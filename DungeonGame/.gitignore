@@ -1,0 +1,35 @@
+﻿# Visual Studio & Rider
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build outputs
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.log
+*.cache
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.sln*
+*.ncb
+*.aps
+*.pch
+Thumbs.db
+.DS_Store
+
+# Logs and Debugging
+logs/
+*.log
+*.tlog
+
+# OS-generated files
+*.DS_Store
