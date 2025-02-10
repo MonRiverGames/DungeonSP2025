@@ -2,7 +2,8 @@
 Dungeon Crawler Starter Code
 This template provides the foundational structure for a text-based dungeon crawler.
 */
-
+/* Test of Rules
+*/
 using DungeonGame;
 using System;
 using System.Collections.Generic;
