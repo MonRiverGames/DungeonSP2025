@@ -1,0 +1,46 @@
+﻿name: Enforce PR Rules
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  enforce-rules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Enforce Branch Naming Convention
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          if [[ ! $BRANCH_NAME =~ ^(feature|bugfix)/ ]]; then
+            echo "❌ Branch name must follow: feature/your-feature or bugfix/your-bugfix"
+            exit 1
+          fi
+
+      - name: Require PR Approval
+        run: |
+          PR_APPROVALS=$(gh pr view ${{ github.event.pull_request.html_url }} --json reviews --jq '.reviews | length')
+          if [[ "$PR_APPROVALS" -lt 1 ]]; then
+            echo "❌ At least one approval is required before merging."
+            exit 1
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Build Project
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Run Tests
+        run: dotnet test --no-build --verbosity normal
