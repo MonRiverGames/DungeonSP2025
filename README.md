@@ -10,7 +10,7 @@ A text-based dungeon crawler built with C#.
 
 ## 🛠 Contribution Guidelines
 - **NEVER, EVER,** Commit to Main
-- Create a new branch (`feature/your-feature-name`) based off of Main
+- Create a new branch (`feature/your-feature-name`) based off of Main to work in
 - Cole will review and determine safe merges, then remediate any unsafe merges for the first week.
 - On the following weeks, Cole will select student reviewers to rotate through the process
 - If you are an assigned programmer in that week's cycle, then submit a **pull request (PR)** by 11:59 PM Friday
