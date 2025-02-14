@@ -62,18 +62,18 @@ Thank you for contributing to the Dungeon Crawler project! To maintain a clean a
 
 ### **Contribution List**
 - Write a summary of your contributions to this project when the project is due. 
-- Taylor Arnett
-- Daniel Bratton
-- James Broadwater
-- Evan Byerley
-- Ada Chen
-- Gabrielle Clover
-- Cole Hemmings
-- Donavon Martin
-- Grant Nuzum
-- Harlan Osborne
-- Jasper Roberts
-- Hayden Scher
-- Cyrus Scott
-- Fallyn Stewart
-- Benjamin Withers
+- Arnett
+- Bratton
+- Broadwater
+- Byerley
+- Chen
+- Clover
+- Hemmings
+- Martin
+- Nuzum
+- Osborne
+- Roberts
+- Scher
+- Scott
+- Stewart
+- Withers
