@@ -5,8 +5,8 @@ A text-based dungeon crawler built with C#.
 
 ## 🚀 Setup Instructions
 1. Clone this repository:
-2. Open the project in **Visual Studio** or **VS Code**.
-3. Run `dotnet run` to start the game.
+2. Open the project's folder in **Visual Studio** or **VS Code**.
+3. Run `dotnet run` to start the game or press the play button in editor.
 
 ## 🛠 Contribution Guidelines
 - Create a new feature branch (`feature/your-feature-name`).
