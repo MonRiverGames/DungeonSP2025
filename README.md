@@ -13,4 +13,5 @@ A text-based dungeon crawler built with C#.
 - Submit a **pull request (PR)** by 11:59 PM Friday each week
 - Cole will review and determine safe merges, then remediate any unsafe merges for the first week.
 - On the following weeks, Cole will select student reviewers to rotate through the process
-- Comments by instructor and others will be given through this system. It will be important for you to review them. 
+- Comments by instructor and others will be given through this system. It will be important for you to review them.
+- Read Contributing.md for full guidelines
