@@ -15,16 +15,18 @@ class Program
         // Initialize Rooms
         Room startRoom = new Room("Entrance Hall", "A grand entrance with torches lining the walls.");
         Room darkRoom = new Room("Dark Chamber", "A pitch-black room with an eerie silence.");
+        Room mirrorRoom = new Room("Mirror Room", "A room filled with mirrors in every direction.");
 
         // Connect Rooms
         startRoom.Exits["north"] = darkRoom;
         darkRoom.Exits["south"] = startRoom;
+        darkRoom.Exits["east"] = mirrorRoom;
 
         // Create Player
         Player player = new Player(startRoom);
 
         Console.WriteLine("Welcome to the Dungeon Crawler!");
-        Console.WriteLine("Type 'go north' to move north or 'go south' to move south.");
+        Console.WriteLine("Type 'go north' to move north or 'go south' to move south or 'go east' to move east.");
 
         // Game Loop
         while (true)
