@@ -10,6 +10,8 @@ using System.Collections.Generic;
 // Main Program
 class Program
 {
+
+    // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch. Then, other person pulls to stay up to date.
     static void Main()
     {
         // Initialize Rooms
@@ -48,6 +50,7 @@ class Program
             {
                 Console.WriteLine("Invalid command.");
             }
-        } // hello chat
+        } 
     }
 }
+
