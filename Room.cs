@@ -1,4 +1,5 @@
-﻿// Room Class
+﻿namespace DungeonGame;
+// Room Class
 class Room
 {
     public string Name { get; set; }
