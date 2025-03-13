@@ -1,4 +1,6 @@
-﻿// Enemy Class
+﻿namespace DungeonGame;
+
+// Enemy Class
 class Enemy
 {
     public string Name { get; set; }

@@ -1,6 +1,6 @@
-﻿// Player Class
-using DungeonGame;
+﻿namespace DungeonGame;
 
+// Player Class
 class Player
 {
     public Room CurrentRoom { get; set; }
