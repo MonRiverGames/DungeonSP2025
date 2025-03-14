@@ -43,7 +43,7 @@ class Program
             }
             else if (input == "quit") //if the input is quit, then the game will break the continuous loop
             {
-                Console.WriteLine("Thanks for playing!"); 
+                Console.WriteLine("Until we meet again...!");
                 break;
             }
             else
