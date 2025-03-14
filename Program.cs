@@ -10,6 +10,8 @@ using System.Collections.Generic;
 // Main Program
 class Program
 {
+    static string [] moveCommand = { "go", "explore", "travel", "move" }; //array of movement commands
+    static string [] grabCommand = { "get", "grab", "take" }; //array of grab commands
 
     // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch (don't push at the same time!) Then, other person pulls to stay up to date.
     static void Main()
@@ -37,9 +39,25 @@ class Program
             string input = Console.ReadLine().ToLower(); //detects player input
             string[] command = input.Split(' '); // splits the input into two separate inputs (command) to create an array within command
 
-            if (command.Length > 1 && (command[0] == "go" || command[0] == "explore" || command [0] == "move" || command [0] == "travel" )) // if the first word (command[0]) is go, then the following will excute
+            if (command.Length > 1 && moveCommand.Contains(command[0])) // if the first word (command[0]) is any of the movement words, then the following body of code will excute
             {
                 player.Move(command[1]); //method that accepts the inputted value and then excutes for whatever happens
+            }
+            else if (command.Length > 1 && grabCommand.Contains(command[0]))
+            {
+                if(!player.Inventory.Contains(command[1]))
+                {
+                //grab method executes
+                //  player.Grab(command[1]);
+                }
+                else if (player.Inventory.Contains(command[1]))
+                {
+                    System.Console.WriteLine("You already have this item!");
+                }
+                else
+                {
+                    System.Console.WriteLine($"You can't pick up {command[1]}.");
+                }
             }
             else if (input == "quit") //if the input is quit, then the game will break the continuous loop
             {
