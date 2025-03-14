@@ -13,6 +13,12 @@ class Program
     static string [] moveCommand = { "go", "explore", "travel", "move" }; //array of movement commands
     static string [] grabCommand = { "get", "grab", "take" }; //array of grab commands
 
+    static string [] fightCommand = { "fight", "punch", "probe", "kick", "annoy", "stab", "flick", "kill", "touch", "slap", "hurt", "yell", "splash", "poke", "shoot" }; //array of fight commands
+
+    static string [] talkCommand = { "talk", "speak", "greet", "address", "say", "hi", "hello", "hey" }; //array of talk commands
+
+    static string [] examineCommand = { "look", "check", "examine", "inspect", "view", "find", "investigate", "scan", "survey" }; //array of examine commands
+
     // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch (don't push at the same time!) Then, other person pulls to stay up to date.
     static void Main()
     {
@@ -58,6 +64,18 @@ class Program
                 {
                     System.Console.WriteLine($"You can't pick up {command[1]}.");
                 }
+            }
+            else if (command.Length >1 && fightCommand.Contains(command[0]))
+            {
+                //player.Fight(command[1]);  this can be used for a fighting method, delete slashes and modify when needed 
+            }
+            else if (command.Length >1 && talkCommand.Contains(command[0]))
+            {
+                //player.Talk(command[1]);  this is for dialogue options (delete slashes & modify)
+            }
+            else if (command.Length >1 && examineCommand.Contains(command[0]))
+            {
+                //player.Examine(command[1]);  this is for examining areas/objects (delete slashes & modify)
             }
             else if (input == "quit") //if the input is quit, then the game will break the continuous loop
             {
