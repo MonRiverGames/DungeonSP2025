@@ -30,7 +30,7 @@ class Program
         Console.WriteLine("Welcome to the Dungeon Crawler!");
         Console.WriteLine("Type 'go north' to move north or 'go south' to move south or 'go east' to move east.");
 
-        // Game Loop
+        // Game Loop!
         while (true)
         {
             Console.Write("> ");
