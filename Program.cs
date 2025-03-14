@@ -11,7 +11,7 @@ using System.Collections.Generic;
 class Program
 {
 
-    // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch. Then, other person pulls to stay up to date.
+    // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch (don't push at the same time!) Then, other person pulls to stay up to date.
     static void Main()
     {
         // Initialize Rooms
@@ -34,16 +34,16 @@ class Program
         while (true)
         {
             Console.Write("> ");
-            string input = Console.ReadLine().ToLower();
-            string[] command = input.Split(' ');
+            string input = Console.ReadLine().ToLower(); //detects player input
+            string[] command = input.Split(' '); // splits the input into two separate inputs (command) to create an array within command
 
-            if (command.Length > 1 && command[0] == "go")
+            if (command.Length > 1 && command[0] == "go") // if the first word (command[0]) is go, then the following will excute
             {
-                player.Move(command[1]);
+                player.Move(command[1]); //method that accepts the inputted value and then excutes for whatever happens
             }
-            else if (input == "quit")
+            else if (input == "quit") //if the input is quit, then the game will break the continuous loop
             {
-                Console.WriteLine("Thanks for playing!");
+                Console.WriteLine("Thanks for playing!"); 
                 break;
             }
             else
