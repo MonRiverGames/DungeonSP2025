@@ -37,7 +37,7 @@ class Program
             string input = Console.ReadLine().ToLower(); //detects player input
             string[] command = input.Split(' '); // splits the input into two separate inputs (command) to create an array within command
 
-            if (command.Length > 1 && command[0] == "go") // if the first word (command[0]) is go, then the following will excute
+            if (command.Length > 1 && (command[0] == "go" || command[0] == "explore" || command [0] == "move" || command [0] == "travel" )) // if the first word (command[0]) is go, then the following will excute
             {
                 player.Move(command[1]); //method that accepts the inputted value and then excutes for whatever happens
             }
