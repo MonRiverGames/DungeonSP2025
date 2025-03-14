@@ -13,6 +13,9 @@ class Program
     static string [] moveCommand = { "go", "explore", "travel", "move" }; //array of movement commands
     static string [] grabCommand = { "get", "grab", "take" }; //array of grab commands
 
+    static string [] useCommand = { "use", "utilize", "operate" }; //array of use commands
+    static string [] inventoryCommand = { "bag", "inventory", "backpack", "pockets", "items"}; // array of inventory commands
+
     // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch (don't push at the same time!) Then, other person pulls to stay up to date.
     static void Main()
     {
@@ -43,14 +46,15 @@ class Program
             {
                 player.Move(command[1]); //method that accepts the inputted value and then excutes for whatever happens
             }
+
             else if (command.Length > 1 && grabCommand.Contains(command[0]))
             {
-                if(!player.Inventory.Contains(command[1]))
+                if(!player.Inventory.Contains(command[1])) // if the player doesn't have the iten, they are able grab the item
                 {
                 //grab method executes
                 //  player.Grab(command[1]);
                 }
-                else if (player.Inventory.Contains(command[1]))
+                else if (player.Inventory.Contains(command[1])) // if player has item, game tells them that they already have the item
                 {
                     System.Console.WriteLine("You already have this item!");
                 }
@@ -59,11 +63,43 @@ class Program
                     System.Console.WriteLine($"You can't pick up {command[1]}.");
                 }
             }
-            else if (input == "quit") //if the input is quit, then the game will break the continuous loop
+
+            else if (command.Length > 1 && useCommand.Contains(command[0]))
+            {
+                if(!player.Inventory.Contains(command[1]) /*&& !Room.Objects.Contains(command[1])*/)  // if the target doesn't exist in the inventory and the room, then it will return a invalid message || currently has the room objects checker OFF
+                {
+                    System.Console.WriteLine("You can't use this. It doesn't exist.");
+                }
+                else if(player.Inventory.Contains(command[1])) //if player has the item, they are able to use it
+                {
+                    // use object method goes here
+                }
+                /* //if the room has the object, they are able to use it | separate method
+                else if(Room.Objects.Contains(command[1]) 
+               {
+                    // use room object method goes here
+                }*/
+                else
+                {
+                    System.Console.WriteLine("Invalid use command."); //placeholder text
+                }
+            }
+            
+            else if (command.Length > 1 && inventoryCommand.Contains(command[0]))
+            {
+                // inventory loop goes here
+            }
+
+            else if (input == "quit") //if the input is 'quit', then the game will break the continuous loop
             {
                 Console.WriteLine("Until we meet again...!");
                 break;
             }
+            else if (input == "menu")
+            {
+                //method for menu goes here
+            }
+
             else
             {
                 Console.WriteLine("Invalid command.");
