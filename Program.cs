@@ -10,6 +10,8 @@ using System.Collections.Generic;
 // Main Program
 class Program
 {
+    private string [] moveCommand = { "go", "explore", "travel", "move" };
+    private string [] grabCommand = { "get", "grab", "take" };
 
     // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch (don't push at the same time!) Then, other person pulls to stay up to date.
     static void Main()
