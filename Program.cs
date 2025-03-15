@@ -26,6 +26,9 @@ class Program
         Player player = new Player(startRoom);
 
         Console.WriteLine("Welcome to the Dungeon Crawler!");
+        Console.WriteLine("What is your name adventurer?");
+        string playerName = Console.ReadLine();
+        Console.WriteLine("Welcome" + playerName);
         Console.WriteLine("Type 'go north' to move north or 'go south' to move south or 'go east' to move east.");
 
         // Game Loop
