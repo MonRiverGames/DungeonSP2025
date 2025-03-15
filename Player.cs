@@ -1,13 +1,20 @@
-﻿namespace DungeonGame;
+﻿
+
+namespace DungeonGame;
 
 // Player Class
 class Player
 {
+    public string Name;
+    public int Health;
     public Room CurrentRoom { get; set; }
     public List<string> Inventory { get; set; }
 
-    public Player(Room startingRoom)
+   
+    public Player(string name,Room startingRoom)
     {
+        Name = name;
+        Health = 100;
         CurrentRoom = startingRoom;
         Inventory = new List<string>();
     }
