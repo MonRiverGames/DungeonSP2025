@@ -34,6 +34,7 @@ class Program
         startRoom.Exits["north"] = darkRoom;
         darkRoom.Exits["south"] = startRoom;
         darkRoom.Exits["east"] = mirrorRoom;
+        mirrorRoom.Exits["west"] = darkRoom;
 
         // Create Player
         Player player = new Player(startRoom);
