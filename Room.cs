@@ -1,15 +1,21 @@
-﻿namespace DungeonGame;
-// Room Class
-class Room
-{
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public Dictionary<string, Room> Exits { get; set; }
+﻿using System;
+using System.Collections.Generic;
 
-    public Room(string name, string description)
+namespace DungeonGame
+{
+    public class Room
     {
-        Name = name;
-        Description = description;
-        Exits = new Dictionary<string, Room>();
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public Dictionary<string, Room> Exits { get; private set; }
+        public List<string> Items { get; private set; }
+
+        public Room(string name, string description)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Description = description ?? throw new ArgumentNullException(nameof(description));
+            Exits = new Dictionary<string, Room>();
+            Items = new List<string>();
+        }
     }
 }

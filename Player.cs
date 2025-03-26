@@ -1,34 +1,33 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 
-namespace DungeonGame;
-
-// Player Class
-class Player
+namespace DungeonGame
 {
-    public string Name;
-    public int Health;
-    public Room CurrentRoom { get; set; }
-    public List<string> Inventory { get; set; }
-
-   
-    public Player(string name,Room startingRoom)
+    // Player Class
+    class Player
     {
-        Name = name;
-        Health = 100;
-        CurrentRoom = startingRoom;
-        Inventory = new List<string>();
-    }
+        public string Name { get; private set; }
+        public Room CurrentRoom { get; set; }
+        public Inventory Inventory { get; private set; }
 
-    public void Move(string direction)
-    {
-        if (CurrentRoom.Exits.ContainsKey(direction))
+        public Player(string name, Room startingRoom)
         {
-            CurrentRoom = CurrentRoom.Exits[direction];
-            Console.WriteLine("You moved to: " + CurrentRoom.Name);
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            CurrentRoom = startingRoom ?? throw new ArgumentNullException(nameof(startingRoom));
+            Inventory = new Inventory();
         }
-        else
+
+        public void Move(string direction)
         {
-            Console.WriteLine("You can't go that way!");
+            if (CurrentRoom.Exits.ContainsKey(direction))
+            {
+                CurrentRoom = CurrentRoom.Exits[direction];
+                Console.WriteLine($"You move {direction} to the {CurrentRoom.Name}.");
+            }
+            else
+            {
+                Console.WriteLine("You can't go that way.");
+            }
         }
     }
 }

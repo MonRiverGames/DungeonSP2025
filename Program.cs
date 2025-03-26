@@ -10,17 +10,17 @@ using System.Collections.Generic;
 // Main Program
 class Program
 {
-    static string [] moveCommand = { "go", "explore", "travel", "move" }; //array of movement commands
-    static string [] grabCommand = { "get", "grab", "take" }; //array of grab commands
+    static string[] moveCommand = { "go", "explore", "travel", "move" }; //array of movement commands
+    static string[] grabCommand = { "get", "grab", "take" }; //array of grab commands
 
-    static string [] useCommand = { "use", "utilize", "operate" }; //array of use commands
-    static string [] inventoryCommand = { "bag", "inventory", "backpack", "pockets", "items"}; // array of inventory commands
+    static string[] useCommand = { "use", "utilize", "operate" }; //array of use commands
+    static string[] inventoryCommand = { "bag", "inventory", "backpack", "pockets", "items" }; // array of inventory commands
 
-    static string [] fightCommand = { "fight", "punch", "probe", "kick", "annoy", "stab", "flick", "kill", "touch", "slap", "hurt", "yell", "splash", "poke", "shoot" }; //array of fight commands
+    static string[] fightCommand = { "fight", "punch", "probe", "kick", "annoy", "stab", "flick", "kill", "touch", "slap", "hurt", "yell", "splash", "poke", "shoot" }; //array of fight commands
 
-    static string [] talkCommand = { "talk", "speak", "greet", "address", "say", "hi", "hello", "hey" }; //array of talk commands
+    static string[] talkCommand = { "talk", "speak", "greet", "address", "say", "hi", "hello", "hey" }; //array of talk commands
 
-    static string [] examineCommand = { "look", "check", "examine", "inspect", "view", "find", "investigate", "scan", "survey" }; //array of examine commands
+    static string[] examineCommand = { "look", "check", "examine", "inspect", "view", "find", "investigate", "scan", "survey" }; //array of examine commands
 
     // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch (don't push at the same time!) Then, other person pulls to stay up to date.
     static void Main()
@@ -36,17 +36,43 @@ class Program
         darkRoom.Exits["east"] = mirrorRoom;
         mirrorRoom.Exits["west"] = darkRoom;
 
+        // Add Items to Rooms
+        startRoom.Items.Add("torch");
+        darkRoom.Items.Add("key"); 
+        mirrorRoom.Items.Add("mirror shard");
+
         Console.WriteLine("Welcome to the Dungeon Crawler!");
         Console.WriteLine("What is your name adventurer?");
-        Player player = new Player(Console.ReadLine(), startRoom);  // Read response and create Player
+        string playerName;
+        while (true)
+        {
+            playerName = Console.ReadLine() ?? string.Empty;
+            if (playerName == null)
+            {
+                Console.WriteLine("Input stream closed. Exiting...");
+                return;
+            }
+            if (!string.IsNullOrEmpty(playerName))
+            {
+                break;
+            }
+            Console.WriteLine("Name cannot be empty. Please enter your name:");
+        }
+        Player player = new Player(playerName, startRoom);  // Read response and create Player
         Console.WriteLine($"Welcome {player.Name}!");
         Console.WriteLine("Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
 
-        // Game Loop!
+       // Game Loop!
         while (true)
         {
             Console.Write("> ");
-            string input = Console.ReadLine().ToLower(); //detects player input
+            string input = Console.ReadLine() ?? string.Empty;
+            if (input == null)
+            {
+                Console.WriteLine("Input stream closed. Exiting...");
+                return;
+            }
+            input = input.ToLower(); //detects player input
             string[] command = input.Split(' '); // splits the input into two separate inputs (command) to create an array within command
 
             if (command.Length > 1 && moveCommand.Contains(command[0])) // if the first word (command[0]) is any of the movement words, then the following body of code will excute
@@ -56,40 +82,42 @@ class Program
 
             else if (command.Length > 1 && grabCommand.Contains(command[0]))
             {
-                if(!player.Inventory.Contains(command[1])) // if the player doesn't have the iten, they are able grab the item
+                if (!string.IsNullOrEmpty(command[1]) && player.CurrentRoom.Items.Contains(command[1]))
                 {
-                //grab method executes
-                //  player.Grab(command[1]);
-                }
-                else if (player.Inventory.Contains(command[1])) // if player has item, game tells them that they already have the item
-                {
-                    System.Console.WriteLine("You already have this item!");
+                    if (!player.Inventory.Contains(command[1])) // if the player doesn't have the item, they are able to grab the item
+                    {
+                        player.Inventory.AddItem(command[1]);
+                        player.CurrentRoom.Items.Remove(command[1]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("You already have this item!");
+                    }
                 }
                 else
                 {
-                    System.Console.WriteLine($"You can't pick up {command[1]}.");
+                    Console.WriteLine($"There is no {command[1]} here to grab.");
                 }
             }
-
-            else if (command.Length >1 && fightCommand.Contains(command[0]))
+            else if (command.Length > 1 && fightCommand.Contains(command[0]))
             {
                 //player.Fight(command[1]);  this can be used for a fighting method, delete slashes and modify when needed 
             }
-            else if (command.Length >1 && talkCommand.Contains(command[0]))
+            else if (command.Length > 1 && talkCommand.Contains(command[0]))
             {
                 //player.Talk(command[1]);  this is for dialogue options (delete slashes & modify)
             }
-            else if (command.Length >1 && examineCommand.Contains(command[0]))
+            else if (command.Length > 1 && examineCommand.Contains(command[0]))
             {
                 //player.Examine(command[1]);  this is for examining areas/objects (delete slashes & modify)
             }
             else if (command.Length > 1 && useCommand.Contains(command[0]))
             {
-                if(!player.Inventory.Contains(command[1]) /*&& !Room.Objects.Contains(command[1])*/)  // if the target doesn't exist in the inventory and the room, then it will return a invalid message || currently has the room objects checker OFF
+                if (!player.Inventory.Contains(command[1]) /*&& !Room.Objects.Contains(command[1])*/)  // if the target doesn't exist in the inventory and the room, then it will return a invalid message || currently has the room objects checker OFF
                 {
                     System.Console.WriteLine("You can't use this. It doesn't exist.");
                 }
-                else if(player.Inventory.Contains(command[1])) //if player has the item, they are able to use it
+                else if (player.Inventory.Contains(command[1])) //if player has the item, they are able to use it
                 {
                     // use object method goes here
                 }
@@ -103,10 +131,10 @@ class Program
                     System.Console.WriteLine("Invalid use command."); //placeholder text
                 }
             }
-            
+
             else if (command.Length > 1 && inventoryCommand.Contains(command[0]))
             {
-                // inventory loop goes here
+                player.Inventory.ShowInventory();
             }
 
             else if (input == "quit") //if the input is 'quit', then the game will break the continuous loop
@@ -123,7 +151,7 @@ class Program
             {
                 Console.WriteLine("Invalid command.");
             }
-        } 
+        }
     }
 }
 
