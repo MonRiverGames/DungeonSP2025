@@ -36,11 +36,11 @@ class Program
         darkRoom.Exits["east"] = mirrorRoom;
         mirrorRoom.Exits["west"] = darkRoom;
 
-        // Create Player
-        Player player = new Player(startRoom);
-
         Console.WriteLine("Welcome to the Dungeon Crawler!");
-        Console.WriteLine("Type 'go north' to move north or 'go south' to move south or 'go east' to move east.");
+        Console.WriteLine("What is your name adventurer?");
+        Player player = new Player(Console.ReadLine(), startRoom);  // Read response and create Player
+        Console.WriteLine($"Welcome {player.Name}!");
+        Console.WriteLine("Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
 
         // Game Loop!
         while (true)
