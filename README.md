@@ -17,3 +17,6 @@ A text-based dungeon crawler built with C#.
 - If you are an assigned reviewer in that week's cycle, the review, comment, revise a pull request by 11:59 PM Monday
 - Comments by instructor and others will be given through this system. It will be important for you to review them.
 - Read Contributing.md for full guidelines
+
+- yo
+
