@@ -9,6 +9,7 @@ namespace DungeonGame
         public string Name { get; private set; }
         public Room CurrentRoom { get; set; }
         public Inventory Inventory { get; private set; }
+        public bool fastMode { get; set; }
 
         public Player(string name, Room startingRoom)
         {
