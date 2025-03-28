@@ -1,33 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace DungeonGame;
 
-namespace DungeonGame
+// Player Class
+class Player
 {
-    // Player Class
-    class Player
+    public Room CurrentRoom { get; set; }
+    public List<string> Inventory { get; set; }
+
+    
+
+
+
+    public Player(Room startingRoom)
     {
-        public string Name { get; private set; }
-        public Room CurrentRoom { get; set; }
-        public Inventory Inventory { get; private set; }
+        CurrentRoom = startingRoom;
+        Inventory = new List<string>();
+    }
 
-        public Player(string name, Room startingRoom)
+    public void Move(string direction)
+    {
+        if (CurrentRoom.Exits.ContainsKey(direction))
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            CurrentRoom = startingRoom ?? throw new ArgumentNullException(nameof(startingRoom));
-            Inventory = new Inventory();
+            CurrentRoom = CurrentRoom.Exits[direction];
+            Console.WriteLine("You moved to: " + CurrentRoom.Name);
         }
+        else
+        {
+            Console.WriteLine("You can't go that way!");
+        }
+    }
 
-        public void Move(string direction)
-        {
-            if (CurrentRoom.Exits.ContainsKey(direction))
-            {
-                CurrentRoom = CurrentRoom.Exits[direction];
-                Console.WriteLine($"You move {direction} to the {CurrentRoom.Name}.");
-            }
-            else
-            {
-                Console.WriteLine("You can't go that way.");
-            }
-        }
+    static void PlayerHealthCheck()
+    {
+        int Health = 10;
+    }
+
+    static void DeathCheck() //this check should be ran after every turn in combat
+    {
+        if Health == 0;
+
+
     }
 }
