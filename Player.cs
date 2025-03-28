@@ -29,15 +29,28 @@ class Player
         }
     }
 
+    static int Health = 10;
     static void PlayerHealthCheck()
     {
-        int Health = 10;
+        Console.WriteLine("Your health is: " + Health);
     }
 
-    static void DeathCheck() //this check should be ran after every turn in combat
+    static void DeathCheck(Health) //this check should be ran after every turn in combat
     {
-        if Health == 0;
 
+        while (true)
+        {
+            if (Health == 0)
+            {
+                 DeathScene(); //placeholder
+            }
+            else 
+            {
+                break;
+            }
 
+ 
+
+        }
     }
 }
