@@ -41,6 +41,7 @@ class Program
         darkRoom.Items.Add("key"); 
         mirrorRoom.Items.Add("mirror shard");
 
+        Graphics.DrawHealthBar("example", 5, 10);
         Console.WriteLine("Welcome to the Dungeon Crawler!");
         Console.WriteLine("What is your name adventurer?");
         string playerName;
