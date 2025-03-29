@@ -60,7 +60,6 @@ class Program
         Player player = new Player(playerName, startRoom);  // Read response and create Player
         Console.WriteLine($"Welcome {player.Name}!");
         Graphics.TypeEffectColor(player.fastMode, "Welcome to..."); //temporary name
-        Console.BackgroundColor = ConsoleColor.Black;
         Console.ForegroundColor = ConsoleColor.Magenta;
         System.Console.WriteLine();
         Thread.Sleep(100);System.Console.WriteLine(@" _   _         _  _          _   __ _");
