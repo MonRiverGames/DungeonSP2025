@@ -30,5 +30,6 @@ namespace DungeonGame
                 Graphics.TypeEffectColor(player.fastMode, "You can't go that way.", "green");
             }
         }
+        
     }
 }
