@@ -1,91 +1,39 @@
-﻿namespace DungeonGame;
+﻿using System;
 
-// Enemy Class
-public class Enemy
+namespace DungeonGame
 {
-    public string Name { get; set; }
-    public int Health { get; set; }
-
-    public int AttackPwr {get; set; }
-
-    public int Defense {get; set;}
-
-    public Enemy(string name, int health, int attackPwr, int defense)// defines the enemy
+    public class Enemy
     {
-        Name = name;
-        Health = health;
-        AttackPwr = attackPwr;
-        Defense = defense;
-    }
+        public string Name { get; private set; }
+        public int Health { get; private set; }
 
-    public void Attack (Player player) // calculates how much damage the enemy deals
-    {
-        int damageDealt = AttackPwr - player.Defense;
-
-
-        damageDealt = Math.Max(1,damageDealt);
-
-        player.TakeDamage(damageDealt);
-
-        Console.WriteLine($"{Name} visciously attacks {player.Name} for {damageDealt} damage");
-
-    }
-
-    public void TakeDamage(int damage) // calculates how much damage the enemy takes
-    {
-        int actualDamage = damage - Defense;
-
-        actualDamage = Math.Max(1, actualDamage );
-
-        Health -= actualDamage;
-
-        Console.WriteLine($"{Name} has suffered {actualDamage} damage");
-
-        if (!IsAlive())
+        public Enemy(string name, int health)
         {
-            Console.WriteLine($"{Name} has been vanquiseh");
+            Name = name;
+            Health = health;
+        }
+
+        public virtual void TakeTurn(Player player)
+        {
+            Console.WriteLine($"{Name} is taking its turn.");
+            // Default enemy behavior
+        }
+
+        public void PoisonAttack(Player player)
+        {
+            Console.WriteLine($"{Name} uses Poison Attack on {player.Name}!");
+            // Implement poison attack logic
         }
     }
 
-    public bool IsAlive()//checks to make sure enemy is still alive
+    public class AcidWorm : Enemy
     {
-        return Health > 0;
-    }
+        public AcidWorm(string name, int health) : base(name, health) { }
 
-    public void EnemyTurn(Player player, Enemy enemy) //uses random to allow the enemy to have different attacks
-    {
-        Random random = new Random();
-        int decision = random.Next(1,101);
-
-        if (enemy.Health < 10 && decision <= 65)
+        public override void TakeTurn(Player player)
         {
-            Console.WriteLine($"{enemy.Name} attacks normally");
-            Attack(player, enemy);
-        }
-        else if (enemy.Health < 20 && decision <= 78)
-        {
-            Console.WriteLine($"{enemy.Name} spits posion!!");
-            PosionAttack(player,enemy);
-
+            Console.WriteLine($"{Name} spits acid at {player.Name}!");
+            // Implement AcidWorm-specific behavior
         }
     }
-
-    public void PosionAttack(Player player)//allows enemy to have posion attack
-    {
-       player.IsPoisoned = true;
-       player. PoisonTurnsRemaining = 3;
-    }
-
-    public class AcidWorm : Enemy //creates enemy class to have posion
-    {
-        public AcidWorm(): base("Acid Worm", 30, 5, 8) {}
-
-        public override void TakeTurn (Player player)
-        {
-            Console.WriteLine("The worm emerges from the ground spewing acid!!");
-            EnemyTurn(player);
-        }
-    }
-
-
 }

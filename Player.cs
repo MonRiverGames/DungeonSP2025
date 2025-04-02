@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace DungeonGame
 {
     // Player Class
-    class Player
+    public class Player // Changed from internal (default) to public
     {
         public string Name { get; private set; }
         public Room CurrentRoom { get; set; }

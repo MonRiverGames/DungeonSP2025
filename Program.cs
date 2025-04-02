@@ -41,17 +41,17 @@ class Program
         darkRoom.Items.Add("key"); 
         mirrorRoom.Items.Add("mirror shard");
 
+        // Debugging: Print room details to ensure no circular references
+        startRoom.PrintRoomDetails();
+        darkRoom.PrintRoomDetails();
+        mirrorRoom.PrintRoomDetails();
+
         Console.WriteLine("Welcome to the Dungeon Crawler!");
         Console.WriteLine("What is your name adventurer?");
         string playerName;
         while (true)
         {
             playerName = Console.ReadLine() ?? string.Empty;
-            if (playerName == null)
-            {
-                Console.WriteLine("Input stream closed. Exiting...");
-                return;
-            }
             if (!string.IsNullOrEmpty(playerName))
             {
                 break;
@@ -67,11 +67,6 @@ class Program
         {
             Console.Write("> ");
             string input = Console.ReadLine() ?? string.Empty;
-            if (input == null)
-            {
-                Console.WriteLine("Input stream closed. Exiting...");
-                return;
-            }
             input = input.ToLower(); //detects player input
             string[] command = input.Split(' '); // splits the input into two separate inputs (command) to create an array within command
 
@@ -154,4 +149,3 @@ class Program
         }
     }
 }
-
