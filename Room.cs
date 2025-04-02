@@ -17,5 +17,21 @@ namespace DungeonGame
             Exits = new Dictionary<string, Room>();
             Items = new List<string>();
         }
+
+        public void PrintRoomDetails()
+        {
+            Console.WriteLine($"Room: {Name}");
+            Console.WriteLine($"Description: {Description}");
+            Console.WriteLine("Exits:");
+            foreach (var exit in Exits)
+            {
+                Console.WriteLine($"- {exit.Key}: {exit.Value.Name}");
+            }
+            Console.WriteLine("Items:");
+            foreach (var item in Items)
+            {
+                Console.WriteLine($"- {item}");
+            }
+        }
     }
 }
