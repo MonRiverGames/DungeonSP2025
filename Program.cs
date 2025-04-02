@@ -60,7 +60,40 @@ class Program
         }
         Player player = new Player(playerName, startRoom);  // Read response and create Player
         Console.WriteLine($"Welcome {player.Name}!");
+        Graphics.TypeEffectColor(player.fastMode, "Welcome to..."); //temporary name
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        System.Console.WriteLine();
+        Thread.Sleep(100);System.Console.WriteLine(@" _   _         _  _          _   __ _");
+        Thread.Sleep(100);System.Console.WriteLine(@"| | | |  ___  | || |  ___   | | / /(_)  _     _");
+        Thread.Sleep(100);System.Console.WriteLine(@"| |_| | / _ \ | || | / _ \  | |/ /  _ _| |_ _| |_  _  _");
+        Thread.Sleep(100);System.Console.WriteLine(@"|  _  |/ /_\ \| || |/ / \ \ |   /  | |_   _|_   _|| |/ /");
+        Thread.Sleep(100);System.Console.WriteLine(@"| | | |\ ,___/| || |\ \_/ / | |\ \ | | | |_  | |_ | / /");
+        Thread.Sleep(100);System.Console.WriteLine(@"|_| |_| \___/ |_||_| \___/  |_| \_\|_| \___| \___||  /");
+        Thread.Sleep(100);System.Console.WriteLine(@"                       _           _              / /");
+        Thread.Sleep(100);System.Console.WriteLine(@"                      / \_______ /|_\             \/");
+        Thread.Sleep(100);System.Console.WriteLine(@"                     /          /_/ \__");
+        Thread.Sleep(100);System.Console.WriteLine(@"                    /             \_/ /");
+        Thread.Sleep(100);System.Console.WriteLine(@"                  _|_              |/|_");
+        Thread.Sleep(100);System.Console.WriteLine(@"                  _|_  O    _    O  _|_");
+        Thread.Sleep(100);System.Console.WriteLine(@"                  _|_      (_)      _|_");
+        Thread.Sleep(100);System.Console.WriteLine(@"                   \                 /");
+        Thread.Sleep(100);System.Console.WriteLine(@"                    _\_____________/_");
+        Thread.Sleep(100);System.Console.WriteLine(@"                   /  \/  (___)  \/  \");
+        Thread.Sleep(100);System.Console.WriteLine(@"                   \__(  o     o  )__/");
+        Thread.Sleep(100);System.Console.WriteLine(@"      ___     _                 _             ");        
+        Thread.Sleep(100);System.Console.WriteLine(@"     |_ _|___| | __ _ _ __   __| |            ");
+        Thread.Sleep(100);System.Console.WriteLine(@"      | |/ __| |/ _` | '_ \ / _` |                ");    
+        Thread.Sleep(100);System.Console.WriteLine(@"      | |\__ \ | (_| | | | | (_| |                   "); 
+        Thread.Sleep(100);System.Console.WriteLine(@"     |___|___/_|\__,_|_| |_|\__,_|_                  ");
+        Thread.Sleep(100);System.Console.WriteLine(@"       / \   __| |_   _____ _ __ | |_ _   _ _ __ ___ ");
+        Thread.Sleep(100);System.Console.WriteLine(@"      / _ \ / _` \ \ / / _ \ '_ \| __| | | | '__/ _ \");
+        Thread.Sleep(100);System.Console.WriteLine(@"     / ___ \ (_| |\ V /  __/ | | | |_| |_| | | |  __/");
+        Thread.Sleep(100);System.Console.WriteLine(@"    /_/   \_\__,_| \_/ \___|_| |_|\__|\__,_|_|  \___|");
+        System.Console.WriteLine();
+        Console.ResetColor();
+        System.Console.WriteLine();
         Console.WriteLine("Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
+        Graphics.Menu(player, "start");
 
        // Game Loop!
         while (true)
@@ -72,9 +105,13 @@ class Program
 
             if (command.Length > 1 && moveCommand.Contains(command[0])) // if the first word (command[0]) is any of the movement words, then the following body of code will excute
             {
-                player.Move(command[1]); //method that accepts the inputted value and then excutes for whatever happens
+                player.Move(command[1], player); //method that accepts the inputted value and then excutes for whatever happens
             }
 
+            else if (input == "menu") // if the first word (command[0]) is any of the movement words, then the following body of code will excute
+            {
+                Graphics.Menu(player); //method that accepts the inputted value and then excutes for whatever happens
+            }
             else if (command.Length > 1 && grabCommand.Contains(command[0]))
             {
                 if (!string.IsNullOrEmpty(command[1]) && player.CurrentRoom.Items.Contains(command[1]))
