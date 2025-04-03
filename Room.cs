@@ -55,9 +55,9 @@ namespace DungeonGame
         // Perform an action
         public string PerformAction(string actionKey)
         {
-            if (Actions.TryGetValue(actionKey.ToLower(), out string result))
+            if (Actions.TryGetValue(actionKey.ToLower(), out string result) && result != null)
             {
-                return result; // Action was successful, return description.
+                return result; // Result is guaranteed to be non-null here.
             }
             return "Nothing happens."; // Default message for invalid actions.
         }
