@@ -1,79 +1,121 @@
-﻿namespace DungeonGame
-{
-    // Room Class
-    class Room
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public Dictionary<string, Room> Exits { get; set; }
-        public List<string> Events { get; set; }
+﻿using System;
+using System.Collections.Generic;
 
+namespace DungeonGame
+{
+    public class Room
+    {
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public Dictionary<string, Room> Exits { get; private set; }
+        public List<string> Items { get; private set; }
+        public Dictionary<string, string> Actions { get; private set; }
+
+        // Constructor
         public Room(string name, string description)
         {
-            Name = name;
-            Description = description;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Description = description ?? throw new ArgumentNullException(nameof(description));
             Exits = new Dictionary<string, Room>();
-            Events = new List<string>();
+            Items = new List<string>();
+            Actions = new Dictionary<string, string>(); // Stores room-specific actions, e.g., "push lever -> Opens secret door."
         }
 
-        public void Enter()
+        // Add an exit to this room
+        public void AddExit(string direction, Room room)
         {
-            Console.WriteLine($"{Name}: {Description}");
-            TriggerEvents();
+            if (string.IsNullOrWhiteSpace(direction)) throw new ArgumentException("Direction cannot be null or empty.", nameof(direction));
+            if (room == null) throw new ArgumentNullException(nameof(room));
+
+            Exits[direction.ToLower()] = room;
         }
 
-        private void TriggerEvents()
+        // Add an item to this room
+        public void AddItem(string item)
         {
-            foreach (var roomEvent in Events)
+            if (string.IsNullOrWhiteSpace(item)) throw new ArgumentException("Item cannot be null or empty.", nameof(item));
+            Items.Add(item);
+        }
+
+        // Remove an item from this room
+        public bool RemoveItem(string item)
+        {
+            return Items.Remove(item);
+        }
+
+        // Add a room-specific action
+        public void AddAction(string actionKey, string actionDescription)
+        {
+            if (string.IsNullOrWhiteSpace(actionKey)) throw new ArgumentException("Action key cannot be null or empty.", nameof(actionKey));
+            if (string.IsNullOrWhiteSpace(actionDescription)) throw new ArgumentException("Action description cannot be null or empty.", nameof(actionDescription));
+
+            Actions[actionKey.ToLower()] = actionDescription;
+        }
+
+        // Perform an action
+        public string PerformAction(string actionKey)
+        {
+            if (Actions.TryGetValue(actionKey.ToLower(), out string result))
             {
-                Console.WriteLine($"Event Triggered: {roomEvent}");
+                return result; // Result is guaranteed to be non-null here.
             }
-        }
-    }
-
-    // Player Class
-    class Player
-    {
-        public string Name { get; set; }
-        public Room CurrentRoom { get; private set; }
-
-        public Player(string name, Room startingRoom)
-        {
-            Name = name;
-            CurrentRoom = startingRoom;
+            return "Nothing happens."; // Default message for invalid actions.
         }
 
-        public void MoveTo(string direction)
+        // Display room information
+        public void DisplayRoomInfo()
         {
-            if (CurrentRoom.Exits.TryGetValue(direction, out Room nextRoom))
+            Console.WriteLine($"Room: {Name}");
+            Console.WriteLine($"Description: {Description}");
+
+            Console.WriteLine("Exits:");
+            foreach (var exit in Exits.Keys)
             {
-                CurrentRoom = nextRoom;
-                CurrentRoom.Enter();
+                Console.WriteLine($"- {exit}");
+            }
+
+            Console.WriteLine("Items:");
+            if (Items.Count > 0)
+            {
+                foreach (var item in Items)
+                {
+                    Console.WriteLine($"- {item}");
+                }
             }
             else
             {
-                Console.WriteLine("You can't go that way.");
+                Console.WriteLine("None.");
+            }
+
+            Console.WriteLine("Actions:");
+            if (Actions.Count > 0)
+            {
+                foreach (var action in Actions)
+                {
+                    Console.WriteLine($"- {action.Key}: {action.Value}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("None.");
             }
         }
-    }
-
-    // Example Usage
-    class Program
-    {
-        static void Main()
+        public void PrintRoomDetails()
         {
-            Room hall = new Room("Hall", "A vast and echoing chamber.");
-            Room dungeon = new Room("Dungeon", "A dark, cold prison cell.");
-
-            hall.Exits["down"] = dungeon;
-            dungeon.Exits["up"] = hall;
-
-            dungeon.Events.Add("You hear chains rattling in the darkness.");
-
-            Player player = new Player("Explorer", hall);
-            player.CurrentRoom.Enter();
-
-            player.MoveTo("down"); // Triggers dungeon event
+            Console.WriteLine($"Room: {Name}");
+            Console.WriteLine($"Description: {Description}");
+            Console.WriteLine("Exits:");
+            foreach (var exit in Exits)
+            {
+                // Check if exit.Value is null before accessing its Name property
+                string exitRoomName = exit.Value != null ? exit.Value.Name : "Unknown";
+                Console.WriteLine($"- {exit.Key}: {exitRoomName}");
+            }
+            Console.WriteLine("Items:");
+            foreach (var item in Items)
+            {
+                Console.WriteLine($"- {item}");
+            }
         }
     }
 }
