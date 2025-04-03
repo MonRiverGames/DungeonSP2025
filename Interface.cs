@@ -124,14 +124,14 @@ static class Graphics
             }
             else
             {
+                Console.ResetColor(); // Reset color only once before the loop.
                 foreach (char c in text)
                 {
-                Console.ResetColor();
-                Console.Write(c);
-                Thread.Sleep(delay); // Controls speed of the typing effect
+                    Console.Write(c);
+                    Thread.Sleep(delay); // Controls speed of the typing effect
                 }
             }
-        Console.ResetColor();
+        Console.ResetColor(); // Ensure color is reset after the loop.
     }
     static public void Sword()
     {

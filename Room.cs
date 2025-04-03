@@ -55,7 +55,7 @@ namespace DungeonGame
         // Perform an action
         public string PerformAction(string actionKey)
         {
-            if (Actions.TryGetValue(actionKey.ToLower(), out string result) && result != null)
+            if (Actions.TryGetValue(actionKey.ToLower(), out string result))
             {
                 return result; // Result is guaranteed to be non-null here.
             }
@@ -107,7 +107,9 @@ namespace DungeonGame
             Console.WriteLine("Exits:");
             foreach (var exit in Exits)
             {
-                Console.WriteLine($"- {exit.Key}: {exit.Value.Name}");
+                // Check if exit.Value is null before accessing its Name property
+                string exitRoomName = exit.Value != null ? exit.Value.Name : "Unknown";
+                Console.WriteLine($"- {exit.Key}: {exitRoomName}");
             }
             Console.WriteLine("Items:");
             foreach (var item in Items)
