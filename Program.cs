@@ -57,7 +57,7 @@ class Program
             }
             Console.WriteLine("Name cannot be empty. Please enter your name:");
         }
-        Player player = new Player(playerName, startRoom);  // Read response and create Player
+        Player player = new Player(playerName, startRoom); // Pass both playerName and startRoom
         Console.WriteLine($"Welcome {player.Name}!");
         Graphics.TypeEffectColor(player.fastMode, "Welcome to..."); //temporary name
         Console.ForegroundColor = ConsoleColor.Magenta;
@@ -109,7 +109,7 @@ class Program
 
             if (command.Length > 1 && moveCommand.Contains(command[0])) // if the first word (command[0]) is any of the movement words, then the following body of code will excute
             {
-                player.Move(command[1], player); //method that accepts the inputted value and then excutes for whatever happens
+                player.Move(command[1]); // Removed redundant player parameter.
             }
 
             else if (input == "menu") // if the first word (command[0]) is any of the movement words, then the following body of code will excute
