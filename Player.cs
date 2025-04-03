@@ -4,12 +4,14 @@ using System.Collections.Generic;
 namespace DungeonGame
 {
     // Player Class
-    public class Player // Changed from internal (default) to public
+    public class Player // Changed to public
     {
         public string Name { get; private set; }
         public Room CurrentRoom { get; set; }
         public Inventory Inventory { get; private set; }
         public bool fastMode { get; set; }
+        public bool IsPoisoned { get; set; }
+        public int PoisonTurnsRemaining { get; set; }
 
         // Player stats, reference original for overall stats but use current during interactions
         public (int original, float current) Health { get; set; }
@@ -31,12 +33,12 @@ namespace DungeonGame
         private (int duration, float percentage) Vulnerability {  get; set; } // Reduces current armor
 
         // Player constructor
+
         public Player(string name, Room startingRoom)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             CurrentRoom = startingRoom ?? throw new ArgumentNullException(nameof(startingRoom));
             Inventory = new Inventory();
-
             Health = (100, 100f);
             Strength = (10, 10f);
             Defense = (10, 10f);
@@ -122,7 +124,7 @@ namespace DungeonGame
         }
 
         // Update method
-        public void Update()
+        public void TakeDamage(int damage)
         {
             // Poison effect
             if (Poison.duration > 0)
@@ -170,12 +172,24 @@ namespace DungeonGame
                 Strength = (Strength.original, Strength.original);
             }
 
+            // Calculate effective damage
+            int effectiveDamage = Math.Max(0, damage - (int)Defense.current); // Reduce damage by defense
+            Health = (Health.original, Health.current - effectiveDamage); // Subtract damage from current health
+
+            Console.WriteLine($"{Name} takes {effectiveDamage} damage! Health is now {Health.current}.");
+
             // Fortify reset
             if (Fortify.duration == 0)
             {
-                Strength = (Strength.original, Strength.original);
+                Defense = (Defense.original, Defense.original);
+            }
+
+            // Check if the player is defeated
+            if (Health.current <= 0)
+            {
+                Console.WriteLine($"{Name} has been defeated!");
+                // Handle player death logic here
             }
         }
-        
     }
 }
