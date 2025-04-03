@@ -17,7 +17,6 @@ namespace DungeonGame
             Exits = new Dictionary<string, Room>();
             Items = new List<string>();
         }
-
         public void PrintRoomDetails()
         {
             Console.WriteLine($"Room: {Name}");

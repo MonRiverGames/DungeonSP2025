@@ -41,17 +41,16 @@ class Program
         darkRoom.Items.Add("key"); 
         mirrorRoom.Items.Add("mirror shard");
 
-        // Debugging: Print room details to ensure no circular references
-        startRoom.PrintRoomDetails();
-        darkRoom.PrintRoomDetails();
-        mirrorRoom.PrintRoomDetails();
-
-        Console.WriteLine("Welcome to the Dungeon Crawler!");
         Console.WriteLine("What is your name adventurer?");
         string playerName;
         while (true)
         {
             playerName = Console.ReadLine() ?? string.Empty;
+            if (playerName == null)
+            {
+                Console.WriteLine("Input stream closed. Exiting...");
+                return;
+            }
             if (!string.IsNullOrEmpty(playerName))
             {
                 break;
@@ -100,6 +99,11 @@ class Program
         {
             Console.Write("> ");
             string input = Console.ReadLine() ?? string.Empty;
+            if (input == null)
+            {
+                Console.WriteLine("Input stream closed. Exiting...");
+                return;
+            }
             input = input.ToLower(); //detects player input
             string[] command = input.Split(' '); // splits the input into two separate inputs (command) to create an array within command
 
@@ -169,6 +173,29 @@ class Program
                 player.Inventory.ShowInventory();
             }
 
+            else if (input == "talk") // Story-driven interaction test case of loop
+            {
+                if (player.CurrentRoom.Name == "Entrance Hall")
+                {
+                    Console.WriteLine("You see a wrinkly lych sitting by the fire. He smiles mischeviously at you and says:");
+                    Console.WriteLine("'Welcome, adventurer. You sure you want to be here?'");
+                    Console.WriteLine("'Take this key, if you dare to enter.'");
+                    if (!player.Inventory.Contains("key")) //if the player doesn't have the item, they are able to grab the item
+                    {
+                        player.Inventory.AddItem("key");
+                        Console.WriteLine("You received a key!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("You already have a key.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("There is no one here to talk to.");
+                }
+            }
+
             else if (input == "quit") //if the input is 'quit', then the game will break the continuous loop
             {
                 Console.WriteLine("Until we meet again...!");
@@ -186,3 +213,4 @@ class Program
         }
     }
 }
+
