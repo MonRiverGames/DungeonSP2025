@@ -36,6 +36,7 @@ public class Player
         Name = name ?? throw new ArgumentNullException(nameof(name));
         CurrentRoom = startingRoom ?? throw new ArgumentNullException(nameof(startingRoom));
         Inventory = new Inventory();
+        Health = (100, 100);
     }
 
     // Move method
@@ -238,7 +239,7 @@ public class Player
 
         // Apply Damage
         Health = (Health.original, Health.current - damage);
-        Console.WriteLine($"You took {damage} points of damage! Your Health is now {Health.current}/{Health.original}.");
+        Graphics.Type(fastMode, $"You took {damage} points of damage! Your Health is now {Health.current}/{Health.original}.");
 
         // Check for Death
         if (Health.current <= 0)
@@ -250,11 +251,18 @@ public class Player
     public void PlayerHealthCheck()
     {
         Console.WriteLine($"Your health is: {Health.current}");
+
     }
 
     static void DeathScene()
     {
         Console.WriteLine("You have perished. Game over.");
         // Add any additional logic for handling player death, such as restarting or exiting the game.
+    }
+
+    public virtual void Attack(Enemy enemy)
+    {
+       Console.WriteLine($"{Name} attacks {enemy.Name}!");
+        enemy.TakeDamage(10, this.fastMode); // Example damage value
     }
 }
