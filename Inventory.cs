@@ -12,92 +12,19 @@ namespace DungeonGame
             Items = new List<string>();
         }
 
-        public void AddItem(string item)
+        public void AddItem(string name)
         {
-            if (!Items.Contains(item))
+            Item item = new Item(name);
+            if (!Items.Contains(item.Name))
             {
                 // Treasure room items
-                Items.Add(item);
-                item = "Rubies";
-                Console.WriteLine($"You have grabbed {item}.");
+                Items.Add(item.Name);
+                Console.WriteLine($"You have grabbed {item.Name}. It is a"+item.Description);
             }
             else
             {
                 Console.WriteLine("You already have this item!");
             }
-
-            if (!Items.Contains(item))
-            {
-                Items.Add(item);
-                item = "Gold";
-                Console.WriteLine($"You have grabbed {item}.");
-            }
-            else
-            {
-                Console.WriteLine("You already have this item!");
-            }
-            if (!Items.Contains(item))
-            {
-                Items.Add(item);
-                item = "Emeralds";
-                Console.WriteLine($"You have grabbed {item}.");
-            }
-            else
-            {
-                Console.WriteLine("You already have this item!");
-            }
-            if (!Items.Contains(item))
-            {
-                Items.Add(item);
-                item = "Diamonds";
-                Console.WriteLine($"You have grabbed {item}.");
-            }
-            else
-            {
-                Console.WriteLine("You already have this item!");
-                // Spell room items
-            }
-            if (!Items.Contains(item))
-            {
-                Items.Add(item);
-                item = "Poison spell";
-                Console.WriteLine($"You have grabbed {item}.");
-            }
-            else
-            {
-                Console.WriteLine("You already have this item!");
-            }
-            if (!Items.Contains(item))
-            {
-                Items.Add(item);
-                item = "Fire spell";
-                Console.WriteLine($"You have grabbed {item}.");
-            }
-            else
-            {
-                Console.WriteLine("You already have this item!");
-            }
-            if (!Items.Contains(item))
-            {
-                Items.Add(item);
-                item = "Regen spell";
-                Console.WriteLine($"You have grabbed {item}.");
-            }
-            else
-            {
-                Console.WriteLine("You already have this item!");
-            }
-            if (!Items.Contains(item))
-            {
-                Items.Add(item);
-                item = "Ice spell";
-                Console.WriteLine($"You have grabbed {item}.");
-            }
-            else
-            {
-                Console.WriteLine("You already have this item!");
-            }
-
         }
 
         public void RemoveItem(string item)
