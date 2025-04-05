@@ -9,10 +9,9 @@ public class Player
     public Room CurrentRoom { get; set; }
     public Inventory Inventory { get; private set; }
     public bool fastMode { get; set; }
-    public bool IsPoisoned { get; set; }
-    public int PoisonTurnsRemaining { get; set; }
 
-    // Player stats, reference original for overall stats but use current during interactions
+    // Player stats, use .original for normal character stats + equipment bonuses, or use .current for interactions and temporary effects
+    string PlayerClass = "Unset";
     public (int original, float current) Health { get; set; }
     public (int original, float current) Strength { get; set; }
     public (int original, float current) Defense { get; set; }
@@ -37,12 +36,9 @@ public class Player
         Name = name ?? throw new ArgumentNullException(nameof(name));
         CurrentRoom = startingRoom ?? throw new ArgumentNullException(nameof(startingRoom));
         Inventory = new Inventory();
-        Health = (100, 100f);
-        Strength = (10, 10f);
-        Defense = (10, 10f);
-        Agility = (5, 5f);
     }
 
+    // Move method
     public void Move(string direction)
     {
         if (CurrentRoom.Exits.ContainsKey(direction))
@@ -56,9 +52,8 @@ public class Player
         }
     }
 
-    static int ClassHealth = 10; // Renamed from "Health" to "ClassHealth" to avoid ambiguity
-    static string PlayerClass = "Unset";
-    static void ClassChoice()
+    // Character class selection method
+    public void ClassChoice()
     {
         Console.WriteLine("Choose a Class, this can determine your healthpoints as well as skills and abilities.");
         Console.WriteLine("1: Knight: Heavy Armor & Heavy Weapons. Health = 20");
@@ -75,23 +70,39 @@ public class Player
                 switch (classChoice)
                 {
                     case 1:
+                        PlayerClass = "Knight";
                         Console.WriteLine("Knight");
-                        ClassHealth = 20; // Updated to use "ClassHealth"
+                        Health = (20, 20f);
+                        Strength = (10, 10f);
+                        Defense = (20, 20f);
+                        Agility = (5, 5f);
                         break;
                     case 2:
+                        PlayerClass = "Rogue";
                         Console.WriteLine("Rogue");
-                        ClassHealth = 12; // Updated to use "ClassHealth"
+                        Health = (12, 12f);
+                        Strength = (8, 8f);
+                        Defense = (10, 10f);
+                        Agility = (20, 20f);
                         break;
                     case 3:
+                        PlayerClass = "Wizard";
                         Console.WriteLine("Wizard");
-                        ClassHealth = 10; // Updated to use "ClassHealth"
+                        Health = (10, 10f);
+                        Strength = (2, 2f);
+                        Defense = (5, 5f);
+                        Agility = (8, 8f);
                         break;
                     case 4:
+                        PlayerClass = "Cleric";
                         Console.WriteLine("Cleric");
-                        ClassHealth = 15; // Updated to use "ClassHealth"
+                        Health = (15, 15f);
+                        Strength = (5, 5);
+                        Defense = (10, 10f);
+                        Agility = (10, 10f);
                         break;
                 }
-                Console.WriteLine($"You chose: {PlayerClass} with {ClassHealth} HP."); // Updated to use "ClassHealth"
+                Console.WriteLine($"You chose {PlayerClass}! \n{Health.original} Health, \n{Strength.original} Strength\n{Defense.original} Defense\n{Agility.original} Agility");
                 break;
             }
             else
@@ -101,40 +112,40 @@ public class Player
         }
     }
 
-    // Attack method
-    public void Attack(int enemyDamage)
-    {
-        Health = (Health.original, Health.current - (enemyDamage - (enemyDamage * ((float)Math.Sqrt(Defense.current) * 0.01f))));
-    }
-
-    // Heal method
-    public void Heal(int health)
-    {
-        Health = (Health.original, Health.current + health);
-    }
-
     // Buff method
     public void Buff(string status, int duration, float effect)
     {
         switch (status)
         {
+            case "heal": // Adds health, use null or 0 for duration
+                Health = (Health.original, Health.current + effect);
+                Console.WriteLine($"You heal for {effect} health!");
+                break;
+
             case "regeneration":
                 Regeneration = (duration, effect);
+                Console.WriteLine($"You regenerate for {effect} health for {duration} round(s)!");
                 break;
 
             case "rage":
+                Strength = (Strength.original, Strength.current - Strength.original * Rage.percentage);
                 Rage = (duration, effect);
-                Strength = (Strength.original, Strength.current + Strength.current * effect);
+                Strength = (Strength.original, Strength.current + Strength.original * effect);
+                Console.WriteLine($"You rage for +{effect * 100}% strength for {duration} round(s)!");
                 break;
 
             case "focus":
+                Agility = (Agility.original, Agility.current - Agility.original * Focus.percentage);
                 Focus = (duration, effect);
-                Agility = (Agility.original, Agility.current + Agility.current * effect);
+                Agility = (Agility.original, Agility.current + Agility.original * effect);
+                Console.WriteLine($"You focus for +{effect * 100}% agility for {duration} round(s)!");
                 break;
 
             case "fortify":
+                Defense = (Defense.original, Defense.current - Defense.original * Focus.percentage);
                 Fortify = (duration, effect);
-                Defense = (Defense.original, Defense.current + Defense.current * effect);
+                Defense = (Defense.original, Defense.current + Defense.original * effect);
+                Console.WriteLine($"You fortify for +{effect * 100}% defense for {duration} round(s)!");
                 break;
         }
     }
@@ -146,116 +157,99 @@ public class Player
         {
             case "stun":
                 Stun = duration;
+                Console.WriteLine($"You are stunned for {duration} round(s)!");
                 break;
 
             case "poison":
                 Poison = (duration, effect);
+                Console.WriteLine($"You are poisoned by {effect} damage for {duration} round(s)!");
                 break;
 
             case "weaken":
+                Strength = (Strength.original, Strength.current + Strength.original * Weaken.percentage);
                 Weaken = (duration, effect);
-                Strength = (Strength.original, Strength.current - Strength.current * effect);
+                Strength = (Strength.original, Strength.current - Strength.original * effect);
+                Console.WriteLine($"You are weakened by {(effect) * 100}% for {duration} round(s)!");
                 break;
 
             case "confusion":
+                Agility = (Agility.original, Agility.current + Agility.original * Confusion.percentage);
                 Confusion = (duration, effect);
-                Agility = (Agility.original, Agility.current - Agility.current * effect);
+                Agility = (Agility.original, Agility.current - Agility.original * effect);
+                Console.WriteLine($"You are confused by {(effect) * 100}% for {duration} round(s)!");
                 break;
 
             case "vulnerability":
+                Defense = (Defense.original, Defense.current + Defense.original * Vulnerability.percentage);
                 Vulnerability = (duration, effect);
-                Defense = (Defense.original, Defense.current - Defense.current * effect);
+                Defense = (Defense.original, Defense.current - Defense.original * effect);
+                Console.WriteLine($"You are weakened by {(effect) * 100}% for {duration} round(s)!");
                 break;
         }
     }
 
     // Update method
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
-        // Poison effect
-        if (Poison.duration > 0)
+        // Add attack damage
+        damage -= Math.Max(0, (damage * ((float)Math.Sqrt(Defense.current) * 0.01f))); // Reduce attack damage by defense
+
+        /* Progress Buffs */
+        if (Regeneration.duration > 0 && Health.current < Health.original) // Regeneration effect
         {
-            Health = (Health.original, Health.current - Poison.damage);
+            Health = (Health.original, Math.Min(Health.original, Health.current + Regeneration.health));
+        }
+        if (Rage.duration <= 0) // Rage reset
+        {
+            Strength = (Strength.original, Strength.current - Strength.original * Rage.percentage);
+            Rage = (0, 0);
+        }
+        if (Focus.duration <= 0) // Focus reset
+        {
+            Agility = (Agility.original, Agility.current - Agility.original * Focus.percentage);
+            Focus = (0, 0);
+        }
+        if (Fortify.duration <= 0) // Fortify reset
+        {
+            Defense = (Defense.original, Defense.current - Defense.original * Focus.percentage);
+            Fortify = (0, 0);
         }
 
-        // Weaken reset
-        if (Weaken.duration == 0)
+        /* Progress Debuffs */
+        if (Poison.duration > 0) // Poison effect
         {
-            Strength = (Strength.original, Strength.original);
+            damage += Poison.damage;
         }
-
-        // Confusion reset
-        if (Confusion.duration == 0)
+        if (Weaken.duration <= 0) // Weaken reset
         {
-            Agility = (Agility.original, Agility.original);
+            Strength = (Strength.original, Strength.current + Strength.original * Weaken.percentage);
+            Weaken = (0, 0);
         }
-
-        // Vulnerability reset
-        if (Vulnerability.duration == 0)
+        if (Confusion.duration <= 0) // Confusion reset
         {
-            Defense = (Defense.original, Defense.original);
+            Agility = (Agility.original, Agility.current + Agility.original * Confusion.percentage);
+            Confusion = (0, 0);
         }
-
-        // Regeneration effect
-        if (Regeneration.duration > 0 && Health.current < Health.original)
+        if (Vulnerability.duration <= 0) // Vulnerability reset
         {
-            Health = (Health.original, Health.current + Regeneration.health);
-        }
-        if (Health.current > Health.original)
-        {
-            Health = (Health.original, Health.original);
-        }
+            Defense = (Defense.original, Defense.current + Defense.original * Vulnerability.percentage);
+            Vulnerability = (0, 0);
+        }   
 
-        // Rage reset
-        if (Rage.duration == 0)
-        {
-            Strength = (Strength.original, Strength.original);
-        }
+        // Apply Damage
+        Health = (Health.original, Health.current - damage);
+        Console.WriteLine($"You took {damage} points of damage! Your Health is now {Health.current}/{Health.original}.");
 
-        // Focus reset
-        if (Focus.duration == 0)
-        {
-            Strength = (Strength.original, Strength.original);
-        }
-
-        // Calculate effective damage
-        int effectiveDamage = Math.Max(0, damage - (int)Defense.current); // Reduce damage by defense
-        Health = (Health.original, Health.current - effectiveDamage); // Subtract damage from current health
-
-        Console.WriteLine($"{Name} takes {effectiveDamage} damage! Health is now {Health.current}.");
-
-        // Fortify reset
-        if (Fortify.duration == 0)
-        {
-            Defense = (Defense.original, Defense.original);
-        }
-
-        // Check if the player is defeated
+        // Check for Death
         if (Health.current <= 0)
         {
-            Console.WriteLine($"{Name} has been defeated!");
-            // Handle player death logic here
+            DeathScene();
         }
     }
 
-    static void PlayerHealthCheck()
+    public void PlayerHealthCheck()
     {
-        Console.WriteLine("Your health is: " + ClassHealth); // Updated to use "ClassHealth"
-    }
-
-    static void DeathCheck(int health) // Updated parameter name to avoid ambiguity
-    {
-        while (true)
-        {
-            if (health == 0)
-            {
-                Player.DeathScene(); // Explicitly reference the static method using the class name
-            }
-            else
-            {
-                break;
-            }
-        }
+        Console.WriteLine($"Your health is: {Health.current}");
     }
 
     static void DeathScene()
