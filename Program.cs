@@ -58,40 +58,10 @@ class Program
             Console.WriteLine("Name cannot be empty. Please enter your name:");
         }
         Player player = new Player(playerName, startRoom); // Pass both playerName and startRoom
-        Console.WriteLine($"Welcome {player.Name}!");
+        Graphics.Type(player.fastMode, $"Welcome {player.Name}!");
         Graphics.Type(player.fastMode, "Welcome to..."); //temporary name
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        System.Console.WriteLine();
-        Thread.Sleep(100);System.Console.WriteLine(@" _   _         _  _          _   __ _");
-        Thread.Sleep(100);System.Console.WriteLine(@"| | | |  ___  | || |  ___   | | / /(_)  _     _");
-        Thread.Sleep(100);System.Console.WriteLine(@"| |_| | / _ \ | || | / _ \  | |/ /  _ _| |_ _| |_  _  _");
-        Thread.Sleep(100);System.Console.WriteLine(@"|  _  |/ /_\ \| || |/ / \ \ |   /  | |_   _|_   _|| |/ /");
-        Thread.Sleep(100);System.Console.WriteLine(@"| | | |\ ,___/| || |\ \_/ / | |\ \ | | | |_  | |_ | / /");
-        Thread.Sleep(100);System.Console.WriteLine(@"|_| |_| \___/ |_||_| \___/  |_| \_\|_| \___| \___||  /");
-        Thread.Sleep(100);System.Console.WriteLine(@"                       _           _              / /");
-        Thread.Sleep(100);System.Console.WriteLine(@"                      / \_______ /|_\             \/");
-        Thread.Sleep(100);System.Console.WriteLine(@"                     /          /_/ \__");
-        Thread.Sleep(100);System.Console.WriteLine(@"                    /             \_/ /");
-        Thread.Sleep(100);System.Console.WriteLine(@"                  _|_              |/|_");
-        Thread.Sleep(100);System.Console.WriteLine(@"                  _|_  O    _    O  _|_");
-        Thread.Sleep(100);System.Console.WriteLine(@"                  _|_      (_)      _|_");
-        Thread.Sleep(100);System.Console.WriteLine(@"                   \                 /");
-        Thread.Sleep(100);System.Console.WriteLine(@"                    _\_____________/_");
-        Thread.Sleep(100);System.Console.WriteLine(@"                   /  \/  (___)  \/  \");
-        Thread.Sleep(100);System.Console.WriteLine(@"                   \__(  o     o  )__/");
-        Thread.Sleep(100);System.Console.WriteLine(@"      ___     _                 _             ");        
-        Thread.Sleep(100);System.Console.WriteLine(@"     |_ _|___| | __ _ _ __   __| |            ");
-        Thread.Sleep(100);System.Console.WriteLine(@"      | |/ __| |/ _` | '_ \ / _` |                ");    
-        Thread.Sleep(100);System.Console.WriteLine(@"      | |\__ \ | (_| | | | | (_| |                   "); 
-        Thread.Sleep(100);System.Console.WriteLine(@"     |___|___/_|\__,_|_| |_|\__,_|_                  ");
-        Thread.Sleep(100);System.Console.WriteLine(@"       / \   __| |_   _____ _ __ | |_ _   _ _ __ ___ ");
-        Thread.Sleep(100);System.Console.WriteLine(@"      / _ \ / _` \ \ / / _ \ '_ \| __| | | | '__/ _ \");
-        Thread.Sleep(100);System.Console.WriteLine(@"     / ___ \ (_| |\ V /  __/ | | | |_| |_| | | |  __/");
-        Thread.Sleep(100);System.Console.WriteLine(@"    /_/   \_\__,_| \_/ \___|_| |_|\__|\__,_|_|  \___|");
-        System.Console.WriteLine();
-        Console.ResetColor();
-        System.Console.WriteLine();
-        Console.WriteLine("Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
+        Graphics.Title();
+        Graphics.Type(player.fastMode, "Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
         Graphics.Menu(player, "start");
 
        // Game Loop!
@@ -101,7 +71,7 @@ class Program
             string input = Console.ReadLine() ?? string.Empty;
             if (input == null)
             {
-                Console.WriteLine("Input stream closed. Exiting...");
+                Graphics.Type(player.fastMode, "Input stream closed. Exiting...");
                 return;
             }
             input = input.ToLower(); //detects player input
@@ -127,12 +97,12 @@ class Program
                     }
                     else
                     {
-                        Console.WriteLine("You already have this item!");
+                        Graphics.Type(player.fastMode, "You already have this item!");
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"There is no {command[1]} here to grab.");
+                    Graphics.Type(player.fastMode, $"There is no {command[1]} here to grab.");
                 }
             }
             
@@ -154,7 +124,7 @@ class Program
             {
                 if (!player.Inventory.Contains(command[1]) /*&& !Room.Objects.Contains(command[1])*/)  // if the target doesn't exist in the inventory and the room, then it will return a invalid message || currently has the room objects checker OFF
                 {
-                    System.Console.WriteLine("You can't use this. It doesn't exist.");
+                    Graphics.Type(player.fastMode, "You can't use this. It doesn't exist.");
                 }
                 else if (player.Inventory.Contains(command[1])) //if player has the item, they are able to use it
                 {
@@ -167,7 +137,7 @@ class Program
                 }*/
                 else
                 {
-                    System.Console.WriteLine("Invalid use command."); //placeholder text
+                    Graphics.Type(player.fastMode, "Invalid use command."); //placeholder text
                 }
             }
 
@@ -180,38 +150,34 @@ class Program
             {
                 if (player.CurrentRoom.Name == "Entrance Hall")
                 {
-                    Console.WriteLine("You see a wrinkly lych sitting by the fire. He smiles mischeviously at you and says:");
-                    Console.WriteLine("'Welcome, adventurer. You sure you want to be here?'");
-                    Console.WriteLine("'Take this key, if you dare to enter.'");
+                    Graphics.Type(player.fastMode, "You see a wrinkly lych sitting by the fire. He smiles mischeviously at you and says:");
+                    Graphics.Type(player.fastMode, "'Welcome, adventurer. You sure you want to be here?'");
+                    Graphics.Type(player.fastMode, "'Take this key, if you dare to enter.'");
                     if (!player.Inventory.Contains("key")) //if the player doesn't have the item, they are able to grab the item
                     {
                         player.Inventory.AddItem("key");
-                        Console.WriteLine("You received a key!");
+                        Graphics.Type(player.fastMode, "You received a key!");
                     }
                     else
                     {
-                        Console.WriteLine("You already have a key.");
+                        Graphics.Type(player.fastMode, "You already have a key.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("There is no one here to talk to.");
+                    Graphics.Type(player.fastMode, "There is no one here to talk to.");
                 }
             }
 
             else if (input == "quit") //if the input is 'quit', then the game will break the continuous loop
             {
-                Console.WriteLine("Until we meet again...!");
+                Graphics.Type(player.fastMode, "Until we meet again...!");
                 break;
-            }
-            else if (input == "menu")
-            {
-                //method for menu goes here
             }
 
             else
             {
-                Console.WriteLine("Invalid command.");
+                Graphics.Type(player.fastMode, "Invalid command.");
             }
         }
     }

@@ -17,7 +17,7 @@ namespace DungeonGame
         }
 
         // Enemy attacks the player
-        public void Attack(Player player)
+        public virtual void Attack(Player player)
         {
             Console.WriteLine($"{Name} attacks {player.Name}!");
             player.TakeDamage(10); // Example damage value
@@ -31,13 +31,20 @@ namespace DungeonGame
         }
 
         // Enemy chooses what action to take during its turn
-        public virtual void TakeTurn(Player player)
+        public virtual void EnemyTurn(Player player)
         {
             Console.WriteLine($"{Name} is taking its turn.");
             // Default enemy behavior
         }
-    }
 
+        public void TakeDamage(float damage, bool fastMode)
+        {
+            // Apply Damage
+            Health = (Health.original, Health.current - damage);
+            Graphics.Type(fastMode, $"{Name} took {damage} points of damage!");
+        }
+
+    }
     // Specific enemy: Acid Worm subclass that inherits from Enemy
     public class AcidWorm : Enemy
     {
@@ -45,9 +52,9 @@ namespace DungeonGame
         public AcidWorm(string name, int health) : base("Acid Worm", 50, 50) { }
 
         // Overrides the TakeTurn behavior to include unique text
-        public override void TakeTurn(Player player)
+        public override void Attack(Player player)
         {
-            Console.WriteLine($"{Name} spits acid at {player.Name}!");
+            Graphics.Type(player.fastMode, $"{Name} spits acid at {player.Name}!", "red");
             player.TakeDamage(15); // Example acid damage
         }
     }

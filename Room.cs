@@ -142,10 +142,10 @@ namespace DungeonGame
                     break;
                 }
                 
-                Graphics.Type(player.fastMode, $"What do you do?");
-                Graphics.Type(player.fastMode, $"1. Attack");
-                Graphics.Type(player.fastMode, $"2. Defend");
-                Graphics.Type(player.fastMode, $"3. Grab");
+                Graphics.Type(player.fastMode, $"\nWhat do you do?", "green");
+                Graphics.Type(player.fastMode, $"1. Attack", "green");
+                Graphics.Type(player.fastMode, $"2. Defend", "green");
+                Graphics.Type(player.fastMode, $"3. Grab\n", "green");
 
                 while (true) // run determine what the player does
                 {
@@ -178,8 +178,56 @@ namespace DungeonGame
                         Graphics.Type(player.fastMode, "Invalid action");
                     }
                 }
-                
 
+                    Random rng = new Random(); //random number generator
+
+                    string[] actions = { "attack", "defend", "grab" }; //enemy action options
+
+                    // Pick a random index between 0 and 2
+                    int index = rng.Next(actions.Length); 
+
+                    enemyAction = actions[index];
+
+                    Graphics.Type(player.fastMode, $"Enemy chose to {enemyAction}!");
+                
+                if (playerAction == enemyAction)
+                {
+                    Graphics.Type(player.fastMode, $"\nBoth sides chose to do the same thing! Everything cancels out!");
+                }
+                else if (playerAction == "attack" && enemyAction == "defend")
+                {
+                    Graphics.Type(player.fastMode, $"\nYou lunge at {enemy.Name}, but {enemy.Name} defends itself. You leave yourself open to an opportunity attack!\n");
+                    enemy.Attack(player);
+                }
+                else if (playerAction == "attack" && enemyAction == "grab")
+                {
+                    Graphics.Type(player.fastMode, $"\nYou lunge at {enemy.Name}, and {enemy.Name} tried to grab you! You take this opportunity to attack!\n");
+                    player.Attack(enemy);
+                } 
+                else if (playerAction == "defend" && enemyAction == "attack")
+                {
+                    Graphics.Type(player.fastMode, $"\n{enemy.Name} lunges at you, but you defended yourself! You take this opportunity to attack!\n");
+                    player.Attack(enemy);
+                }    
+                else if (playerAction == "defend" && enemyAction == "grab")
+                {
+                    Graphics.Type(player.fastMode, $"\nYou go to defend yourself, but {enemy.Name} grabs you! Breaking you out of your defense, it gets a chance to attack.\n");
+                    enemy.Attack(player);
+                }   
+                else if (playerAction == "grab" && enemyAction == "attack")
+                {
+                    Graphics.Type(player.fastMode, $"\nYou go to grab your opponent, but {enemy.Name} attacks you! As you lunge towards it, it has a moment of oppportunity.\n");
+                    enemy.Attack(player);
+                }       
+                else if (playerAction == "grab" && enemyAction == "defend")
+                {
+                    Graphics.Type(player.fastMode, $"\n{enemy.Name} tried to defend itself, and you take this opportunity to grab it! It gives you a moment of oppportunity.\n");
+                    player.Attack(enemy);
+                }
+                else
+                {
+                    Graphics.Type(player.fastMode, "\nSomething wrong happened. You should never get this message!\n");
+                }                                                         
             }
         }
     }

@@ -239,4 +239,38 @@ static class Graphics
         string bar = filledBar + emptyBar;
         Console.WriteLine($"{name}: [{bar}] {currentHP}/{maxHP} HP");
     }
+    public static void Title()
+    {
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        System.Console.WriteLine();
+        Thread.Sleep(100);System.Console.WriteLine(@" _   _         _  _          _   __ _");
+        Thread.Sleep(100);System.Console.WriteLine(@"| | | |  ___  | || |  ___   | | / /(_)  _     _");
+        Thread.Sleep(100);System.Console.WriteLine(@"| |_| | / _ \ | || | / _ \  | |/ /  _ _| |_ _| |_  _  _");
+        Thread.Sleep(100);System.Console.WriteLine(@"|  _  |/ /_\ \| || |/ / \ \ |   /  | |_   _|_   _|| |/ /");
+        Thread.Sleep(100);System.Console.WriteLine(@"| | | |\ ,___/| || |\ \_/ / | |\ \ | | | |_  | |_ | / /");
+        Thread.Sleep(100);System.Console.WriteLine(@"|_| |_| \___/ |_||_| \___/  |_| \_\|_| \___| \___||  /");
+        Thread.Sleep(100);System.Console.WriteLine(@"                       _           _              / /");
+        Thread.Sleep(100);System.Console.WriteLine(@"                      / \_______ /|_\             \/");
+        Thread.Sleep(100);System.Console.WriteLine(@"                     /          /_/ \__");
+        Thread.Sleep(100);System.Console.WriteLine(@"                    /             \_/ /");
+        Thread.Sleep(100);System.Console.WriteLine(@"                  _|_              |/|_");
+        Thread.Sleep(100);System.Console.WriteLine(@"                  _|_  O    _    O  _|_");
+        Thread.Sleep(100);System.Console.WriteLine(@"                  _|_      (_)      _|_");
+        Thread.Sleep(100);System.Console.WriteLine(@"                   \                 /");
+        Thread.Sleep(100);System.Console.WriteLine(@"                    _\_____________/_");
+        Thread.Sleep(100);System.Console.WriteLine(@"                   /  \/  (___)  \/  \");
+        Thread.Sleep(100);System.Console.WriteLine(@"                   \__(  o     o  )__/");
+        Thread.Sleep(100);System.Console.WriteLine(@"      ___     _                 _             ");        
+        Thread.Sleep(100);System.Console.WriteLine(@"     |_ _|___| | __ _ _ __   __| |            ");
+        Thread.Sleep(100);System.Console.WriteLine(@"      | |/ __| |/ _` | '_ \ / _` |                ");    
+        Thread.Sleep(100);System.Console.WriteLine(@"      | |\__ \ | (_| | | | | (_| |                   "); 
+        Thread.Sleep(100);System.Console.WriteLine(@"     |___|___/_|\__,_|_| |_|\__,_|_                  ");
+        Thread.Sleep(100);System.Console.WriteLine(@"       / \   __| |_   _____ _ __ | |_ _   _ _ __ ___ ");
+        Thread.Sleep(100);System.Console.WriteLine(@"      / _ \ / _` \ \ / / _ \ '_ \| __| | | | '__/ _ \");
+        Thread.Sleep(100);System.Console.WriteLine(@"     / ___ \ (_| |\ V /  __/ | | | |_| |_| | | |  __/");
+        Thread.Sleep(100);System.Console.WriteLine(@"    /_/   \_\__,_| \_/ \___|_| |_|\__|\__,_|_|  \___|");
+        System.Console.WriteLine();
+        Console.ResetColor();
+        System.Console.WriteLine();
+    }
 }
