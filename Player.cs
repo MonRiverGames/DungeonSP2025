@@ -128,20 +128,23 @@ public class Player
                 break;
 
             case "rage":
+                Strength = (Strength.original, Strength.current - Strength.original * Rage.percentage);
                 Rage = (duration, effect);
-                Strength = (Strength.original, Strength.current + Strength.current * effect);
+                Strength = (Strength.original, Strength.current + Strength.original * effect);
                 Console.WriteLine($"You rage for +{effect * 100}% strength for {duration} round(s)!");
                 break;
 
             case "focus":
+                Agility = (Agility.original, Agility.current - Agility.original * Focus.percentage);
                 Focus = (duration, effect);
-                Agility = (Agility.original, Agility.current + Agility.current * effect);
+                Agility = (Agility.original, Agility.current + Agility.original * effect);
                 Console.WriteLine($"You focus for +{effect * 100}% agility for {duration} round(s)!");
                 break;
 
             case "fortify":
+                Defense = (Defense.original, Defense.current - Defense.original * Focus.percentage);
                 Fortify = (duration, effect);
-                Defense = (Defense.original, Defense.current + Defense.current * effect);
+                Defense = (Defense.original, Defense.current + Defense.original * effect);
                 Console.WriteLine($"You fortify for +{effect * 100}% defense for {duration} round(s)!");
                 break;
         }
@@ -163,20 +166,23 @@ public class Player
                 break;
 
             case "weaken":
+                Strength = (Strength.original, Strength.current + Strength.original * Weaken.percentage);
                 Weaken = (duration, effect);
-                Strength = (Strength.original, Strength.current - Strength.current * effect);
+                Strength = (Strength.original, Strength.current - Strength.original * effect);
                 Console.WriteLine($"You are weakened by {(effect) * 100}% for {duration} round(s)!");
                 break;
 
             case "confusion":
+                Agility = (Agility.original, Agility.current + Agility.original * Confusion.percentage);
                 Confusion = (duration, effect);
-                Agility = (Agility.original, Agility.current - Agility.current * effect);
+                Agility = (Agility.original, Agility.current - Agility.original * effect);
                 Console.WriteLine($"You are confused by {(effect) * 100}% for {duration} round(s)!");
                 break;
 
             case "vulnerability":
+                Defense = (Defense.original, Defense.current + Defense.original * Vulnerability.percentage);
                 Vulnerability = (duration, effect);
-                Defense = (Defense.original, Defense.current - Defense.current * effect);
+                Defense = (Defense.original, Defense.current - Defense.original * effect);
                 Console.WriteLine($"You are weakened by {(effect) * 100}% for {duration} round(s)!");
                 break;
         }
@@ -193,17 +199,20 @@ public class Player
         {
             Health = (Health.original, Math.Min(Health.original, Health.current + Regeneration.health));
         }
-        if (Rage.duration == 0) // Rage reset
+        if (Rage.duration <= 0) // Rage reset
         {
-            Strength = (Strength.original, Strength.current - Strength.current * Rage.percentage);
+            Strength = (Strength.original, Strength.current - Strength.original * Rage.percentage);
+            Rage = (0, 0);
         }
-        if (Focus.duration == 0) // Focus reset
+        if (Focus.duration <= 0) // Focus reset
         {
-            Agility = (Agility.original, Agility.current + Agility.current * Focus.percentage);
+            Agility = (Agility.original, Agility.current - Agility.original * Focus.percentage);
+            Focus = (0, 0);
         }
-        if (Fortify.duration == 0) // Fortify reset
+        if (Fortify.duration <= 0) // Fortify reset
         {
-            Defense = (Defense.original, Defense.original);
+            Defense = (Defense.original, Defense.current - Defense.original * Focus.percentage);
+            Fortify = (0, 0);
         }
 
         /* Progress Debuffs */
@@ -211,18 +220,21 @@ public class Player
         {
             damage += Poison.damage;
         }
-        if (Weaken.duration == 0) // Weaken reset
+        if (Weaken.duration <= 0) // Weaken reset
         {
-            Strength = (Strength.original, Strength.current + Strength.current * Weaken.percentage);
+            Strength = (Strength.original, Strength.current + Strength.original * Weaken.percentage);
+            Weaken = (0, 0);
         }
-        if (Confusion.duration == 0) // Confusion reset
+        if (Confusion.duration <= 0) // Confusion reset
         {
-            Agility = (Agility.original, Agility.current + Agility.current * Confusion.percentage);
+            Agility = (Agility.original, Agility.current + Agility.original * Confusion.percentage);
+            Confusion = (0, 0);
         }
-        if (Vulnerability.duration == 0) // Vulnerability reset
+        if (Vulnerability.duration <= 0) // Vulnerability reset
         {
-            Defense = (Defense.original, Defense.current + Defense.current * Vulnerability.percentage);
-        }
+            Defense = (Defense.original, Defense.current + Defense.original * Vulnerability.percentage);
+            Vulnerability = (0, 0);
+        }   
 
         // Apply Damage
         Health = (Health.original, Health.current - damage);
