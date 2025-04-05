@@ -27,8 +27,7 @@ namespace DungeonGame
         public void PoisonAttack(Player player)
         {
             Console.WriteLine($"{Name} uses Poison Attack on {player.Name}!");
-            player.IsPoisoned = true;
-            player.PoisonTurnsRemaining = Math.Max(player.PoisonTurnsRemaining, 3); // Ensure poison duration is extended.
+            player.Debuff("poison", 3, 1f);
         }
 
         // Enemy chooses what action to take during its turn
