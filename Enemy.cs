@@ -7,13 +7,13 @@ namespace DungeonGame
     {
         // Properties: Every enemy has a name and health
         public string Name { get; private set; }
-        public int Health { get; private set; }
+        public (int original, float current) Health { get; set; }
 
         // Constructor: Called when creating a new enemy object
-        public Enemy(string name, int health)
+        public Enemy(string name, int maxHealth, int currentHP)
         {
             Name = name;
-            Health = health;
+            Health = (maxHealth, currentHP);
         }
 
         // Enemy attacks the player
@@ -43,7 +43,7 @@ namespace DungeonGame
     public class AcidWorm : Enemy
     {
         // Constructor uses base class values
-        public AcidWorm(string name, int health) : base(name, health) { }
+        public AcidWorm(string name, int health) : base("Acid Worm", 50, 50) { }
 
         // Overrides the TakeTurn behavior to include unique text
         public override void TakeTurn(Player player)

@@ -59,7 +59,7 @@ class Program
         }
         Player player = new Player(playerName, startRoom); // Pass both playerName and startRoom
         Console.WriteLine($"Welcome {player.Name}!");
-        Graphics.TypeEffectColor(player.fastMode, "Welcome to..."); //temporary name
+        Graphics.Type(player.fastMode, "Welcome to..."); //temporary name
         Console.ForegroundColor = ConsoleColor.Magenta;
         System.Console.WriteLine();
         Thread.Sleep(100);System.Console.WriteLine(@" _   _         _  _          _   __ _");
@@ -135,9 +135,12 @@ class Program
                     Console.WriteLine($"There is no {command[1]} here to grab.");
                 }
             }
+            
             else if (command.Length > 1 && fightCommand.Contains(command[0]))
             {
-                //player.Fight(command[1]);  this can be used for a fighting method, delete slashes and modify when needed 
+                Graphics.Type(player.fastMode, "This is a test battle."); //this is a temporary example of the battle function
+                Enemy AcidWorm = new AcidWorm(default, default); // create acid worm
+                Room.Battle(AcidWorm, player);  //method to initiate battle
             }
             else if (command.Length > 1 && talkCommand.Contains(command[0]))
             {
