@@ -25,6 +25,7 @@ class Program
     // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch (don't push at the same time!) Then, other person pulls to stay up to date.
     static void Main()
     {
+
         // Initialize Rooms
         Room startRoom = new Room("Entrance Hall", "A grand entrance with torches lining the walls.");
         Room darkRoom = new Room("Dark Chamber", "A pitch-black room with an eerie silence.");
