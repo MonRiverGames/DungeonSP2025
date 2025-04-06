@@ -7,6 +7,7 @@ This template provides the foundational structure for a text-based dungeon crawl
 using DungeonGame;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 // Main Program
 class Program
 {
@@ -35,6 +36,7 @@ class Program
         darkRoom.Exits["south"] = startRoom;
         darkRoom.Exits["east"] = mirrorRoom;
         mirrorRoom.Exits["west"] = darkRoom;
+       
 
         // Add Items to Rooms
         startRoom.Items.Add("torch");
@@ -85,6 +87,25 @@ class Program
             else if (input == "menu") // if the first word (command[0]) is any of the movement words, then the following body of code will excute
             {
                 Graphics.Menu(player); //method that accepts the inputted value and then excutes for whatever happens
+            }
+
+            else if (input == "generate dungeon") // generate dungeon testing
+            {
+                while (true)
+                {
+                    Console.Clear(); // Clear the console before rendering a new dungeon
+
+                    // Create and generate a new dungeon
+                    BSPDungeon dungeon = new BSPDungeon(); // executes space for dungeon
+                    dungeon.GenerateDungeon(100, 50); // generates the random dungeon
+                    dungeon.RenderAsciiDungeon(100, 50); // uses ASCII to represent the dungeon
+
+                    Console.WriteLine("\nPress [Enter] to regenerate the dungeon, or type 'exit' to quit."); // loops the generation until the player types exit
+                    input = Console.ReadLine();
+
+                    if (input?.ToLower() == "exit")
+                        break;
+                }            
             }
             else if (command.Length > 1 && grabCommand.Contains(command[0]))
             {
@@ -177,9 +198,159 @@ class Program
 
             else
             {
-                Graphics.Type(player.fastMode, "Invalid command.");
+                Graphics.Type(player.fastMode, "Invalid command.\n");
             }
         }
     }
+}
+
+// Class that generates a dungeon using Binary Space Partitioning (BSP)
+public class BSPDungeon
+{
+    private const int MIN_ROOM_WIDTH = 6;// restricts room width
+    private const int MIN_ROOM_HEIGHT = 6; // restricts room height
+
+    // Inner class representing a node in the BSP tree
+    private class Node
+    {
+        public Rectangle Area;      // The rectangular space this node represents
+        public Node Left, Right;    // The two sub-regions this node can split into
+
+        // Constructor that sets the area of the node
+        public Node(Rectangle area)
+        {
+            Area = area;
+        }
+    }
+
+    // List to store the final rooms generated
+    private List<Rectangle> rooms = new List<Rectangle>();
+
+    // Random number generator for splits
+    private Random random = new Random();
+
+    // Public method to generate the dungeon of given width and height
+    public void GenerateDungeon(int width, int height)
+    {
+        // Create the root node, representing the entire dungeon space
+        Node root = new Node(new Rectangle(0, 0, width, height));
+
+        // Begin recursively splitting the space
+        Split(root);
+
+        // After splitting, create rooms in the leaf nodes
+        CreateRooms(root);
+    }
+
+    // Recursive method to split a node into two sub-regions
+        private void Split(Node node)
+        {
+            // If the area is too small, stop splitting
+            if (node.Area.Width < MIN_ROOM_WIDTH * 2 || node.Area.Height < MIN_ROOM_HEIGHT * 2)
+                return;
+
+            bool splitVertically = random.Next(2) == 0;
+
+            // Prevent bad splits by checking dimensions first
+            if (splitVertically)
+            {
+                int maxSplit = node.Area.Width - MIN_ROOM_WIDTH;
+                if (maxSplit <= MIN_ROOM_WIDTH)
+                    return;
+
+                int splitX = random.Next(MIN_ROOM_WIDTH, maxSplit);
+                node.Left = new Node(new Rectangle(node.Area.X, node.Area.Y, splitX, node.Area.Height));
+                node.Right = new Node(new Rectangle(node.Area.X + splitX, node.Area.Y, node.Area.Width - splitX, node.Area.Height));
+            }
+            else
+            {
+                int maxSplit = node.Area.Height - MIN_ROOM_HEIGHT;
+                if (maxSplit <= MIN_ROOM_HEIGHT)
+                    return;
+
+                int splitY = random.Next(MIN_ROOM_HEIGHT, maxSplit);
+                node.Left = new Node(new Rectangle(node.Area.X, node.Area.Y, node.Area.Width, splitY));
+                node.Right = new Node(new Rectangle(node.Area.X, node.Area.Y + splitY, node.Area.Width, node.Area.Height - splitY));
+            }
+
+            // 80% chance to continue splitting recursively
+            if (random.Next(100) < 80)
+            {
+                Split(node.Left);
+                Split(node.Right);
+            }
+        }
+
+    // Recursively creates rooms in the tree's leaf nodes
+    private void CreateRooms(Node node)
+    {
+        // If node has no children, it's a leaf — we treat this area as a room
+        if (node.Left == null && node.Right == null)
+        {
+            rooms.Add(node.Area); // Add the room area to the rooms list
+        }
+        else
+        {
+            // If it has children, continue recursively down both sides
+            CreateRooms(node.Left);
+            CreateRooms(node.Right);
+        }
+    }
+    public void RenderAsciiDungeon(int width, int height)
+    {
+        char[,] map = new char[width, height];
+
+        // Fill the map with empty space
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                map[x, y] = ' ';
+            }
+        }
+
+        // Draw each room with '#'
+        foreach (var room in rooms)
+        {
+            for (int x = room.X + 1; x < room.X + room.Width - 1; x++)
+            {
+                for (int y = room.Y + 1; y < room.Y + room.Height - 1; y++)
+                {
+                    if (x >= 0 && x < width && y >= 0 && y < height)
+                    {
+                        map[x, y] = '#';
+                    }
+                }
+            }
+
+            // Optional: draw borders
+            for (int x = room.X; x < room.X + room.Width; x++)
+            {
+                if (x >= 0 && x < width && room.Y >= 0 && room.Y < height)
+                    map[x, room.Y] = '-';
+                if (x >= 0 && x < width && room.Y + room.Height - 1 >= 0 && room.Y + room.Height - 1 < height)
+                    map[x, room.Y + room.Height - 1] = '-';
+            }
+
+            for (int y = room.Y; y < room.Y + room.Height; y++)
+            {
+                if (room.X >= 0 && room.X < width && y >= 0 && y < height)
+                    map[room.X, y] = '|';
+                if (room.X + room.Width - 1 >= 0 && room.X + room.Width - 1 < width && y >= 0 && y < height)
+                    map[room.X + room.Width - 1, y] = '|';
+            }
+        }
+
+        // Print the map to the console
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                Console.Write(map[x, y]);
+            }
+            Console.WriteLine();
+        }
+    }
+
 }
 
