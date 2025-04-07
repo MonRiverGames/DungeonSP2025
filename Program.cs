@@ -27,15 +27,10 @@ class Program
     {
         // Initialize Rooms
         Room startRoom = new Room("Foyer", "A grand black and red dimly lit hall, room is lit by some torches. ");
-        Room livingRoom = new Room("Living Room", "A room lit only by table lamps. " +
-            "The first thing you see upon entrance is a jet black Victorian table. ");
-        Room libraryRoom = new Room("Library", "A library filled with books of all kind. " +
-            "In your peripheral vision you can see a potion station.");
-        Room bedRoom = new Room("Master bedroom" "A huge room fit for a king. " +
-            "You notice all the stuffed animals on the pink frilly bed.");
-        Room kitchenRoom = new Room("Kitchen", "A black and white tiled kitchen. " +
-            "You see a singular apple on the marble island."); //If someone wants to do something fun or interactive with this apple they can
-        
+        Room livingRoom = new Room("Living Room", "A room lit only by table lamps.\nThe first thing you see upon entrance is a jet black Victorian table. ");
+        Room libraryRoom = new Room("Library", "A library filled with books of all kind.\nIn your peripheral vision you can see a potion station.");
+        Room bedRoom = new Room("Master bedroom", "A huge room fit for a king.\nYou notice all the stuffed animals on the pink frilly bed.");
+        Room kitchenRoom = new Room("Kitchen", "A black and white tiled kitchen.\nYou see a singular apple on the marble island."); //If someone wants to do something fun or interactive with this apple they can
 
         // Connect Rooms
         startRoom.Exits["north"] = livingRoom;
@@ -44,20 +39,16 @@ class Program
         livingRoom.Exits["east"] = libraryRoom;
         livingRoom.Exits["north"] = kitchenRoom;
         livingRoom.Exits["west"] = bedRoom;
-
         libraryRoom.Exits["west"] = livingRoom;
-
-        kitchenRoom.Exits["south"] = livingRoom
-
-        bedRoom.Exits["east"] = livingRoom
-
+        kitchenRoom.Exits["south"] = livingRoom;
+        bedRoom.Exits["east"] = livingRoom;
 
         // Add Items to Rooms
         startRoom.Items.Add("torch");
         livingRoom.Items.Add("key"); 
         libraryRoom.Items.Add("potion");
         bedRoom.Items.Add("note");
-        kitchenRoom.Items.Add("apple")
+        kitchenRoom.Items.Add("apple");
 
 
         Console.WriteLine("What is your name adventurer?");
@@ -196,10 +187,8 @@ class Program
             {
                 if (player.CurrentRoom.Name == "Foyer")
                 {
-                    Console.WriteLine("You see a wrinkly lych sitting by the fire. He seems to be petting one of those white rat dogs. " +
-                        "He smiles at you as his dog gives you THAT stare and asks:");
-                    Console.WriteLine("'Welcome, adventurer. Would you like to pet my sickly pup? His name is Coconut. " +
-                        "Oh! Also, why are you here?'");
+                    Console.WriteLine("You see a wrinkly lych sitting by the fire. He seems to be petting one of those white rat dogs.\nHe smiles at you as his dog gives you THAT stare and asks:");
+                    Console.WriteLine("'Welcome, adventurer. Would you like to pet my sickly pup? His name is Coconut.\nOh! Also, why are you here?'");
                     Console.WriteLine("'Take this key, I believe it's supposed to help you.'");
                     if (!player.Inventory.Contains("key")) //if the player doesn't have the item, they are able to grab the item
                     {
@@ -231,8 +220,6 @@ class Program
             {
                 Console.WriteLine("Invalid command.");
             }
-
-            
         }
     }
 }
