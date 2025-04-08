@@ -59,10 +59,18 @@ class Program
             Console.WriteLine("Name cannot be empty. Please enter your name:");
         }
         Player player = new Player(playerName, startRoom); // Pass both playerName and startRoom
+
         Graphics.Type(player.fastMode, $"Welcome {player.Name}!");
         Graphics.Type(player.fastMode, "Welcome to..."); //temporary name
-        Graphics.Title();
-        Graphics.Type(player.fastMode, "Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
+        Graphics graphics = new Graphics();
+        graphics.Title();
+
+        // Sample use of drawing a map using the Tileset.cs system
+        Console.WriteLine("Here is an example map:");
+        Tileset tileset = new Tileset();
+        tileset.RenderDungeon(tileset.sampleMap);
+
+        //Graphics.Type(player.fastMode, "Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
         Graphics.Menu(player, "start");
 
        // Game Loop!
