@@ -25,6 +25,7 @@ class Program
     // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch (don't push at the same time!) Then, other person pulls to stay up to date.
     static void Main()
     {
+
         // Initialize Rooms
         Room startRoom = new Room("Entrance Hall", "A grand entrance with torches lining the walls.");
         Room darkRoom = new Room("Dark Chamber", "A pitch-black room with an eerie silence.");
@@ -58,10 +59,18 @@ class Program
             Console.WriteLine("Name cannot be empty. Please enter your name:");
         }
         Player player = new Player(playerName, startRoom); // Pass both playerName and startRoom
+
         Graphics.Type(player.fastMode, $"Welcome {player.Name}!");
         Graphics.Type(player.fastMode, "Welcome to..."); //temporary name
-        Graphics.Title();
-        Graphics.Type(player.fastMode, "Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
+        Graphics graphics = new Graphics();
+        graphics.Title();
+
+        // Sample use of drawing a map using the Tileset.cs system
+        Console.WriteLine("Here is an example map:");
+        Tileset tileset = new Tileset();
+        tileset.RenderDungeon(tileset.sampleMap);
+
+        //Graphics.Type(player.fastMode, "Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
         Graphics.Menu(player, "start");
 
        // Game Loop!
