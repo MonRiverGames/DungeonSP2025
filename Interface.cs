@@ -242,7 +242,7 @@ namespace DungeonGame
             string bar = filledBar + emptyBar;
             Console.WriteLine($"{name}: [{bar}] {currentHP}/{maxHP} HP");
         }
-        public void Title()
+        public static void Title()
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
             System.Console.WriteLine();

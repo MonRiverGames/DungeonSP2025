@@ -25,22 +25,8 @@ class Program
     // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch (don't push at the same time!) Then, other person pulls to stay up to date.
     static void Main()
     {
-
         // Initialize Rooms
-        Room startRoom = new Room("Entrance Hall", "A grand entrance with torches lining the walls.");
-        Room darkRoom = new Room("Dark Chamber", "A pitch-black room with an eerie silence.");
-        Room mirrorRoom = new Room("Mirror Room", "A room filled with mirrors in every direction.");
-
-        // Connect Rooms
-        startRoom.Exits["north"] = darkRoom;
-        darkRoom.Exits["south"] = startRoom;
-        darkRoom.Exits["east"] = mirrorRoom;
-        mirrorRoom.Exits["west"] = darkRoom;
-
-        // Add Items to Rooms
-        startRoom.Items.Add("torch");
-        darkRoom.Items.Add("key"); 
-        mirrorRoom.Items.Add("mirror shard");
+        Room startRoom = Room.InitializeRooms(); // Use the static method to set up rooms
 
         Console.WriteLine("What is your name adventurer?");
         string playerName;
@@ -59,16 +45,24 @@ class Program
             Console.WriteLine("Name cannot be empty. Please enter your name:");
         }
         Player player = new Player(playerName, startRoom); // Pass both playerName and startRoom
-
-        Graphics.Type(player.fastMode, $"Welcome {player.Name}!");
-        Graphics.Type(player.fastMode, "Welcome to..."); //temporary name
-        Graphics graphics = new Graphics();
-        graphics.Title();
-
+        // PROLOGUE ⬇️
+        Graphics.Type(player.fastMode, "It's a gloomy night, but amid the treacherous downpour, " + $"{player.Name} pushes on.");
+        Graphics.Type(player.fastMode, "You trudge through the soggy terrain, your shoes repeatedly submerged in the deep mud.");
+        Graphics.Type(player.fastMode, "I have to find my cat,' you whisper to yourself."); // Cat can be changed to dad, but I feel like the story has changed based on the name lol
+        Graphics.Type(player.fastMode, "As you shiver in soaked clothes, you become desperate for shelter.");
+        Graphics.Type(player.fastMode, "You've walked so far that you seem to be off the grid, though... No trace of your cat's paw prints anymore either...");
+        Graphics.Type(player.fastMode, "You continue to walk, and eventually light becomes visible in the distance.");
         // Sample use of drawing a map using the Tileset.cs system
-        Console.WriteLine("Here is an example map:");
         Tileset tileset = new Tileset();
         tileset.RenderDungeon(tileset.sampleMap);
+        Graphics.Type(player.fastMode, "You finally reach a mansion consumed in ivy and surrounded by overgrown weeds.");
+        Graphics.Type(player.fastMode, $"{player.Name} tugs on the front door, and it creaks open.");
+        Graphics.Type(player.fastMode, "The door is cracked, and on it, there's a sign.");
+        Graphics.Type(player.fastMode, "Welcome to..."); //temporary name
+        Graphics.Title();
+        Graphics.Type(player.fastMode, "As you step in, the door creaks shut behind you -- and latches. It's locked.");
+        Graphics.Type(player.fastMode, "You have no other choice but to look around, but as you do, you realize just how big this dungeon is.");
+
 
         //Graphics.Type(player.fastMode, "Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
         Graphics.Menu(player, "start");
@@ -119,15 +113,15 @@ class Program
             {
                 Graphics.Type(player.fastMode, "This is a test battle."); //this is a temporary example of the battle function
                 Enemy AcidWorm = new AcidWorm(default, default); // create acid worm
-                Room.Battle(AcidWorm, player);  //method to initiate battle
+                Enemy.Battle(AcidWorm, player);  //method to initiate battle
             }
             else if (command.Length > 1 && talkCommand.Contains(command[0]))
             {
                 //player.Talk(command[1]);  this is for dialogue options (delete slashes & modify)
             }
-            else if (command.Length > 1 && examineCommand.Contains(command[0]))
+            else if (examineCommand.Contains(command[0]))
             {
-                //player.Examine(command[1]);  this is for examining areas/objects (delete slashes & modify)
+                player.CurrentRoom.DisplayRoomInfo(); // Call the method to display room details
             }
             else if (command.Length > 1 && useCommand.Contains(command[0]))
             {
@@ -157,11 +151,11 @@ class Program
 
             else if (input == "talk") // Story-driven interaction test case of loop
             {
-                if (player.CurrentRoom.Name == "Entrance Hall")
+                if (player.CurrentRoom.Name == "Foyer")
                 {
-                    Graphics.Type(player.fastMode, "You see a wrinkly lych sitting by the fire. He smiles mischeviously at you and says:");
-                    Graphics.Type(player.fastMode, "'Welcome, adventurer. You sure you want to be here?'");
-                    Graphics.Type(player.fastMode, "'Take this key, if you dare to enter.'");
+                    Console.WriteLine("You see a wrinkly lych sitting by the fire. He seems to be petting one of those white rat dogs.\nHe smiles at you as his dog gives you THAT stare and asks:");
+                    Console.WriteLine("'Welcome, adventurer. Would you like to pet my sickly pup? His name is Coconut.\nOh! Also, why are you here?'");
+                    Console.WriteLine("'Take this key, I believe it's supposed to help you.'");
                     if (!player.Inventory.Contains("key")) //if the player doesn't have the item, they are able to grab the item
                     {
                         player.Inventory.AddItem("key");
