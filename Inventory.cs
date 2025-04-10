@@ -1,59 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DungeonGame
+﻿public class Inventory
 {
-    public class Inventory
+    public List<Item> Items { get; private set; }
+
+    public Inventory()
     {
-        public List<string> Items { get; private set; }
+        Items = new List<Item>();
+    }
 
-        public Inventory()
+    public void AddItem(Item item)
+    {
+        if (!Items.Contains(item))
         {
-            Items = new List<string>();
-        }
+            Items.Add(item);
+            Console.WriteLine($"You have grabbed {item.Name}. {item.Description}");
 
-        public void AddItem(string name)
-        {
-            Item item = new Item(name);
-            if (!Items.Contains(item.Name))
+            // If it's a trap, trigger it immediately
+            if (item is Trap trap)
             {
-                // Treasure room items
-                Items.Add(item.Name);
-                Console.WriteLine($"You have grabbed {item.Name}. It is a"+item.Description);
-            }
-            else
-            {
-                Console.WriteLine("You already have this item!");
+                trap.Trigger();
             }
         }
-
-        public void RemoveItem(string item)
+        else
         {
-            if (Items.Contains(item))
-            {
-                Items.Remove(item);
-            }
+            Console.WriteLine("You already have this item!");
+        }
+    }
+
+    public void ShowInventory()
+    {
+        if (Items.Count == 0)
+        {
+            Console.WriteLine("Your inventory is empty.");
+            return;
         }
 
-        public bool Contains(string item)
+        Console.WriteLine("Your inventory contains:");
+        foreach (var item in Items)
         {
-            return Items.Contains(item);
-        }
-
-        public void ShowInventory()
-        {
-            if (Items.Count == 0)
-            {
-                Console.WriteLine("Your inventory is empty.");
-            }
-            else
-            {
-                Console.WriteLine("You have the following items in your inventory:");
-                foreach (var item in Items)
-                {
-                    Console.WriteLine($"- {item}");
-                }
-            }
+            Console.WriteLine($"- {item.Name}: {item.Description}");
         }
     }
 }
