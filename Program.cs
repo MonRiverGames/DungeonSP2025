@@ -59,16 +59,16 @@ class Program
         }
         Player player = new Player(playerName, startRoom); // Pass both playerName and startRoom
         // PROLOGUE ⬇️
-        Graphics.Type(player.fastMode, $"/nIt's a gloomy night, but amid the treacherous downpour, {player.Name} pushes on.");
-        Graphics.Type(player.fastMode, "/nYou trudge through the soggy terrain, your shoes repeatedly submerged in the deep mud.");
-        Graphics.Type(player.fastMode, "/n'I have to find my cat,' you whisper to yourself."); // Cat can be changed to dad, but I feel like the story has changed based on the name lol
-        Graphics.Type(player.fastMode, "/nAs you shiver in soaked clothes, you become desperate for shelter.");
-        Graphics.Type(player.fastMode, "/nYou've walked so far that you seem to be off the grid, though... No trace of your cat's paw prints anymore either...");
-        Graphics.Type(player.fastMode, "/nYou continue to walk, and eventually light becomes visible in the distance.");
-        Graphics.Type(player.fastMode, "/nYou finally reach a mansion consumed in ivy and surrounded by overgrown weeds.");
-        Graphics.Type(player.fastMode, $"/n{player.Name} tugs on the front door, but to no avail. You circle the house and reach a staircase leading to the basement.");
-        Graphics.Type(player.fastMode, "/nThe door is cracked, and on it, there's a sign.");
-        Graphics.Type(player.fastMode, "/nWelcome to..."); //temporary name
+        Graphics.Type(player.fastMode, $"\nIt's a gloomy night, but amid the treacherous downpour, {player.Name} pushes on.");
+        Graphics.Type(player.fastMode, "\nYou trudge through the soggy terrain, your shoes repeatedly submerged in the deep mud.");
+        Graphics.Type(player.fastMode, "\n'I have to find my cat,' you whisper to yourself."); // Cat can be changed to dad, but I feel like the story has changed based on the name lol
+        Graphics.Type(player.fastMode, "\nAs you shiver in soaked clothes, you become desperate for shelter.");
+        Graphics.Type(player.fastMode, "\nYou've walked so far that you seem to be off the grid, though... No trace of your cat's paw prints anymore either...");
+        Graphics.Type(player.fastMode, "\nYou continue to walk, and eventually light becomes visible in the distance.");
+        Graphics.Type(player.fastMode, "\nYou finally reach a mansion consumed in ivy and surrounded by overgrown weeds.");
+        Graphics.Type(player.fastMode, $"\n{player.Name} tugs on the front door, but to no avail. You circle the house and reach a staircase leading to the basement.");
+        Graphics.Type(player.fastMode, "\nThe door is cracked, and on it, there's a sign.");
+        Graphics.Type(player.fastMode, "\nWelcome to...");Thread.Sleep(500); //temporary name
         Graphics.Title();
         Graphics.Type(player.fastMode, "As you step in, the door creaks shut behind you -- and latches. It's locked.");
         Graphics.Type(player.fastMode, "You have no other choice but to look around, but as you do, you realize just how big this dungeon is.");
