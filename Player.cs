@@ -1,4 +1,17 @@
 ﻿using Microsoft.Win32.SafeHandles;
+using System.Text.Json;
+
+var PlayerSave = new
+{
+    Player = new
+    {
+        Class = PlayerClass,
+        Health = Health
+    }
+};
+
+string jsonString = JsonSerializer.Serialize(playerData);
+Console.WriteLine(jsonString);
 
 namespace DungeonGame;
 
