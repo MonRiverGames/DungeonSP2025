@@ -9,6 +9,8 @@ public class Player
     public Room CurrentRoom { get; set; }
     public Inventory Inventory { get; private set; }
     public bool fastMode { get; set; }
+    public bool EndingUnlocked = false;
+
 
     // Player stats, use .original for normal character stats + equipment bonuses, or use .current for interactions and temporary effects
     string PlayerClass = "Unset";
@@ -36,7 +38,6 @@ public class Player
         Name = name ?? throw new ArgumentNullException(nameof(name));
         CurrentRoom = startingRoom ?? throw new ArgumentNullException(nameof(startingRoom));
         Inventory = new Inventory();
-        Health = (100, 100);
     }
 
     // Move method
@@ -56,7 +57,7 @@ public class Player
     // Character class selection method
     public void ClassChoice()
     {
-        Console.WriteLine("Choose a Class, this can determine your healthpoints as well as skills and abilities.");
+        Console.WriteLine("\nChoose a Class! This determines your stats and abilities. Choose wisely.");
         Console.WriteLine("1: Knight: Heavy Armor & Heavy Weapons. Health = 20");
         Console.WriteLine("2: Rogue: Light Armor & Small Weapons. Health = 12");
         Console.WriteLine("3: Wizard: Staffs & Damaging Magic/Spells. Health = 10");
@@ -65,7 +66,7 @@ public class Player
         int classChoice;
         while (true)
         {
-            Console.Write("Choose a class from 1-4");
+            Console.Write("\nPlease select a class!\n> ");
             if (int.TryParse(Console.ReadLine(), out classChoice) && classChoice >= 1 && classChoice <= 4)
             {
                 switch (classChoice)
@@ -103,7 +104,9 @@ public class Player
                         Agility = (10, 10f);
                         break;
                 }
-                Console.WriteLine($"You chose {PlayerClass}! \n{Health.original} Health, \n{Strength.original} Strength\n{Defense.original} Defense\n{Agility.original} Agility");
+                Console.WriteLine($"\nYou chose {PlayerClass}! \n{Health.original} Health, \n{Strength.original} Strength\n{Defense.original} Defense\n{Agility.original} Agility");
+                System.Console.WriteLine("\nPress any key to continue.");
+                Console.ReadKey();
                 break;
             }
             else
@@ -251,7 +254,6 @@ public class Player
     public void PlayerHealthCheck()
     {
         Console.WriteLine($"Your health is: {Health.current}");
-
     }
 
     static void DeathScene()

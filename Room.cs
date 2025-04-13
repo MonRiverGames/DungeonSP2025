@@ -138,6 +138,9 @@ namespace DungeonGame
 
             // Add Items to Rooms
             startRoom.Items.Add("torch");
+            startRoom.Items.Add("collar");
+            startRoom.Items.Add("milk");
+            startRoom.Items.Add("end");
             livingRoom.Items.Add("key");
             libraryRoom.Items.Add("potion");
             bedRoom.Items.Add("note");
