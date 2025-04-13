@@ -42,7 +42,7 @@ class Program
             {
                 break;
             }
-            Console.WriteLine("Name cannot be empty. Please enter your name:");
+            Console.WriteLine("You can't leave it blank. Put a name it already:");
         }
         Player player = new Player(playerName, startRoom); // Pass both playerName and startRoom
         // PROLOGUE ⬇️
@@ -100,7 +100,7 @@ class Program
                     }
                     else
                     {
-                        Graphics.Type(player.fastMode, "You already have this item!");
+                        Graphics.Type(player.fastMode, "Check your inventory lately? You already have this item!");
                     }
                 }
                 else

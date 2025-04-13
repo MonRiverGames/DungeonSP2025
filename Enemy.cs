@@ -46,8 +46,8 @@ namespace DungeonGame
 
         public static void Battle(Enemy enemy, Player player)
         {
-            Graphics.Type(player.fastMode, $"You are now battling {enemy.Name}.", "none");
-            Graphics.Type(player.fastMode, $"[You are unable to interact with the room until you finish off {enemy.Name} or if you die. Good luck!]", "green", 0, 15);
+            Graphics.Type(player.fastMode, $"You are now battling {enemy.Name}. You got this!", "none");
+            Graphics.Type(player.fastMode, $"[You gotta kill the {enemy.Name} if you want to interact with the room. Either that or you die. Good luck! You're gonna need it.]", "green", 0, 15);
 
             string playerAction = "none";
             string enemyAction = "none";
@@ -62,7 +62,7 @@ namespace DungeonGame
                 }
                 else if (enemy.Health.current <= 0)
                 {
-                    Graphics.Type(player.fastMode, $"You deliver the final blow to the {enemy.Name}. It shrieks in pain. You sigh, it's over.", "none", 200, 50);
+                    Graphics.Type(player.fastMode, $"You deliver the final blow to the {enemy.Name}. It shrieks in pain. You sigh, and wonder how you ever survived.", "none", 200, 50);
                     Graphics.Type(player.fastMode, "YOU HAVE SLAIN YOUR ENEMY.", "green", 200, 50);
                     break;
                 }
@@ -145,7 +145,7 @@ namespace DungeonGame
                 }
                 else
                 {
-                    Graphics.Type(player.fastMode, "\nSomething wrong happened. You should never get this message!\n");
+                    Graphics.Type(player.fastMode, "\nWhat the... You broke something didn't you? You're not supposed to be able to get this text!\n");
                 }
             }
         }

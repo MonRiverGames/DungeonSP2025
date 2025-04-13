@@ -120,11 +120,11 @@ namespace DungeonGame
         public static Room InitializeRooms()
         {
             // Initialize Rooms
-            Room startRoom = new Room("Foyer", "A grand black and red dimly lit hall, room is lit by some torches.");
-            Room livingRoom = new Room("Living Room", "A room lit only by table lamps.\nThe first thing you see upon entrance is a jet black Victorian table.");
-            Room libraryRoom = new Room("Library", "A library filled with books of all kind.\nIn your peripheral vision you can see a potion station.");
-            Room bedRoom = new Room("Master bedroom", "A huge room fit for a king.\nYou notice all the stuffed animals on the pink frilly bed.");
-            Room kitchenRoom = new Room("Kitchen", "A black and white tiled kitchen.\nYou see a singular apple on the marble island.");
+            Room startRoom = new Room("Foyer", "A kinda spooky black and red hall with barely any lighting. These torches seem on their last legs.. or wick I suppose.");
+            Room livingRoom = new Room("Living Room", "A room fully lit by table lamps. Seems kind of impractical.\nThe first thing you see upon entrance is a Victorian table painted darker than the inside of your head.");
+            Room libraryRoom = new Room("Library", "A library filled with books of all kind, not that you would know how to read.\nIn your peripheral vision you can see an alchemy station.");
+            Room bedRoom = new Room("Master bedroom", "A huge room fit for a king.\nYou notice all the stuffed animals on the pink frilly bed, seemingly reminicent of something you would have.");
+            Room kitchenRoom = new Room("Kitchen", "A black and white tiled kitchen.\nYou see a singular apple on the marble island. Not that you've ever eaten something healthy.");
 
             // Connect Rooms
             startRoom.Exits["north"] = livingRoom;

@@ -19,11 +19,11 @@ namespace DungeonGame
             {
                 // Treasure room items
                 Items.Add(item.Name);
-                Console.WriteLine($"You have grabbed {item.Name}. It is a"+item.Description);
+                Console.WriteLine($"You aggressively shove the {item.Name} into your bag. It seems to be a "+item.Description);
             }
             else
             {
-                Console.WriteLine("You already have this item!");
+                Console.WriteLine("Check your inventory lately? You already have that item!");
             }
         }
 
@@ -44,11 +44,11 @@ namespace DungeonGame
         {
             if (Items.Count == 0)
             {
-                Console.WriteLine("Your inventory is empty.");
+                Console.WriteLine("It's as empty in here as your wallet.");
             }
             else
             {
-                Console.WriteLine("You have the following items in your inventory:");
+                Console.WriteLine("Is that a...? The items in your... Hello Kitty merchandise bag are as follows:");
                 foreach (var item in Items)
                 {
                     Console.WriteLine($"- {item}");
