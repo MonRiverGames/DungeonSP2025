@@ -12,6 +12,8 @@ namespace DungeonGame
         public List<string> Items { get; set; } = new List<string>();
         public Dictionary<string, string> Actions { get; private set; }
 
+        public List  <string> Enemies {get; set; } = new List<string>();
+
         // Constructor
         public Room(string name, string description)
         {
@@ -34,6 +36,12 @@ namespace DungeonGame
         {
             if (string.IsNullOrWhiteSpace(item)) throw new ArgumentException("Item cannot be null or empty.", nameof(item));
             Items.Add(item);
+        }
+
+        public void AddEnemy (string enemy)
+        {
+            if (string.IsNullOrWhiteSpace(enemy)) throw new ArgumentException("Item cannot be null or empty.", nameof(enemy));
+            Enemies.Add(enemy);
         }
 
         // Remove an item from this room
@@ -117,6 +125,8 @@ namespace DungeonGame
             }
         }
 
+        
+
         public static Room InitializeRooms()
         {
             // Initialize Rooms
@@ -142,6 +152,17 @@ namespace DungeonGame
             libraryRoom.Items.Add("potion");
             bedRoom.Items.Add("note");
             kitchenRoom.Items.Add("apple");
+
+            // Adds Enemies to the rooms
+            livingRoom.Enemies.Add("Spirit");
+            kitchenRoom.Enemies.Add("AcidWorm");
+            libraryRoom.Enemies.Add("Lich");
+            bedRoom.Enemies.Add("Spirit");
+
+
+
+
+
 
             return startRoom; // Return the starting room
         }
