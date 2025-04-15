@@ -47,6 +47,10 @@ public class Item
                     Console.WriteLine("\nIn retaliation, he approaches you and not only bites the gold out of your hand, but he takes one of your fingers with it.");
                     Console.WriteLine("\nHe then vanishes into thin air.");
                 }
+                else
+                {
+                    Console.WriteLine("\nPlease type '1' or '2'!");
+                }
         }
 
         else if (name=="Emeralds"){
@@ -66,6 +70,13 @@ public class Item
         else if (name=="Diamonds"){
             Description=" 32k diamond with no imperfections";
             IsConsumable=false;
+            Random rng = new Random();
+            int index = rng.Next(2);
+
+            if (index==0)
+                Diamonds1();
+            else
+                Diamonds2();
         }
         else if (name=="Poison Spell"){
             Description="n old parchment that stinks of sulfur and death";
@@ -74,6 +85,13 @@ public class Item
         else if (name=="Fire Spell"){
             Description="n old scroll that is warm to the touch and smells like campfire";
             IsConsumable=true;
+            Random rng = new Random();
+            int index = rng.Next(2);
+
+            if (index==0)
+                Fire1();
+            else
+                Fire2();
         }
         else if (name=="Regen Spell"){
             Description="n old paper that feels like a bandage and has the aroma of an emergency room";
@@ -82,10 +100,24 @@ public class Item
         else if (name=="Ice Spell"){
             Description=" cold sheet of papyrus that has frost on the corners";
             IsConsumable=true;
+            Random rng = new Random();
+            int index = rng.Next(2);
+
+            if (index==0)
+                Ice1();
+            else
+                Ice2();
         }
         else if (name=="Key"){
-            Description="n old copper key";
+            Description="an old copper key";
             IsConsumable=true;
+            Random rng = new Random();
+            int index = rng.Next(2);
+
+            if (index==0)
+                Key1();
+            else
+                Key2();
         }
         else
         {
@@ -94,7 +126,7 @@ public class Item
         }
     }
 
-    // EVENTS FOR ITEMS
+    // EVENTS FOR ITEMS (Some of these are very unusual but they're meant to be in line with the satire theme)
 
     // RUBIES
     static void Rubies1()
@@ -183,6 +215,40 @@ public class Item
         Console.WriteLine("\nYou have no desire to give up this key.");
         Console.WriteLine("\n'Why did the chicken cross the road?' you ask.");
         Console.WriteLine("\nIt stops dead in its tracks and stares at you. All of a sudden, the chicken explodes in a cloud of feathers.");
+    }
+
+    static void Fire1()
+    {
+        Console.WriteLine("\nAs you memorize the fire spell, a fire-breathing dragon comes out of nowhere lunges at you.");
+        Console.WriteLine("\nAfraid of being scorched, you dodge its advance.");
+        Console.WriteLine("\nThe dragon stares at you for a moment before screaming 'CHICKEN JOCKEY,' then vanishing into nothingness.");
+    }
+
+    static void Fire2()
+    {
+        Console.WriteLine("\nAfter reading the spell, you attempt to recite it.");
+        Console.WriteLine("\nYou definitely did something wrong. Instead of the paper you cast the spell on erupting in flames, it turns into a squirrel.");
+        Console.WriteLine("\nThe squirrel looks at you in confusion for a moment, before preceding to chuck acorns at you.");
+        Console.WriteLine("\nYou try and grab it, but it snickers as it throws one last acorn at you and disappears in a plume of smoke.");
+    }
+
+    static void Ice1()
+    {
+        Console.WriteLine("\nYou recite the ice spell, but it doesn't seem to work.");
+        Console.WriteLine("\nYou try it over and over, to no avail. You finally give up.");
+        Console.WriteLine("\nAs you start to explore the room a bit more, you hear a funny jingle.");
+        Console.WriteLine("\nIt's a very familiar jingle. But what is it?");
+        Console.WriteLine("\nAll of a sudden, an ice cream truck bursts into the room, leaving stray ice cream bars strewn everywhere.");
+        Console.WriteLine("\nAt least you get a sweet treat!");
+    }
+
+    static void Ice2()
+    {
+        Console.WriteLine("\nYou attempt to freeze a candle with your newly learned ice spell.");
+        Console.WriteLine("\nThe candle won't freeze for some reason.");
+        Console.WriteLine("\nYou keep trying, but you suddenly slip and hit your face on a table.");
+        Console.WriteLine("\nThe floor is ice.");
+        Console.WriteLine("\nThis would be fun if you could skate!");
     }
 }
 
