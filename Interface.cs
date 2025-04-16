@@ -1,6 +1,59 @@
 using System;
+using System.Collections.Generic;
 using DungeonGame;
+class Program
+{ 
+     static List<string> choices = new List<string>();
 
+    static void Main()
+    {
+        bool keepPlaying = true; // Flag to control the game loop
+
+        while (keepPlaying)
+        {
+            Console.WriteLine("Do you want to load a saved game? (yes/no)");
+            Console.Write("> ");
+            string loadGameChoice = (Console.ReadLine() ?? string.Empty).ToLower();
+
+            if (loadGameChoice == "yes")
+            {
+                LoadGame();
+            }
+         else
+            {
+             StartNewGame();
+            }
+
+            // After the game ends, ask the player if they want to play again
+            Console.WriteLine("\nDo you want to play again? (yes/no)");
+            Console.Write("> ");
+            string playAgainChoice = (Console.ReadLine() ?? string.Empty).ToLower();
+
+            if (playAgainChoice.ToLower() != "yes")
+            {
+                keepPlaying = false; // Exit the loop if the player does not want to play again
+                Console.WriteLine("Thanks for playing!");
+            }
+            else
+            {
+                Console.WriteLine("Starting a new game...");
+            }
+     }
+ }
+
+ // Placeholder method for loading a saved game
+ static void LoadGame()
+ {
+      Console.WriteLine("Loading saved game...");
+ }
+
+ // Start a new game from the beginning
+ static void StartNewGame()
+ {
+     Console.WriteLine("Starting a new game...");
+     choices.Clear(); // Clears previous choices
+ }
+ 
 static class Graphics
 {
     public static void Menu(Player player, string menuType = "default") // method for the menu
@@ -273,4 +326,5 @@ static class Graphics
         Console.ResetColor();
         System.Console.WriteLine();
     }
+}
 }

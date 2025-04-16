@@ -7,6 +7,7 @@ This template provides the foundational structure for a text-based dungeon crawl
 using DungeonGame;
 using System;
 using System.Collections.Generic;
+using System.IO;
 // Main Program
 class Program
 {
@@ -23,7 +24,7 @@ class Program
     static string[] examineCommand = { "look", "check", "examine", "inspect", "view", "find", "investigate", "scan", "survey" }; //array of examine commands
 
     // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch (don't push at the same time!) Then, other person pulls to stay up to date.
-    static void Main()
+    static void MainGame()
     {
         // Initialize Rooms
         Room startRoom = new Room("Entrance Hall", "A grand entrance with torches lining the walls.");
@@ -109,7 +110,7 @@ class Program
             else if (command.Length > 1 && fightCommand.Contains(command[0]))
             {
                 Graphics.Type(player.fastMode, "This is a test battle."); //this is a temporary example of the battle function
-                Enemy AcidWorm = new AcidWorm(default, default); // create acid worm
+                Enemy AcidWorm = new AcidWorm("Acid Worm", 50); // create acid worm with valid name and health
                 Room.Battle(AcidWorm, player);  //method to initiate battle
             }
             else if (command.Length > 1 && talkCommand.Contains(command[0]))
@@ -179,7 +180,47 @@ class Program
             {
                 Graphics.Type(player.fastMode, "Invalid command.");
             }
+        
+                    // Save the choices to a file
+                    SaveChoices(choices);
+                }
+
+                // Load the saved game
+                static void LoadGame()
+                {
+                    if (File.Exists("savegame.txt"))
+                    {
+                        string[] savedData = File.ReadAllLines("savegame.txt");
+                        foreach (string line in savedData)
+                        {
+                            Console.WriteLine(line);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No saved game found. Starting a new game.");
+                        StartNewGame();
+                    }
+                }
+
+            // Save the choices to a file
+            static void SaveChoices(List<string> choices)
+            {
+                File.WriteAllLines("savegame.txt", choices);
+            }
+
+            // Removed unused local function 'GetPlayerChoice' to resolve the compile error.
+
+            // Display the list of choices made by the player
+            static void DisplayChoices()
+            {
+                Console.WriteLine("Choices made so far:");
+                foreach (string choice in choices)
+                {
+                Console.WriteLine(choice);
+                }
+            }
         }
     }
-}
+
 
