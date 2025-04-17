@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 
 namespace DungeonGame
 {
@@ -11,6 +12,9 @@ namespace DungeonGame
         public Dictionary<string, Room> Exits { get; set; } = new Dictionary<string, Room>();
         public List<string> Items { get; set; } = new List<string>();
         public Dictionary<string, string> Actions { get; private set; }
+        public int[,] RoomMap { get; private set; } // Stores ascii map reference array
+
+        Tileset tileset = new Tileset();
 
         // Constructor
         public Room(string name, string description)
@@ -66,6 +70,8 @@ namespace DungeonGame
         {
             Console.WriteLine($"Room: {Name}");
             Console.WriteLine($"Description: {Description}");
+
+            tileset.RenderDungeon(RoomMap);
 
             Console.WriteLine("Exits:");
             foreach (var exit in Exits.Keys)
@@ -138,10 +144,60 @@ namespace DungeonGame
 
             // Add Items to Rooms
             startRoom.Items.Add("torch");
+            startRoom.Items.Add("collar");
+            startRoom.Items.Add("end");
             livingRoom.Items.Add("key");
             libraryRoom.Items.Add("potion");
             bedRoom.Items.Add("note");
             kitchenRoom.Items.Add("apple");
+            kitchenRoom.Items.Add("milk");
+
+            // Add map arrays to rooms
+            startRoom.RoomMap = new int[,]{
+            { 03, 02, 00, 00, 00, 02, 04},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 06, 02, 02, 02, 02, 02, 05},
+            };
+            livingRoom.RoomMap = new int[,]{
+            { 03, 00, 00, 02, 02, 02, 04},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 01, 00, 00, 00, 00, 00, 00},
+            { 00, 00, 00, 00, 00, 00, 00},
+            { 01, 00, 00, 00, 00, 00, 00},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 06, 02, 00, 00, 00, 02, 05},
+            };
+            libraryRoom.RoomMap = new int[,]{
+            { 03, 02, 02, 02, 02, 02, 04},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 00, 00, 02, 02, 02, 00, 01},
+            { 00, 00, 00, 00, 00, 00, 01},
+            { 00, 00, 02, 02, 02, 00, 01},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 06, 02, 02, 02, 02, 02, 05},
+            };
+            bedRoom.RoomMap = new int[,]{
+            { 03, 02, 02, 02, 02, 02, 04},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 01, 00, 00, 00, 00, 00, 00},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 06, 04, 02, 00, 00, 03, 05},
+            { 00, 06, 02, 02, 02, 05, 00},
+            };
+            kitchenRoom.RoomMap = new int[,]{
+            { 03, 02, 02, 02, 02, 02, 04},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 01, 00, 00, 02, 02, 02, 01},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 01, 00, 00, 00, 00, 00, 01},
+            { 06, 00, 00, 02, 02, 02, 05},
+            };
 
             return startRoom; // Return the starting room
         }

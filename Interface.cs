@@ -18,45 +18,85 @@ namespace DungeonGame
                 {
                     Type(player.fastMode, "1. Start", "green");
                 }
+
                 Type(player.fastMode, "2. Toggle Fast Mode", "green");
+                
+                if (menuType == "default")
+                {
                 Type(player.fastMode, "3. The Story So Far...", "green");
                 Type(player.fastMode, "4. Save", "green");
                 Type(player.fastMode, "5. Save and Quit", "green");
+                }
+
+                if (menuType == "start")
+                {
+                Type(player.fastMode, "3. Quit", "green");
+                }
+
                 Console.Write("\n> ");
                 string input = Console.ReadLine() ?? string.Empty;
                 input = input.ToLower(); //converts input to lowercase
 
-                if (input.Contains("1") || input.Contains("continue")) //exits menu
+                if (menuType == "default")
                 {
-                    Type(player.fastMode, "You chose to continue.\n");
-                    return;
+                    if (input.Contains("1") || input.Contains("continue")) //exits menu
+                    {
+                        Type(player.fastMode, "You chose to continue.\n");
+                        return;
+                    }
+                    else if (input.Contains("2") || input.Contains("fast")) //toggles fast mode
+                    {
+                        player.fastMode = !player.fastMode;
+                        Type(player.fastMode, player.fastMode ? "You're now in fast mode." : "You've turned off fast mode.");
+                    }
+                    else if (input.Contains("3") || input.Contains("story")) // reads out the story so far , should only be major story points
+                    {
+                        Type(player.fastMode, "Here is what you've done so far!", "cyan");
+                        //method for displaying the story beats, should be uploaded to log
+                    }
+                    else if (input.Contains("4") || input.Contains("save")) // saves the game
+                    {
+                        Type(player.fastMode, "You saved your game.", "green");
+                        //method for saving the game
+                    }
+                    else if (input.Contains("5") || input.Contains("quit"))
+                    {
+                        Type(player.fastMode, "You have chose to quit the game. Press any key to exit."); // saves the game and then quits the program
+                        //method for save
+                        Console.ReadKey();
+                        Environment.Exit(0);
+                        break;
+                    }
+                    else
+                    {
+                        Type(player.fastMode, "This is an invalid input."); // for invalid inputs
+                    }
                 }
-                else if (input.Contains("2") || input.Contains("fast")) //toggles fast mode
+
+                if (menuType == "start")
                 {
-                    player.fastMode = !player.fastMode;
-                    Type(player.fastMode, player.fastMode ? "You're now in fast mode." : "You've turned off fast mode.");
-                }
-                else if (input.Contains("3") || input.Contains("story")) // reads out the story so far , should only be major story points
-                {
-                    Type(player.fastMode, "Here is what you've done so far!", "cyan");
-                    //method for displaying the story beats, should be uploaded to log
-                }
-                else if (input.Contains("4") || input.Contains("save")) // saves the game
-                {
-                    Type(player.fastMode, "You saved your game.", "green");
-                    //method for saving the game
-                }
-                else if (input.Contains("5") || input.Contains("quit"))
-                {
-                    Type(player.fastMode, "You have chose to quit the game. Press any key to exit."); // saves the game and then quits the program
-                    //method for save
-                    Console.ReadKey();
-                    Environment.Exit(0);
-                    break;
-                }
-                else
-                {
-                    Type(player.fastMode, "This is an invalid input."); // for invalid inputs
+                    if (input.Contains("1") || input.Contains("continue")) //exits menu
+                    {
+                        Type(player.fastMode, "You chose to start your adventure.\n");
+                        return;
+                    }
+                    else if (input.Contains("2") || input.Contains("fast")) //toggles fast mode
+                    {
+                        player.fastMode = !player.fastMode;
+                        Type(player.fastMode, player.fastMode ? "You're now in fast mode." : "You've turned off fast mode.");
+                    }
+                    else if (input.Contains("3") || input.Contains("quit"))
+                    {
+                        Type(player.fastMode, "You have chose to quit the game. Press any key to exit."); // saves the game and then quits the program
+                        //method for save
+                        Console.ReadKey();
+                        Environment.Exit(0);
+                        break;
+                    }
+                    else
+                    {
+                        Type(player.fastMode, "This is an invalid input."); // for invalid inputs
+                    }
                 }
             }
         }
@@ -244,37 +284,53 @@ namespace DungeonGame
         }
         public static void Title()
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            System.Console.WriteLine();
-            Thread.Sleep(100); System.Console.WriteLine(@" _   _         _  _          _   __ _");
-            Thread.Sleep(100); System.Console.WriteLine(@"| | | |  ___  | || |  ___   | | / /(_)  _     _");
-            Thread.Sleep(100); System.Console.WriteLine(@"| |_| | / _ \ | || | / _ \  | |/ /  _ _| |_ _| |_  _  _");
-            Thread.Sleep(100); System.Console.WriteLine(@"|  _  |/ /_\ \| || |/ / \ \ |   /  | |_   _|_   _|| |/ /");
-            Thread.Sleep(100); System.Console.WriteLine(@"| | | |\ ,___/| || |\ \_/ / | |\ \ | | | |_  | |_ | / /");
-            Thread.Sleep(100); System.Console.WriteLine(@"|_| |_| \___/ |_||_| \___/  |_| \_\|_| \___| \___||  /");
-            Thread.Sleep(100); System.Console.WriteLine(@"                       _           _              / /");
-            Thread.Sleep(100); System.Console.WriteLine(@"                      / \_______ /|_\             \/");
-            Thread.Sleep(100); System.Console.WriteLine(@"                     /          /_/ \__");
-            Thread.Sleep(100); System.Console.WriteLine(@"                    /             \_/ /");
-            Thread.Sleep(100); System.Console.WriteLine(@"                  _|_              |/|_");
-            Thread.Sleep(100); System.Console.WriteLine(@"                  _|_  O    _    O  _|_");
-            Thread.Sleep(100); System.Console.WriteLine(@"                  _|_      (_)      _|_");
-            Thread.Sleep(100); System.Console.WriteLine(@"                   \                 /");
-            Thread.Sleep(100); System.Console.WriteLine(@"                    _\_____________/_");
-            Thread.Sleep(100); System.Console.WriteLine(@"                   /  \/  (___)  \/  \");
-            Thread.Sleep(100); System.Console.WriteLine(@"                   \__(  o     o  )__/");
-            Thread.Sleep(100); System.Console.WriteLine(@"      ___     _                 _             ");
-            Thread.Sleep(100); System.Console.WriteLine(@"     |_ _|___| | __ _ _ __   __| |            ");
-            Thread.Sleep(100); System.Console.WriteLine(@"      | |/ __| |/ _` | '_ \ / _` |                ");
-            Thread.Sleep(100); System.Console.WriteLine(@"      | |\__ \ | (_| | | | | (_| |                   ");
-            Thread.Sleep(100); System.Console.WriteLine(@"     |___|___/_|\__,_|_| |_|\__,_|_                  ");
-            Thread.Sleep(100); System.Console.WriteLine(@"       / \   __| |_   _____ _ __ | |_ _   _ _ __ ___ ");
-            Thread.Sleep(100); System.Console.WriteLine(@"      / _ \ / _` \ \ / / _ \ '_ \| __| | | | '__/ _ \");
-            Thread.Sleep(100); System.Console.WriteLine(@"     / ___ \ (_| |\ V /  __/ | | | |_| |_| | | |  __/");
-            Thread.Sleep(100); System.Console.WriteLine(@"    /_/   \_\__,_| \_/ \___|_| |_|\__|\__,_|_|  \___|");
+            Console.ForegroundColor = ConsoleColor.Red;
+            System.Console.WriteLine("\n");
+            Thread.Sleep(100); System.Console.WriteLine(@" ░      █   ░   █      ░     ██▓     ██▓ ▄████▄   ██░ ██     ██ ▄█▀ ██▓▄▄▄█████▓▄▄▄█████▓▓██   ██▓ ██ ██████ ");
+            Thread.Sleep(100); System.Console.WriteLine(@" ░     █    █    █     ░    ▓██▒    ▓██▒▒██▀ ▀█  ▓██░ ██▒    ██▄█▒ ▓██▒▓  ██▒ ░▒▓  ██▒ ░▒ ▒██  ██ ██▒▒██    ▒ ");
+            Thread.Sleep(100); System.Console.WriteLine(@"      ░░█   ▓    █ ░        ▒██░    ▒██▒▒▓█    ▄ ▒██▀▀██░   ▓███▄░ ▒██▒▒ ▓██░ ▒░▒ ▓██░ ▒░  ▒██ ██░░     ▓██▄   ");
+            Thread.Sleep(100); System.Console.WriteLine(@"   ░░░   █ █▓█▓ █   ░░      ▒██░    ░██░▒▓▓▄ ▄██▒░▓█ ░██    ▓██ █░ ░██░░ ▓██░ ░ ░ ▓██░ ░   ░ ▐██▓░    ▒   ██▒");
+            Thread.Sleep(100); System.Console.WriteLine(@"  ░  █  █ ██▓█▓█ ██   ░    ░██████▒░██░▒ ▓███▀ ░░▓█▒░██▓   ▒██▒ █▄░██░  ▒██▒ ░   ▒██▒ ░   ░ ██▒▓░  ▒██████▒▒");
+            Thread.Sleep(100); System.Console.WriteLine(@"  ░ █▒█  █ █▓██▓ █  █  ░    ░ ▒░▓  ░░▓  ░ ░▒ ▒  ░ ▒ ░░▒░▒   ▒ ▒▒ ▓▒░▓ ░  ▒ ░░     ▒ ░▓      ██▒▒▒ ▒ ▒▓▒ ▒ ░");
+            Thread.Sleep(100); System.Console.WriteLine(@"  ░ █▒█▄█▄████▓▄█    █ ░    ▗▄▄▄▒▗▖░▗▖▗▖░ ▗▖ ▗▄▄▖▗▄▄▄▖▒▗▄▖ ▗▖  ▗▖ ▓░  ▗▄▖ ▗▄▄▄▖░    ▓░    ▓██ ░▒░ ░ ░▒  ▓ ░");
+            Thread.Sleep(100); System.Console.WriteLine(@" ░ █▒                █░░    ▐▌░ █▐▌░▐▌▐▛▚▖▐▌▐▌  ░▐▌  ░▐▌ ▐▌▐▛▚▖▐▌░░  ▐▌ ▐▌▐▌░░  ░░        ░░        ░       ");
+            Thread.Sleep(100); System.Console.WriteLine(@" ░░█▒                 █     ▐▌  █▐▌ ▐▌▐▌ ▝▜▌▐▌▝▜▌▐▛▀▀▘▐▌ ▐▌▐▌ ▝▜▌ ░  ▐▌ ▐▌▐▛▀▀▘░  ▀▀▀▀▀▀▀▀▄▀▀▀▄▄      ▄▄▄▄▄▀▀▀▀");
+            Thread.Sleep(100); System.Console.WriteLine(@"  █▒   █          █    █    ▐▙▄▄▀▝▚▄▞▘▐▌░ ▐▌▝▚▄▞▘▐▙▄▄▖▝▚▄▞▘▐▌  ▐▌ ░  ▝▚▄▞▘▐▌      ░░░░░░░░  ░ ░░▀▀▀▀▀▀ ░ ░ ░");
+            Thread.Sleep(100); System.Console.WriteLine(@" ▄█▒    █        █      █▄    ");           
+            Thread.Sleep(100); System.Console.WriteLine(@" ▄█▒  ▄    ▄▄    ▄      █▄  ▓█████▄  ▒█████   ▒█████   ███▄ ▄███▓     ▒█▒       ▓█████▄ ▓█████   ██████  ██▓███     ██      ██▓ ██▀███  ");
+            Thread.Sleep(100); System.Console.WriteLine(@" ▄█▒    ▄▄▄▄▄▄▄▄       ▒█▄  ▒██▀ ██▌▒██▒  ██▒▒██▒  ██▒▓██▒▀█▀ ██▒     ▓█▓       ▒██▀ ██▌▓█   ▀ ▒██    ▒ ▓██░  ██▒▒█████    ▓██▒▓██ ▒ ██▒");
+            Thread.Sleep(100); System.Console.WriteLine(@"   ██▒               ▒██    ░██   █▌▒██░  ██▒▒██░  ██▒▓██    ▓██░   ▄▄████▄▄    ░██   █▌▒███   ░ ▓██▄   ▓██░ ██▓▒▒██  ▀██  ▒██▒▓██ ░▄█ ▒");
+            Thread.Sleep(100); System.Console.WriteLine(@"     █████████████████      ░██▄  █▌▒██   ██░▒██   ██░▒██    ▒██    ░ ▓█▓░      ░▓█▄   █▒▓█  ▄   ▒   ██▒▒██▄█▓▒ ▒░██▄▄▄▄██ ░██░▒██▀▀█▄  ");
+            Thread.Sleep(100); System.Console.WriteLine(@"      ▓▓▒▒▒▒▒█▒▒▒ ▒▒▓      ░▒██████░ ████▓▒░░ ████▓▒░▒██▒   ░██▒     ▒██▒ ░    ░▒███████▒████▒▒██████▒▒▒██▒ ░  ░ ▓█   ▓██▒░██░░██▓ ▒██▒");
+            Thread.Sleep(100); System.Console.WriteLine(@"     ▓▓░ ▒▒▒▒▒▒ ▒▒▒░▒▒      ▒▒▓  ▒ ░ ▒░▒░▒░ ░ ▒░▒░▒░ ░ ▒░   ░  ░     ▒ ░░       ▒▒▓  ▒ ░░ ▒░ ░▒ ▒▓▒ ▒ ░▒▓▒░ ░  ░ ▒▒   ▓▒█░░▓  ░ ▒▓ ░▒▓░");
+            Thread.Sleep(100); System.Console.WriteLine(@"    ▒▓░░ ░ ░░▒░░░ ░ ░░▒▒     ░ ▒  ▒   ░ ▒ ▒░   ░ ▒ ▒░ ░  ░      ░       ░        ░ ▒  ▒  ░ ░  ░░ ░▒  ░ ░░▒ ░       ▒   ▒▒ ░ ▒ ░  ░▒ ░ ▒░");
+            Thread.Sleep(100); System.Console.WriteLine(@"    ▒  ░ ░░  ░░   ░░  ░░▒    ░ ░  ░ ░ ░ ░ ▒  ░ ░ ░ ▒  ░      ░        ░          ░ ░  ░    ░   ░  ░  ░  ░░         ░   ▒    ▒ ░  ░░   ░ ");
+            Thread.Sleep(100); System.Console.WriteLine(@"    ░    ░░    ░░ ░    ░     ░        ░ ░      ░ ░         ░                ░       ░  ░      ░                 ░  ░ ░     ░     ");
+            Thread.Sleep(100); System.Console.WriteLine(@"           ░  ░░       ░     ░                                            ░                                                      ");
             System.Console.WriteLine();
             Console.ResetColor();
-            System.Console.WriteLine();
         }
+
+        public static void Prolouge(Player player)
+        {
+        // PROLOGUE ⬇️
+        Type(player.fastMode, "It's a gloomy night, but amid the treacherous downpour, " + $"{player.Name} pushes on.");
+        Type(player.fastMode, "You trudge through the soggy terrain, your shoes repeatedly submerged in the deep mud.");
+        Type(player.fastMode, "I have to find my cat,' you whisper to yourself."); // Cat can be changed to dad, but I feel like the story has changed based on the name lol
+        Type(player.fastMode, "As you shiver in soaked clothes, you become desperate for shelter.");
+        Type(player.fastMode, "You've walked so far that you seem to be off the grid, though... No trace of your cat's paw prints anymore either...");
+        Type(player.fastMode, "You continue to walk, and eventually light becomes visible in the distance.\n");
+        Type(player.fastMode, "You finally reach a mansion consumed in ivy and surrounded by overgrown weeds.");
+        Type(player.fastMode, $"{player.Name} tugs on the front door, and it creaks open.");
+        Type(player.fastMode, "The door is cracked, and on it, there's a sign.");
+        Type(player.fastMode, "As you step in, the door creaks shut behind you -- and latches. It's locked.");
+        Type(player.fastMode, "You have no other choice but to look around, but as you do, you realize just how big this dungeon is.\n");
+        }
+
+        public static void Help(Player player)
+        {
+            Type(player.fastMode, "Certain phrases allow you to interact with the world. When in doubt, try looking around! You can also type in 'menu' to adjust settings.");
+        }
+
     }
 }
