@@ -324,7 +324,7 @@ public class Item
     static void Potion1()
     {
         Console.WriteLine("\nAs you go to pick up the potion, it explodes in your face.");
-        Console.WriteLine("\nThe horse of judgement and self-satisfactiion walks by and cackles at your stupidity.");
+        Console.WriteLine("\nThe horse of judgement and self-satisfaction walks by and cackles at your stupidity.");
     }
 
 }

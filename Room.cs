@@ -133,8 +133,6 @@ namespace DungeonGame
             }
         }
 
-        
-
         public static Room InitializeRooms()
         {
             // Initialize Rooms
