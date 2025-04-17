@@ -19,7 +19,7 @@ namespace DungeonGame
             {
                 // Treasure room items
                 Items.Add(item.Name);
-                Console.WriteLine($"You aggressively shove the {item.Name} into your bag. It seems to be a "+item.Description);
+                Console.WriteLine($"You aggressively shove the {item.Name} into your bag.");
             }
             else
             {
@@ -48,7 +48,7 @@ namespace DungeonGame
             }
             else
             {
-                Console.WriteLine("Is that a...? The items in your... Hello Kitty merchandise bag are as follows:");
+                Console.WriteLine("Is that a...? The items in your... Lich Kitty merchandise bag are as follows:");
                 foreach (var item in Items)
                 {
                     Console.WriteLine($"- {item}");
