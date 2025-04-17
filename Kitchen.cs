@@ -9,7 +9,7 @@ namespace DungeonGame
 {
     class Return_Room
     {
-        static void Main()
+        static void Kitchen()
         {
             int Room = 1;
 
