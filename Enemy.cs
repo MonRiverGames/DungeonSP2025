@@ -58,6 +58,9 @@ namespace DungeonGame
                 {
                     Graphics.Type(player.fastMode, "You start to feel woozy. Your breaths become shallower, and your vision begins to darken. Eventually, you can't see anything. You can't feel anything.", "green", 200, 50);
                     Graphics.Type(player.fastMode, "YOU DIED.", "green", 200, 50);
+                    Graphics.Type(player.fastMode, "Press any key to exit.", "green", 200, 50);
+                    Console.ReadKey();
+                    Environment.Exit(0);
                     break;
                 }
                 else if (enemy.Health.current <= 0)
