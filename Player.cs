@@ -111,7 +111,7 @@ public class Player
             }
             else
             {
-                Console.WriteLine("Invalid choice, please enter a number between 1 and 4.");
+                Console.WriteLine("*Incorrect Buzzer Sound* Try again. This time enter a number between 1 and 4.");
             }
         }
     }
