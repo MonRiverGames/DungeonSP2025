@@ -11,7 +11,7 @@ public class Item
     public Item(string name)
     {
         Name = name;
-        if (name=="Rubies"){
+        if (name=="rubies"){
             Description=" dazzling red ruby the color of human blood";
             IsConsumable=false;
             Random rng = new Random();
@@ -23,7 +23,7 @@ public class Item
                 Rubies2();
         }
         
-        else if (name=="Gold"){
+        else if (name=="gold"){
             Description=" heavy bar weighing almost as much as a child";
             IsConsumable=false;
             Console.WriteLine("\nAs you struggle to lift the chunk of gold, you wonder how it could be of any use.");
@@ -53,7 +53,19 @@ public class Item
                 }
         }
 
-        else if (name=="Emeralds"){
+        else if (name=="milk"){
+            Description="a nice, cold glass of milk";
+            IsConsumable=true;
+            Random rng = new Random();
+            int index = rng.Next(2);
+
+            if (index==0)
+                Milk1();
+            else
+                Milk2();
+        }
+
+        else if (name=="emeralds"){
             Description=" 8x8 png picture of a minecraft emerald and as you pick you hear a distant 'hrrrrr' ";
             IsConsumable=false;
             Console.WriteLine("\nTo your utter surprise, one of the emeralds grows a face and begins speaking to you.");
@@ -67,7 +79,7 @@ public class Item
             else
                 Emeralds2();
         }
-        else if (name=="Diamonds"){
+        else if (name=="diamonds"){
             Description=" 32k diamond with no imperfections";
             IsConsumable=false;
             Random rng = new Random();
@@ -82,9 +94,9 @@ public class Item
             Description="n old parchment that stinks of sulfur and death";
             IsConsumable=true;
         }
-        else if (name=="Fire Spell"){
-            Description="n old scroll that is warm to the touch and smells like campfire";
-            IsConsumable=true;
+        else if (name=="torch"){
+            Description="a burning stick that illuminates your surroundings flawlessly"; //this was formally the fire spell, but the wizard can't use it so I just recycled it into torch stories.
+            IsConsumable=false;
             Random rng = new Random();
             int index = rng.Next(2);
 
@@ -92,6 +104,33 @@ public class Item
                 Fire1();
             else
                 Fire2();
+        }
+        else if (name=="milk"){
+            Description="a cold glass of milk";
+            IsConsumable=true;
+            Random rng = new Random();
+            int index = rng.Next(2);
+
+            if (index==0)
+                Milk1();
+            else
+                Milk2();
+        }
+        else if (name=="apple"){
+            Description="a perfectly delicious fruit";
+            IsConsumable=true;
+            Random rng = new Random();
+            int index = rng.Next(2);
+
+            if (index==0)
+                Apple1();
+            else
+                Apple2();
+        }
+        else if (name=="potion"){
+            Description="a bubbling liquid";
+            IsConsumable=true;
+            Potion1();
         }
         else if (name=="Regen Spell"){
             Description="n old paper that feels like a bandage and has the aroma of an emergency room";
@@ -108,7 +147,7 @@ public class Item
             else
                 Ice2();
         }
-        else if (name=="Key"){
+        else if (name=="key"){
             Description="an old copper key";
             IsConsumable=true;
             Random rng = new Random();
@@ -150,6 +189,7 @@ public class Item
                 {
                     Console.WriteLine("\nYou drop the rubies, and they shatter as they hit the ground, emitting rancid smoke.");
                     Console.WriteLine("\nGood thing you dropped those, I guess.");
+                    Console.WriteLine("\nYou notice a few rubies still lying on the table.");
                 }
                 else if (input.Contains("2")) 
                 {
@@ -173,7 +213,7 @@ public class Item
     {
         Console.WriteLine("\n'You do NOT want to see my bad side,' says the emerald.");
         Console.WriteLine("\n'You're right! I don't. That's why you're going in my pocket, so I don't have to see you at all.'");
-        Console.WriteLine("\nThe emerald attempts to protest, but as it reaches your pocket, it is silenced.");
+        Console.WriteLine("\nThe emerald attempts to protest, but as it reaches your bag, it is silenced.");
     }
 
     // DIAMONDS
@@ -186,6 +226,7 @@ public class Item
         Console.WriteLine("\n'NO! Absolutely not!'");
         Console.WriteLine("\n'How rude! Why would you tease me like that?'");
         Console.WriteLine("\nThe horse of love and affection becomes the horse of hatred and annoyance, then eats the diamonds.");
+        Console.WriteLine("\nThankfully, there's a few diamonds left.");
     }
 
     static void Diamonds2()
@@ -214,20 +255,20 @@ public class Item
         Console.WriteLine("\nIt runs in circles, repeatedly pecking at your toes and screeching 'KEY! KEY!'");
         Console.WriteLine("\nYou have no desire to give up this key.");
         Console.WriteLine("\n'Why did the chicken cross the road?' you ask.");
-        Console.WriteLine("\nIt stops dead in its tracks and stares at you. All of a sudden, the chicken explodes in a cloud of feathers.");
+        Console.WriteLine("\nThe chicken stops dead in its tracks and stares at you. All of a sudden, it screeches 'CHICKEN JOCKEY!' and explodes in a cloud of feathers.");
     }
 
     static void Fire1()
     {
-        Console.WriteLine("\nAs you memorize the fire spell, a fire-breathing dragon comes out of nowhere lunges at you.");
+        Console.WriteLine("\nA fire-breathing dragon comes out of nowhere lunges at you.");
         Console.WriteLine("\nAfraid of being scorched, you dodge its advance.");
-        Console.WriteLine("\nThe dragon stares at you for a moment before screaming 'CHICKEN JOCKEY,' then vanishing into nothingness.");
+        Console.WriteLine("\nThe dragon stares at you for a moment, then murmurs something about Shrek and vanishes into nothingness.");
     }
 
     static void Fire2()
     {
-        Console.WriteLine("\nAfter reading the spell, you attempt to recite it.");
-        Console.WriteLine("\nYou definitely did something wrong. Instead of the paper you cast the spell on erupting in flames, it turns into a squirrel.");
+        Console.WriteLine("\nYou pick up the torch, but it slips out of your hands.");
+        Console.WriteLine("\nA scrap of parchment lying on the ground erupts into flames, then turns into a squirrel.");
         Console.WriteLine("\nThe squirrel looks at you in confusion for a moment, before preceding to chuck acorns at you.");
         Console.WriteLine("\nYou try and grab it, but it snickers as it throws one last acorn at you and disappears in a plume of smoke.");
     }
@@ -250,6 +291,42 @@ public class Item
         Console.WriteLine("\nThe floor is ice.");
         Console.WriteLine("\nThis would be fun if you could skate!");
     }
+
+    static void Milk1()
+    {
+        Console.WriteLine("\nYou pick up the milk and take a sip.");
+        Console.WriteLine("\nIt's nice and refreshing, and reminds you of childhood.");
+        Console.WriteLine("\nThe only thing that would make this better is a freshly baked chocolate chip cookie.");
+    }
+
+    static void Milk2()
+    {
+        Console.WriteLine("\nYou take a sip of the milk...");
+        Console.WriteLine("\nIt's absolutely disgusting.");
+        Console.WriteLine("\nYou take a closer look at it. It's spoiled.");
+    }
+
+    static void Apple1()
+    {
+        Console.WriteLine("\nAs you grab the apple, a worm crawls out of it.");
+        Console.WriteLine("\nYou gasp out of disgust, but the worm looks at you desperately.");
+        Console.WriteLine("\n'Help! He's coming after me!' says the worm.");
+        Console.WriteLine("\n'Who's coming after--?'");
+        Console.WriteLine("\nAll of a sudden, a hawk swoops down from nowhere and grabs the worm by its head.");
+    }
+
+    static void Apple2()
+    {
+        Console.WriteLine("\nA crisp, unblemished apple.");
+        Console.WriteLine("\nIf you had a knife and some peanut butter, this would make a great snack.");
+    }
+    
+    static void Potion1()
+    {
+        Console.WriteLine("\nAs you go to pick up the potion, it explodes in your face.");
+        Console.WriteLine("\nThe horse of judgement and self-satisfactiion walks by and cackles at your stupidity.");
+    }
+
 }
 
 
