@@ -133,8 +133,6 @@ namespace DungeonGame
             }
         }
 
-        
-
         public static Room InitializeRooms()
         {
             // Initialize Rooms
@@ -163,6 +161,12 @@ namespace DungeonGame
             bedRoom.Items.Add("note");
             kitchenRoom.Items.Add("apple");
             kitchenRoom.Items.Add("milk");
+            libraryRoom.Items.Add("gold");
+            startRoom.Items.Add("rubies");
+            livingRoom.Items.Add("emeralds");
+            kitchenRoom.Items.Add("diamonds");
+
+
 
             // Add map arrays to rooms
             startRoom.RoomMap = new int[,]{
