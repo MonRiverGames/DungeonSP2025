@@ -5,20 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using DungeonGame;
 
-using System;
-
 namespace DungeonGame
 {
-    internal class Bedroom
+    public class Bedroom
     {
-    }
+        private int bedroomState = 1; // Represents the state or visit count of the bedroom.
 
-    class Program
-    {
-        static void Main()
+        public void EnterBedroom()
         {
-            int bedroomState = 1; // Represents the state or visit count of the bedroom.
-
             switch (bedroomState)
             {
                 case 1:
@@ -39,6 +33,12 @@ namespace DungeonGame
                 default:
                     Console.WriteLine("The room seems unfamiliar. Are you lost?");
                     break;
+            }
+
+            // Increment the state for the next visit, but cap it at 5.
+            if (bedroomState < 5)
+            {
+                bedroomState++;
             }
         }
     }

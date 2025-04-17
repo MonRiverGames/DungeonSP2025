@@ -16,6 +16,8 @@ namespace DungeonGame
 
         Tileset tileset = new Tileset();
 
+        private int visitState = 1; // Tracks the number of visits to this room
+
         // Constructor
         public Room(string name, string description)
         {
@@ -200,6 +202,64 @@ namespace DungeonGame
             };
 
             return startRoom; // Return the starting room
+        }
+
+        // Method to get the room description based on the visit state
+        public string GetStateBasedDescription()
+        {
+            if (Name == "Kitchen")
+            {
+                switch (visitState)
+                {
+                    case 1:
+                        return "You come back into the kitchen to find some cat-nip...\nYou're not sure what it's for but you just decide to pick it up.";
+                    case 2:
+                        return "When entering the room again you find an open can of Feline Feast on the marble counter.\nYou wonder if there's someone else in the dungeon with you.";
+                    case 3:
+                        return "After going back into the kitchen for more clues you find a piece of paper that says a few words on it.\nUpon further inspection you see it has the Hello Cat showtimes for today...\nIt makes you want to sit down and watch the show.";
+                    case 4:
+                        return "Upon your scramble for hints in the kitchen you see a cat collar that says 'Kitty' on it...\nYou decide to pick it up.";
+                    case 5:
+                        return "You hope to find another clue in the kitchen, one that would help more this time.\nWhen going in for the last time you decide to feel around to see if you can find ANYTHING that would help.\nYou feel a square dip on the oak China cabinet, it seems to resemble a button.\nYou decide to push it.\nIt opens up a dark room and you decide to go in.\nIn the room you see a picture of a mysterious and fuzzy stranger, it seems to be holding a... freshly hatched human.\nThe small being appears to have a set of pointy feline ears.\nWhile you were inspecting the dark room, you smell smoke.\nYou go to see what it is, and see a blaze of orange and yellow in front of you.\nIt seems to be coming from the stove...\nYou decide it's best to get out of there because the fire is destroying the room.";
+                    default:
+                        return "The kitchen seems unfamiliar. Are you lost?";
+                }
+            }
+            else if (Name == "Master bedroom")
+            {
+                switch (visitState)
+                {
+                    case 1:
+                        return "You enter a bedroom. Virtually everything including the ornate bed is colored pink, and Hello Kitty memorabilia can be seen everywhere you look.";
+                    case 2:
+                        return "You return to the gaudy pink bedroom. You forgot how offensive the decor is.";
+                    case 3:
+                        return "You return to the bedroom. Maybe you missed something.";
+                    case 4:
+                        return "You're back in the pink bedroom. Do you hate yourself?";
+                    case 5:
+                        return "There is nothing left for you here. Try something else.";
+                    default:
+                        return "The room seems unfamiliar. Are you lost?";
+                }
+            }
+
+            // Default description for other rooms
+            return Description;
+        }
+
+        // Method to increment the visit state
+        public void IncrementVisitState()
+        {
+            if (visitState < 5)
+            {
+                visitState++;
+            }
+        }
+
+        public override string ToString()
+        {
+            return GetStateBasedDescription();
         }
     }
 }

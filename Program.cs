@@ -27,6 +27,7 @@ class Program
     {
         // Initialize Rooms
         Room startRoom = Room.InitializeRooms(); // Use the static method to set up rooms
+        Kitchen kitchen = new Kitchen(); // Create an instance of the Kitchen class
         
         Console.Clear();
 
@@ -44,7 +45,7 @@ class Program
             {
                 break;
             }
-            Console.WriteLine("You can't leave it blank. Put a name it already:");
+            Console.WriteLine("Name cannot be empty. Please enter your name:");
         }
 
         Player player = new Player(playerName, startRoom); // Pass both playerName and startRoom
@@ -149,7 +150,7 @@ class Program
                     }
                     else
                     {
-                        Graphics.Type(player.fastMode, "Check your inventory lately? You already have this item!");
+                        Graphics.Type(player.fastMode, "You already have this item!");
                     }
                 }
                 else
@@ -193,7 +194,33 @@ class Program
 
             else if (examineCommand.Contains(command[0])) // look method
             {
-                player.CurrentRoom.DisplayRoomInfo(); // Call the method to display room details
+                Console.WriteLine($"Room: {player.CurrentRoom.Name}"); // Display the room name
+                Console.WriteLine(player.CurrentRoom.GetStateBasedDescription()); // Display state-based description
+
+                Console.WriteLine("\nItems in this room:");
+                if (player.CurrentRoom.Items.Count > 0)
+                {
+                    foreach (var item in player.CurrentRoom.Items)
+                    {
+                        Console.WriteLine($"- {item}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("None.");
+                }
+
+                Console.WriteLine("\nExits:");
+                foreach (var exit in player.CurrentRoom.Exits.Keys)
+                {
+                    Console.WriteLine($"- {exit}");
+                }
+
+                Console.WriteLine("\nRoom Map:");
+                Tileset tileset = new Tileset(); // Create an instance of Tileset
+                tileset.RenderDungeon(player.CurrentRoom.RoomMap); // Render the relevant tile map for the current room
+
+                player.CurrentRoom.IncrementVisitState(); // Increment the visit state for the room
             }
 
             else if (useCommand.Contains(command[0])) // use method
@@ -226,6 +253,12 @@ class Program
             {
                 Graphics.Type(player.fastMode, "Until we meet again...!\n");
                 break;
+            }
+
+            else if (input == "enter kitchen")
+            {
+                string kitchenDescription = kitchen.GetDescription(); // Get the next description for the kitchen
+                Console.WriteLine($"Kitchen Description:\n{kitchenDescription}");
             }
 
             else
