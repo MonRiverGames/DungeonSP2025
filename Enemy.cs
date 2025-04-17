@@ -30,6 +30,12 @@ namespace DungeonGame
             player.Debuff("poison", 3, 1f);
         }
 
+        public void FireAttack(Player player)
+        {
+            Console.WriteLine($"{Name} uses fire breath on {player.Name}!");
+            player.Debuff("fire", 3, 1f);
+        }
+
         // Enemy chooses what action to take during its turn
         public virtual void EnemyTurn(Player player)
         {
@@ -165,5 +171,21 @@ namespace DungeonGame
             Graphics.Type(player.fastMode, $"{Name} spits acid at {player.Name}!", "red");
             player.TakeDamage(15); // Example acid damage
         }
+    }
+
+    public class Lich : Enemy
+    {
+        public Lich(string name, int health) : base ("Lich", 100, 100) {}
+
+        public override void Attack(Player player)
+        {
+         Graphics.Type(player.fastMode, $"{Name} opens its maw and spits fire from it mouth at {player.Name}!!", "red");
+         player.TakeDamage(20);//Fire damage   
+        }
+    }
+
+    public class Spirit : Enemy
+    {
+        public Spirit(string name, int health) : base ("Spirit", 75,75) {}
     }
 }

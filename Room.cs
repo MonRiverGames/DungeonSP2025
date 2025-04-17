@@ -18,6 +18,8 @@ namespace DungeonGame
 
         private int visitState = 1; // Tracks the number of visits to this room
 
+        public List  <string> Enemies {get; set; } = new List<string>();
+
         // Constructor
         public Room(string name, string description)
         {
@@ -40,6 +42,12 @@ namespace DungeonGame
         {
             if (string.IsNullOrWhiteSpace(item)) throw new ArgumentException("Item cannot be null or empty.", nameof(item));
             Items.Add(item);
+        }
+
+        public void AddEnemy (string enemy)
+        {
+            if (string.IsNullOrWhiteSpace(enemy)) throw new ArgumentException("Item cannot be null or empty.", nameof(enemy));
+            Enemies.Add(enemy);
         }
 
         // Remove an item from this room
@@ -125,6 +133,8 @@ namespace DungeonGame
             }
         }
 
+        
+
         public static Room InitializeRooms()
         {
             // Initialize Rooms
@@ -200,6 +210,17 @@ namespace DungeonGame
             { 01, 00, 00, 00, 00, 00, 01},
             { 06, 00, 00, 02, 02, 02, 05},
             };
+
+            // Adds Enemies to the rooms
+            livingRoom.Enemies.Add("Spirit");
+            kitchenRoom.Enemies.Add("AcidWorm");
+            libraryRoom.Enemies.Add("Lich");
+            bedRoom.Enemies.Add("Spirit");
+
+
+
+
+
 
             return startRoom; // Return the starting room
         }
