@@ -27,8 +27,10 @@ class Program
     {
         // Initialize Rooms
         Room startRoom = Room.InitializeRooms(); // Use the static method to set up rooms
+        
+        Console.Clear();
 
-        Console.WriteLine("What is your name adventurer?");
+        Console.WriteLine("What is your name?");
         string playerName;
         while (true)
         {
@@ -44,32 +46,25 @@ class Program
             }
             Console.WriteLine("Name cannot be empty. Please enter your name:");
         }
+
         Player player = new Player(playerName, startRoom); // Pass both playerName and startRoom
-        // PROLOGUE ⬇️
-        Graphics.Type(player.fastMode, "It's a gloomy night, but amid the treacherous downpour, " + $"{player.Name} pushes on.");
-        Graphics.Type(player.fastMode, "You trudge through the soggy terrain, your shoes repeatedly submerged in the deep mud.");
-        Graphics.Type(player.fastMode, "I have to find my cat,' you whisper to yourself."); // Cat can be changed to dad, but I feel like the story has changed based on the name lol
-        Graphics.Type(player.fastMode, "As you shiver in soaked clothes, you become desperate for shelter.");
-        Graphics.Type(player.fastMode, "You've walked so far that you seem to be off the grid, though... No trace of your cat's paw prints anymore either...");
-        Graphics.Type(player.fastMode, "You continue to walk, and eventually light becomes visible in the distance.");
-        // Sample use of drawing a map using the Tileset.cs system
-        Tileset tileset = new Tileset();
-        tileset.RenderDungeon(tileset.sampleMap);
-        Graphics.Type(player.fastMode, "You finally reach a mansion consumed in ivy and surrounded by overgrown weeds.");
-        Graphics.Type(player.fastMode, $"{player.Name} tugs on the front door, and it creaks open.");
-        Graphics.Type(player.fastMode, "The door is cracked, and on it, there's a sign.");
+        
+        player.ClassChoice();
+        System.Console.WriteLine();
+
         Graphics.Type(player.fastMode, "Welcome to..."); //temporary name
         Graphics.Title();
-        Graphics.Type(player.fastMode, "As you step in, the door creaks shut behind you -- and latches. It's locked.");
-        Graphics.Type(player.fastMode, "You have no other choice but to look around, but as you do, you realize just how big this dungeon is.");
-
-
-        //Graphics.Type(player.fastMode, "Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
         Graphics.Menu(player, "start");
+        Graphics.Prolouge(player);
+        //Graphics.Type(player.fastMode, "Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
 
-       // Game Loop!
         while (true)
         {
+            if (player.Inventory.Contains("end"))
+            {
+                player.EndingUnlocked = true;
+            }
+
             Console.Write("> ");
             string input = Console.ReadLine() ?? string.Empty;
             if (input == null)
@@ -80,16 +75,70 @@ class Program
             input = input.ToLower(); //detects player input
             string[] command = input.Split(' '); // splits the input into two separate inputs (command) to create an array within command
 
-            if (command.Length > 1 && moveCommand.Contains(command[0])) // if the first word (command[0]) is any of the movement words, then the following body of code will excute
+            if (moveCommand.Contains(command[0])) // if the first word (command[0]) is any of the movement words, then the following body of code will excute
             {
                 player.Move(command[1]); // Removed redundant player parameter.
+                
+                if (player.EndingUnlocked == true && player.CurrentRoom.Name == "Living Room") // intiates game ending
+                {
+                    Graphics.Type(player.fastMode, "A small kitty walks out from the corner of the room. It stands and stares into your soul.");
+
+                    if (player.Inventory.Contains("collar")) // enables route 1 ending
+                    {
+                        Graphics.Type(player.fastMode, "It notices that you have a collar clipped onto your belt.");
+                        Graphics.Type(player.fastMode, "Slowly, the kitty creeps up to you.");
+                        Graphics.Type(player.fastMode, "Beady eyes peer into your soul.");
+                        Graphics.Type(player.fastMode, "A soft paw brushes up against your hand, as if it's asking for something.");
+
+                        if (player.Inventory.Contains("milk")) // good ending
+                        {
+                            Graphics.Type(player.fastMode, "You offer it the milk you found in the kitchen");
+                            Graphics.Type(player.fastMode, "It bows down and accepts you as a apprentice.");
+                            Graphics.Type(player.fastMode, "Congratulations! You got the good ending!", "green");
+                            Graphics.Type(player.fastMode, "Press any key to quit.", "green");
+                            Console.ReadKey();
+                            Environment.Exit(0);                                                  
+                        }
+                        else // bad ending
+                        {
+                            Graphics.Type(player.fastMode, "You have nothing to offer to Lich Kitty");
+                            Graphics.Type(player.fastMode, "It seems disappointed and ushers you to the door.");
+                            Graphics.Type(player.fastMode, "You watch as Lich Kitty puts out the fires you started, and you decide that you've disappointed it.");
+                            Graphics.Type(player.fastMode, "You leave the house.");
+                            Graphics.Type(player.fastMode, "You got the ok ending!", "green");
+                            Graphics.Type(player.fastMode, "Press any key to quit.", "green");
+                            Console.ReadKey();
+                            Environment.Exit(0);                                                  
+                        }
+                    }
+
+                    else // worst ending
+                    {
+                    Graphics.Type(player.fastMode, "It thinks of you as a sneaky scoundrel and startles you with a sassy, squinty, slightly suspicious stare.");
+                    Graphics.Type(player.fastMode, "All of a sudden, it barrels towards you."); //this is a temporary example of the battle function
+                    /*Enemy LichKitty = new LichKitty(default, default)*/; // create Lich Kitty //CURRENTLY DISABLED
+                    /*Enemy.Battle(LichKitty, player)*/;  //method to initiate battle //CURRENTLY DISABLED
+                    //if player wins the battle, this happens v
+                    Graphics.Type(player.fastMode, "You peer down the lifeless soul of Lich Kitty.", "red", 200, 50);
+                    Graphics.Type(player.fastMode, "GAME OVER.", "red", 200, 50);      
+                    Graphics.Type(player.fastMode, "Press any key to quit.", "green");
+                    Console.ReadKey();             
+                    Environment.Exit(0);                                                  
+                    }
+                } 
             }
 
             else if (input == "menu") // if the first word (command[0]) is any of the movement words, then the following body of code will excute
             {
                 Graphics.Menu(player); //method that accepts the inputted value and then excutes for whatever happens
             }
-            else if (command.Length > 1 && grabCommand.Contains(command[0]))
+            
+            else if (input == "help") // if the first word (command[0]) is any of the movement words, then the following body of code will excute
+            {
+                Graphics.Help(player); //method that accepts the inputted value and then excutes for whatever happens
+            }
+
+            else if (grabCommand.Contains(command[0])) // grab method
             {
                 if (!string.IsNullOrEmpty(command[1]) && player.CurrentRoom.Items.Contains(command[1]))
                 {
@@ -109,47 +158,17 @@ class Program
                 }
             }
             
-            else if (command.Length > 1 && fightCommand.Contains(command[0]))
+            else if (fightCommand.Contains(command[0])) // fight method
             {
+                if (player.CurrentRoom.Name == "Foyer")
+                {
                 Graphics.Type(player.fastMode, "This is a test battle."); //this is a temporary example of the battle function
                 Enemy AcidWorm = new AcidWorm(default, default); // create acid worm
                 Enemy.Battle(AcidWorm, player);  //method to initiate battle
-            }
-            else if (command.Length > 1 && talkCommand.Contains(command[0]))
-            {
-                //player.Talk(command[1]);  this is for dialogue options (delete slashes & modify)
-            }
-            else if (examineCommand.Contains(command[0]))
-            {
-                player.CurrentRoom.DisplayRoomInfo(); // Call the method to display room details
-            }
-            else if (command.Length > 1 && useCommand.Contains(command[0]))
-            {
-                if (!player.Inventory.Contains(command[1]) /*&& !Room.Objects.Contains(command[1])*/)  // if the target doesn't exist in the inventory and the room, then it will return a invalid message || currently has the room objects checker OFF
-                {
-                    Graphics.Type(player.fastMode, "You can't use this. It doesn't exist.");
-                }
-                else if (player.Inventory.Contains(command[1])) //if player has the item, they are able to use it
-                {
-                    // use object method goes here
-                }
-                /* //if the room has the object, they are able to use it | separate method
-                else if(Room.Objects.Contains(command[1]) 
-               {
-                    // use room object method goes here
-                }*/
-                else
-                {
-                    Graphics.Type(player.fastMode, "Invalid use command."); //placeholder text
                 }
             }
 
-            else if (command.Length > 1 && inventoryCommand.Contains(command[0]))
-            {
-                player.Inventory.ShowInventory();
-            }
-
-            else if (input == "talk") // Story-driven interaction test case of loop
+            else if (talkCommand.Contains(command[0])) // talk method
             {
                 if (player.CurrentRoom.Name == "Foyer")
                 {
@@ -172,15 +191,47 @@ class Program
                 }
             }
 
+            else if (examineCommand.Contains(command[0])) // look method
+            {
+                player.CurrentRoom.DisplayRoomInfo(); // Call the method to display room details
+            }
+
+            else if (useCommand.Contains(command[0])) // use method
+            {
+                if (!player.Inventory.Contains(command[1]) /*&& !Room.Objects.Contains(command[1])*/)  // if the target doesn't exist in the inventory and the room, then it will return a invalid message || currently has the room objects checker OFF
+                {
+                    Graphics.Type(player.fastMode, "You can't use this because you don't have it!");
+                }
+                else if (player.Inventory.Contains(command[1])) //if player has the item, they are able to use it
+                {
+                    // use object method goes here
+                }
+                /* //if the room has the object, they are able to use it | separate method
+                else if(Room.Objects.Contains(command[1]) 
+               {
+                    // use room object method goes here
+                }*/
+                else
+                {
+                    Graphics.Type(player.fastMode, "Invalid use command."); //placeholder text
+                }
+            }
+
+            else if (command.Length > 1 && inventoryCommand.Contains(command[0])) // check inventory
+            {
+                player.Inventory.ShowInventory();
+            }
+
             else if (input == "quit") //if the input is 'quit', then the game will break the continuous loop
             {
-                Graphics.Type(player.fastMode, "Until we meet again...!");
+                Graphics.Type(player.fastMode, "Until we meet again...!\n");
                 break;
             }
 
             else
             {
-                Graphics.Type(player.fastMode, "Invalid command.");
+                Graphics.Type(player.fastMode, "Invalid command.\n", "green");
+                Graphics.Type(player.fastMode, "If you need help, try typing in 'help!'\n", "green");
             }
         }
     }
