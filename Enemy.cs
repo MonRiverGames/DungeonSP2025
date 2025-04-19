@@ -30,6 +30,12 @@ namespace DungeonGame
             player.Debuff("poison", 3, 1f);
         }
 
+        public void FireAttack(Player player)
+        {
+            Console.WriteLine($"{Name} uses fire breath on {player.Name}!");
+            player.Debuff("fire", 3, 1f);
+        }
+
         // Enemy chooses what action to take during its turn
         public virtual void EnemyTurn(Player player)
         {
@@ -46,8 +52,8 @@ namespace DungeonGame
 
         public static void Battle(Enemy enemy, Player player)
         {
-            Graphics.Type(player.fastMode, $"You are now battling {enemy.Name}.", "none");
-            Graphics.Type(player.fastMode, $"[You are unable to interact with the room until you finish off {enemy.Name} or if you die. Good luck!]", "green", 0, 15);
+            Graphics.Type(player.fastMode, $"You are now battling {enemy.Name}. You got this!", "none");
+            Graphics.Type(player.fastMode, $"[You gotta kill the {enemy.Name} if you want to interact with the room. Either that or you die. Good luck! You're gonna need it.]", "green", 0, 15);
 
             string playerAction = "none";
             string enemyAction = "none";
@@ -58,11 +64,14 @@ namespace DungeonGame
                 {
                     Graphics.Type(player.fastMode, "You start to feel woozy. Your breaths become shallower, and your vision begins to darken. Eventually, you can't see anything. You can't feel anything.", "green", 200, 50);
                     Graphics.Type(player.fastMode, "YOU DIED.", "green", 200, 50);
+                    Graphics.Type(player.fastMode, "Press any key to exit.", "green", 200, 50);
+                    Console.ReadKey();
+                    Environment.Exit(0);
                     break;
                 }
                 else if (enemy.Health.current <= 0)
                 {
-                    Graphics.Type(player.fastMode, $"You deliver the final blow to the {enemy.Name}. It shrieks in pain. You sigh, it's over.", "none", 200, 50);
+                    Graphics.Type(player.fastMode, $"You deliver the final blow to the {enemy.Name}. It shrieks in pain. You sigh, and wonder how you ever survived.", "none", 200, 50);
                     Graphics.Type(player.fastMode, "YOU HAVE SLAIN YOUR ENEMY.", "green", 200, 50);
                     break;
                 }
@@ -145,7 +154,7 @@ namespace DungeonGame
                 }
                 else
                 {
-                    Graphics.Type(player.fastMode, "\nSomething wrong happened. You should never get this message!\n");
+                    Graphics.Type(player.fastMode, "\nWhat the... You broke something didn't you? You're not supposed to be able to get this text!\n");
                 }
             }
         }
@@ -162,5 +171,21 @@ namespace DungeonGame
             Graphics.Type(player.fastMode, $"{Name} spits acid at {player.Name}!", "red");
             player.TakeDamage(15); // Example acid damage
         }
+    }
+
+    public class Lich : Enemy
+    {
+        public Lich(string name, int health) : base ("Lich", 100, 100) {}
+
+        public override void Attack(Player player)
+        {
+         Graphics.Type(player.fastMode, $"{Name} opens its maw and spits fire from it mouth at {player.Name}!!", "red");
+         player.TakeDamage(20);//Fire damage   
+        }
+    }
+
+    public class Spirit : Enemy
+    {
+        public Spirit(string name, int health) : base ("Spirit", 75,75) {}
     }
 }
