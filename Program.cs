@@ -27,7 +27,6 @@ class Program
     {
         // Initialize Rooms
         Room startRoom = Room.InitializeRooms(); // Use the static method to set up rooms
-        Kitchen kitchen = new Kitchen(); // Create an instance of the Kitchen class
         
         Console.Clear();
 
@@ -253,12 +252,6 @@ class Program
             {
                 Graphics.Type(player.fastMode, "Until we meet again...!\n");
                 break;
-            }
-
-            else if (input == "enter kitchen")
-            {
-                string kitchenDescription = kitchen.GetDescription(); // Get the next description for the kitchen
-                Console.WriteLine($"Kitchen Description:\n{kitchenDescription}");
             }
 
             else

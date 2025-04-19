@@ -265,7 +265,25 @@ namespace DungeonGame
                     case 5:
                         return "There is nothing left for you here. Try something else.";
                     default:
-                        return "The room seems unfamiliar. Are you lost?";
+                        return "The bedroom seems unfamiliar. Are you lost?";
+                }
+            }
+            else if (Name == "Library")
+            {
+                switch (visitState)
+                {
+                    case 1:
+                        return "You have entered the library. Accents of pink adorn each shelf.";
+                    case 2:
+                        return "You return to the place where one must read. READ.";
+                    case 3:
+                        return "You return to the place of books. Maybe you missed something Chiken Jockey.";
+                    case 4:
+                        return "You're back in the stacks. You could get lost here.";
+                    case 5:
+                        return "There is nothing left for you here. Try something else.";
+                    default:
+                        return "The library room seems unfamiliar. Are you lost?";
                 }
             }
 
