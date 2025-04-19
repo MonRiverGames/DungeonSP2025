@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace DungeonGame
 {
@@ -44,10 +45,12 @@ namespace DungeonGame
             Items.Add(item);
         }
 
+    
         public void AddEnemy (string enemy)
         {
             if (string.IsNullOrWhiteSpace(enemy)) throw new ArgumentException("Item cannot be null or empty.", nameof(enemy));
             Enemies.Add(enemy);
+           
         }
 
         // Remove an item from this room
@@ -217,7 +220,7 @@ namespace DungeonGame
 
             // Adds Enemies to the rooms
             livingRoom.Enemies.Add("Spirit");
-            kitchenRoom.Enemies.Add("AcidWorm");
+            kitchenRoom.Enemies.Add("Acid Worm");
             libraryRoom.Enemies.Add("Lich");
             bedRoom.Enemies.Add("Spirit");
 

@@ -37,11 +37,15 @@ namespace DungeonGame
         }
 
         // Enemy chooses what action to take during its turn
-        public virtual void EnemyTurn(Player player)
+        public virtual string EnemyTurn(Player player)
         {
-            Console.WriteLine($"{Name} is taking its turn.");
-            // Default enemy behavior
+         Random rng = new Random();
+         string[] actions = { "attack", "defend", "grab" };
+         string action = actions[rng.Next(actions.Length)];
+         Graphics.Type(player.fastMode, $"{Name} chose to {action}!");
+         return action;
         }
+
 
         public void TakeDamage(float damage, bool fastMode)
         {
@@ -111,12 +115,7 @@ namespace DungeonGame
                     }
                 }
 
-                Random rng = new Random(); // Random number generator
-                string[] actions = { "attack", "defend", "grab" }; // Enemy action options
-                int index = rng.Next(actions.Length); // Pick a random index between 0 and 2
-                enemyAction = actions[index];
-
-                Graphics.Type(player.fastMode, $"Enemy chose to {enemyAction}!");
+                enemyAction = enemy.EnemyTurn(player);  // Now calls the polymorphic version
 
                 if (playerAction == enemyAction)
                 {
@@ -182,10 +181,34 @@ namespace DungeonGame
          Graphics.Type(player.fastMode, $"{Name} opens its maw and spits fire from it mouth at {player.Name}!!", "red");
          player.TakeDamage(20);//Fire damage   
         }
+        public override string EnemyTurn(Player player)
+        {
+         Random rng = new Random();
+         int roll = rng.Next(100);
+
+         if (roll < 60)
+         {
+           Graphics.Type(player.fastMode, $"{Name} prepares a fire spell!", "red");
+           return "attack";
+         }
+           else if (roll < 80)
+         {
+            Graphics.Type(player.fastMode, $"{Name} raises a bone shield!", "yellow");
+            return "defend";
+         }
+           else
+         {
+            Graphics.Type(player.fastMode, $"{Name} attempts to grab you with a spectral hand!", "purple");
+            return "grab";
+         }
+        }
+
     }
 
     public class Spirit : Enemy
     {
         public Spirit(string name, int health) : base ("Spirit", 75,75) {}
     }
+
+    
 }
