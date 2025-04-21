@@ -58,10 +58,10 @@ public class Player
     public void ClassChoice()
     {
         Console.WriteLine("\nChoose a Class! This determines your stats and abilities. Choose wisely.");
-        Console.WriteLine("1: Knight: Heavy Armor & Heavy Weapons. Health = 20");
-        Console.WriteLine("2: Rogue: Light Armor & Small Weapons. Health = 12");
-        Console.WriteLine("3: Wizard: Staffs & Damaging Magic/Spells. Health = 10");
-        Console.WriteLine("4: Cleric: Healing Spells & Blunt Weapons. Health = 15");
+        Console.WriteLine("1: Knight: Heavy Armor & Heavy Weapons.");
+        Console.WriteLine("2: Rogue: Light Armor & Small Weapons.");
+        Console.WriteLine("3: Wizard: Staffs & Damaging Magic/Spells.");
+        Console.WriteLine("4: Cleric: Healing Spells & Blunt Weapons.");
 
         int classChoice;
         while (true)
@@ -74,7 +74,7 @@ public class Player
                     case 1:
                         PlayerClass = "Knight";
                         Console.WriteLine("Knight");
-                        Health = (20, 20f);
+                        Health = (100, 100f);
                         Strength = (10, 10f);
                         Defense = (20, 20f);
                         Agility = (5, 5f);
@@ -82,7 +82,7 @@ public class Player
                     case 2:
                         PlayerClass = "Rogue";
                         Console.WriteLine("Rogue");
-                        Health = (12, 12f);
+                        Health = (100, 100f);
                         Strength = (8, 8f);
                         Defense = (10, 10f);
                         Agility = (20, 20f);
@@ -90,7 +90,7 @@ public class Player
                     case 3:
                         PlayerClass = "Wizard";
                         Console.WriteLine("Wizard");
-                        Health = (10, 10f);
+                        Health = (100, 100f);
                         Strength = (2, 2f);
                         Defense = (5, 5f);
                         Agility = (8, 8f);
@@ -98,7 +98,7 @@ public class Player
                     case 4:
                         PlayerClass = "Cleric";
                         Console.WriteLine("Cleric");
-                        Health = (15, 15f);
+                        Health = (100, 100f);
                         Strength = (5, 5);
                         Defense = (10, 10f);
                         Agility = (10, 10f);

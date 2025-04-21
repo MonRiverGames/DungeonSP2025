@@ -172,9 +172,9 @@ namespace DungeonGame
         }
     }
 
-    public class Lich : Enemy
+    public class LichKitty : Enemy
     {
-        public Lich(string name, int health) : base ("Lich", 100, 100) {}
+        public LichKitty(string name, int health) : base ("Lich Kitty", 100, 100) {}
 
         public override void Attack(Player player)
         {
@@ -207,7 +207,12 @@ namespace DungeonGame
 
     public class Spirit : Enemy
     {
-        public Spirit(string name, int health) : base ("Spirit", 75,75) {}
+        public Spirit(string name, int health) : base ("Spirit", 25,25) {}
+        public override void Attack(Player player)
+        {
+            Graphics.Type(player.fastMode, $"{Name} leaps through {player.Name} soul!", "red");
+            player.TakeDamage(15); // Example spirit damage
+        }
     }
 
     
