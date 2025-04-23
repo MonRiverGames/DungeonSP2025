@@ -7,6 +7,7 @@ This template provides the foundational structure for a text-based dungeon crawl
 using DungeonGame;
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 // Main Program
 class Program
 {
@@ -27,45 +28,56 @@ class Program
     {
         // Initialize Rooms
         Room startRoom = Room.InitializeRooms(); // Use the static method to set up rooms
-        
+        Tileset tileset = new Tileset(); // Create an instance of Tileset
+
         Console.Clear();
-
-        Console.WriteLine("What is your name?");
-        string playerName;
-        while (true)
-        {
-            playerName = Console.ReadLine() ?? string.Empty;
-            if (playerName == null)
-            {
-                Console.WriteLine("Input stream closed. Exiting...");
-                return;
-            }
-            if (!string.IsNullOrEmpty(playerName))
-            {
-                break;
-            }
-            Console.WriteLine("Name cannot be empty. Please enter your name:");
-        }
-
-        Player player = new Player(playerName, startRoom); // Pass both playerName and startRoom
+        GameData gameData = GameData.LoadGame(startRoom.Exits["North"]);
+        Player player;
         
-        player.ClassChoice();
+        // Name prompt only runs if gameData is not resuming a save file
+        if (!gameData.IsResuming)
+        {
+            Console.WriteLine("What is your name?");
+            string Name;
+            while (true)
+            {
+                Name = Console.ReadLine() ?? string.Empty;
+                if (Name == null)
+                {
+                    Console.WriteLine("Input stream closed. Exiting...");
+                    return;
+                }
+                if (!string.IsNullOrEmpty(Name))
+                {
+                    gameData.PlayerName = Name;
+                    break;
+                }
+                Console.WriteLine("Name cannot be empty. Please enter your name:");
+            }
+            player = new Player(startRoom, gameData); // Pass both playerName and startRoom
+            player.ClassChoice();
+        }
+        else
+        {
+            player = new Player(gameData.CurrentRoom, gameData); // Pass both playerName and CurrentRoom
+        } 
+        
         System.Console.WriteLine();
 
         Graphics.Type(player.fastMode, "Welcome to..."); //temporary name
         Graphics.Title();
         Graphics.Menu(player, "start");
-        Graphics.Prolouge(player);
+        if (!gameData.IsResuming) Graphics.Prolouge(player); // Prolouge only plays if gameData is not resuming a save file
         //Graphics.Type(player.fastMode, "Type 'go north', 'go south', 'go east', or 'go west' to move in any of the cardinal directions.");
 
         while (true)
         {
-            if (player.Inventory.Contains("end"))
+            if (gameData.PlayerInventory.Contains("end"))
             {
-                player.EndingUnlocked = true;
+                gameData.EndingUnlocked = true;
             }
-
-            Console.Write("> ");
+            GameData.SaveGame(gameData); // Saves the game at the the start of command loop
+            Console.Write("\n> ");
             string input = Console.ReadLine() ?? string.Empty;
             if (input == null)
             {
@@ -79,18 +91,18 @@ class Program
             {
                 player.Move(command[1]); // Removed redundant player parameter.
                 
-                if (player.EndingUnlocked == true && player.CurrentRoom.Name == "Living Room") // intiates game ending
+                if (gameData.EndingUnlocked == true && gameData.CurrentRoom.Name == "Living Room") // intiates game ending
                 {
                     Graphics.Type(player.fastMode, "A small kitty walks out from the corner of the room. It stands and stares into your soul.");
 
-                    if (player.Inventory.Contains("collar")) // enables route 1 ending
+                    if (gameData.PlayerInventory.Contains("collar")) // enables route 1 ending
                     {
                         Graphics.Type(player.fastMode, "It notices that you have a collar clipped onto your belt.");
                         Graphics.Type(player.fastMode, "Slowly, the kitty creeps up to you.");
                         Graphics.Type(player.fastMode, "Beady eyes peer into your soul.");
                         Graphics.Type(player.fastMode, "A soft paw brushes up against your hand, as if it's asking for something.");
 
-                        if (player.Inventory.Contains("milk")) // good ending
+                        if (gameData.PlayerInventory.Contains("milk")) // good ending
                         {
                             Graphics.Type(player.fastMode, "You offer it the milk you found in the kitchen");
                             Graphics.Type(player.fastMode, "It bows down and accepts you as a apprentice.");
@@ -140,12 +152,12 @@ class Program
 
             else if (grabCommand.Contains(command[0])) // grab method
             {
-                if (!string.IsNullOrEmpty(command[1]) && player.CurrentRoom.Items.Contains(command[1]))
+                if (!string.IsNullOrEmpty(command[1]) && gameData.CurrentRoom.Items.Contains(command[1]))
                 {
-                    if (!player.Inventory.Contains(command[1])) // if the player doesn't have the item, they are able to grab the item
+                    if (!gameData.PlayerInventory.Contains(command[1])) // if the player doesn't have the item, they are able to grab the item
                     {
-                        player.Inventory.AddItem(command[1]);
-                        player.CurrentRoom.Items.Remove(command[1]);
+                        gameData.PlayerInventory.AddItem(command[1]);
+                        gameData.CurrentRoom.Items.Remove(command[1]);
                     }
                     else
                     {
@@ -160,7 +172,7 @@ class Program
             
             else if (fightCommand.Contains(command[0])) // fight method
             {
-                if (player.CurrentRoom.Name == "Kitchen")
+                if (gameData.CurrentRoom.Name == "Kitchen")
                 {
                 Graphics.Type(player.fastMode, "The apple contains a terrible curse. From its core springs an Acid Worm."); //this is a temporary example of the battle function
                 Enemy AcidWorm = new AcidWorm(default, default); // create acid worm
@@ -170,7 +182,7 @@ class Program
 
              else if (fightCommand.Contains(command[0])) // fight method
             {
-                if (player.CurrentRoom.Name == "Bedroom")
+                if (gameData.CurrentRoom.Name == "Bedroom")
                 {
                 Graphics.Type(player.fastMode, "The master of this household rises in an etheral form"); //battle function
                 Graphics.Type(player.fastMode, "and begins to attack you with a barrage of pillows."); //
@@ -181,14 +193,14 @@ class Program
 
             else if (talkCommand.Contains(command[0])) // talk method
             {
-                if (player.CurrentRoom.Name == "Kitchen")
+                if (gameData.CurrentRoom.Name == "Kitchen")
                 {
                     Console.WriteLine("You see a wrinkly lych sitting by the stove. He seems to be petting one of those white rat dogs.\nHe smiles at you as his dog gives you THAT stare and asks:");
                     Console.WriteLine("'Welcome, adventurer. Would you like to pet my sickly pup? His name is Coconut.\nOh! Also, why are you here?'");
                     Console.WriteLine("'Take this key, I believe it's supposed to help you.'");
-                    if (!player.Inventory.Contains("key")) //if the player doesn't have the item, they are able to grab the item
+                    if (!gameData.PlayerInventory.Contains("key")) //if the player doesn't have the item, they are able to grab the item
                     {
-                        player.Inventory.AddItem("key");
+                        gameData.PlayerInventory.AddItem("key");
                         Graphics.Type(player.fastMode, "You received a key!");
                     }
                     else
@@ -204,13 +216,13 @@ class Program
 
             else if (examineCommand.Contains(command[0])) // look method
             {
-                Console.WriteLine($"Room: {player.CurrentRoom.Name}"); // Display the room name
-                Console.WriteLine(player.CurrentRoom.GetStateBasedDescription()); // Display state-based description
+                Console.WriteLine($"Room: {gameData.CurrentRoom.Name}"); // Display the room name
+                Console.WriteLine(gameData.CurrentRoom.GetStateBasedDescription()); // Display state-based description
 
                 Console.WriteLine("\nItems in this room:");
-                if (player.CurrentRoom.Items.Count > 0)
+                if (gameData.CurrentRoom.Items.Count > 0)
                 {
-                    foreach (var item in player.CurrentRoom.Items)
+                    foreach (var item in gameData.CurrentRoom.Items)
                     {
                         Console.WriteLine($"- {item}");
                     }
@@ -221,25 +233,24 @@ class Program
                 }
 
                 Console.WriteLine("\nExits:");
-                foreach (var exit in player.CurrentRoom.Exits.Keys)
+                foreach (var exit in gameData.CurrentRoom.Exits.Keys)
                 {
                     Console.WriteLine($"- {exit}");
                 }
 
                 Console.WriteLine("\nRoom Map:");
-                Tileset tileset = new Tileset(); // Create an instance of Tileset
-                tileset.RenderDungeon(player.CurrentRoom.RoomMap); // Render the relevant tile map for the current room
+                tileset.RenderDungeon(gameData.CurrentRoom.RoomMap); // Render the relevant tile map for the current room
 
-                player.CurrentRoom.IncrementVisitState(); // Increment the visit state for the room
+                gameData.CurrentRoom.IncrementVisitState(); // Increment the visit state for the room
             }
 
             else if (useCommand.Contains(command[0])) // use method
             {
-                if (!player.Inventory.Contains(command[1]) /*&& !Room.Objects.Contains(command[1])*/)  // if the target doesn't exist in the inventory and the room, then it will return a invalid message || currently has the room objects checker OFF
+                if (!gameData.PlayerInventory.Contains(command[1]) /*&& !Room.Objects.Contains(command[1])*/)  // if the target doesn't exist in the inventory and the room, then it will return a invalid message || currently has the room objects checker OFF
                 {
                     Graphics.Type(player.fastMode, "You can't use this because you don't have it!");
                 }
-                else if (player.Inventory.Contains(command[1])) //if player has the item, they are able to use it
+                else if (gameData.PlayerInventory.Contains(command[1])) //if player has the item, they are able to use it
                 {
                     // use object method goes here
                 }
@@ -256,7 +267,7 @@ class Program
 
             else if (command.Length > 1 && inventoryCommand.Contains(command[0])) // check inventory
             {
-                player.Inventory.ShowInventory();
+                gameData.PlayerInventory.ShowInventory();
             }
 
             else if (input == "quit") //if the input is 'quit', then the game will break the continuous loop

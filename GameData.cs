@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+namespace DungeonGame
+{
+    public class GameData
+    {
+        static string FilePath = "game_save.json";
+        public bool IsResuming = false;
+
+        public string PlayerName { get; set; }
+        public Room CurrentRoom { get; set; }
+        public Inventory PlayerInventory { get; set; }
+        public bool EndingUnlocked = false;
+
+        // Player stats, use .original for normal character stats + equipment bonuses, or use .current for interactions and temporary effects
+        public string PlayerClass = "Unset";
+        public (int original, float current) Health { get; set; }
+        public (int original, float current) Strength { get; set; }
+        public (int original, float current) Defense { get; set; }
+        public (int original, float current) Agility { get; set; }
+
+        public GameData()
+        {
+            PlayerInventory = new Inventory();
+        }
+
+        // Main Load method, takes the 'startRoom.Exits[North]' parameter which equals livingRoom
+        public static GameData LoadGame(Room livingRoom)
+        {
+            GameData gameData = File.Exists(FilePath) ? JsonConvert.DeserializeObject<GameData>(File.ReadAllText(FilePath)) : new GameData();
+            if (File.Exists(FilePath))
+            {
+                Graphics.Type(false, $"Hello there {gameData.PlayerName}, would you like to resume your game? (Y/N)");
+                while (true)
+                {
+                    Thread.Sleep(50);
+                    Console.Write("\n> ");
+                    string response = Console.ReadLine().ToLower();
+                    if (response.Contains("y"))
+                    {
+                        List<Room> rooms = new List<Room> { livingRoom, livingRoom.Exits["North"], livingRoom.Exits["East"], livingRoom.Exits["South"], livingRoom.Exits["West"] };
+                        gameData.CurrentRoom = rooms.Find(room => room.Name == gameData.CurrentRoom.Name);
+                        gameData.IsResuming = true;
+                        break;
+                    }
+                    else if (response.Contains("n"))
+                    {
+                        gameData.IsResuming = false;
+                        ResetGame();
+                        break;
+                    }
+                    Graphics.Type(false, "It's a simple question...\nWould you like to resume your game? (Y/N)");
+                }
+            }
+
+            return gameData;
+        }
+
+        // Save method, pass in current gameData reference
+        public static void SaveGame(GameData gameData)
+        {
+            File.WriteAllText(FilePath, JsonConvert.SerializeObject(gameData, Formatting.Indented));
+        }
+
+        // Reset Save file
+        public static void ResetGame()
+        {
+            if (File.Exists(FilePath)) File.Delete(FilePath);
+        }
+    }
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace DungeonGame
 {
@@ -10,10 +11,10 @@ namespace DungeonGame
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public Dictionary<string, Room> Exits { get; set; } = new Dictionary<string, Room>();
+        [JsonIgnore] public Dictionary<string, Room> Exits { get; set; } = new Dictionary<string, Room>();
         public List<string> Items { get; set; } = new List<string>();
         public Dictionary<string, string> Actions { get; private set; }
-        public int[,] RoomMap { get; private set; } // Stores ascii map reference array
+        public int[,] RoomMap { get; set; } // Stores ascii map reference array
 
         Tileset tileset = new Tileset();
 
@@ -169,8 +170,6 @@ namespace DungeonGame
             livingRoom.Items.Add("emeralds");
             kitchenRoom.Items.Add("diamonds");
 
-
-
             // Add map arrays to rooms
             startRoom.RoomMap = new int[,]{
             { 03, 02, 00, 00, 00, 02, 04},
@@ -223,11 +222,6 @@ namespace DungeonGame
             kitchenRoom.Enemies.Add("Acid Worm");
             libraryRoom.Enemies.Add("Lich");
             bedRoom.Enemies.Add("Spirit");
-
-
-
-
-
 
             return startRoom; // Return the starting room
         }
@@ -301,11 +295,6 @@ namespace DungeonGame
             {
                 visitState++;
             }
-        }
-
-        public override string ToString()
-        {
-            return GetStateBasedDescription();
         }
     }
 }

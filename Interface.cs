@@ -314,14 +314,14 @@ namespace DungeonGame
         public static void Prolouge(Player player)
         {
         // PROLOGUE ⬇️
-        Type(player.fastMode, "It's a gloomy night, but amid the treacherous downpour, " + $"{player.Name} pushes on.");
+        Type(player.fastMode, "It's a gloomy night, but amid the treacherous downpour, " + $"{player.gameData.PlayerName} pushes on.");
         Type(player.fastMode, "You trudge through the soggy terrain, your shoes repeatedly submerged in the deep mud.");
         Type(player.fastMode, "I have to find my cat,' you whisper to yourself."); // Cat can be changed to dad, but I feel like the story has changed based on the name lol
         Type(player.fastMode, "As you shiver in soaked clothes, you become desperate for shelter.");
         Type(player.fastMode, "You've walked so far that you seem to be off the grid, though... No trace of your cat's paw prints anymore either...");
         Type(player.fastMode, "You continue to walk, and eventually light becomes visible in the distance.\n");
         Type(player.fastMode, "You finally reach a mansion consumed in ivy and surrounded by overgrown weeds.");
-        Type(player.fastMode, $"{player.Name} tugs on the front door, and it creaks open.");
+        Type(player.fastMode, $"{player.gameData.PlayerName} tugs on the front door, and it creaks open.");
         Type(player.fastMode, "The door is cracked, and on it, there's a sign.");
         Type(player.fastMode, "As you step in, the door creaks shut behind you -- and latches. It's locked.");
         Type(player.fastMode, "You have no other choice but to look around, but as you do, you realize just how big this dungeon is.\n");

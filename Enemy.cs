@@ -19,20 +19,20 @@ namespace DungeonGame
         // Enemy attacks the player
         public virtual void Attack(Player player)
         {
-            Console.WriteLine($"{Name} attacks {player.Name}!");
+            Console.WriteLine($"{Name} attacks {player.gameData.PlayerName}!");
             player.TakeDamage(10); // Example damage value
         }
 
         // Special poison attack: applies a poison status to the player
         public void PoisonAttack(Player player)
         {
-            Console.WriteLine($"{Name} uses Poison Attack on {player.Name}!");
+            Console.WriteLine($"{Name} uses Poison Attack on {player.gameData.PlayerName}!");
             player.Debuff("poison", 3, 1f);
         }
 
         public void FireAttack(Player player)
         {
-            Console.WriteLine($"{Name} uses fire breath on {player.Name}!");
+            Console.WriteLine($"{Name} uses fire breath on {player.gameData.PlayerName}!");
             player.Debuff("fire", 3, 1f);
         }
 
@@ -64,7 +64,7 @@ namespace DungeonGame
 
             while (true)
             {
-                if (player.Health.current <= 0)
+                if (player.gameData.Health.current <= 0)
                 {
                     Graphics.Type(player.fastMode, "You start to feel woozy. Your breaths become shallower, and your vision begins to darken. Eventually, you can't see anything. You can't feel anything.", "green", 200, 50);
                     Graphics.Type(player.fastMode, "YOU DIED.", "green", 200, 50);
@@ -167,7 +167,7 @@ namespace DungeonGame
         // Overrides the TakeTurn behavior to include unique text
         public override void Attack(Player player)
         {
-            Graphics.Type(player.fastMode, $"{Name} spits acid at {player.Name}!", "red");
+            Graphics.Type(player.fastMode, $"{Name} spits acid at {player.gameData.PlayerName}!", "red");
             player.TakeDamage(15); // Example acid damage
         }
     }
@@ -178,7 +178,7 @@ namespace DungeonGame
 
         public override void Attack(Player player)
         {
-         Graphics.Type(player.fastMode, $"{Name} opens its maw and spits fire from it mouth at {player.Name}!!", "red");
+         Graphics.Type(player.fastMode, $"{Name} opens its maw and spits fire from it mouth at {player.gameData.PlayerName}!!", "red");
          player.TakeDamage(20);//Fire damage   
         }
         public override string EnemyTurn(Player player)
@@ -210,7 +210,7 @@ namespace DungeonGame
         public Spirit(string name, int health) : base ("Spirit", 25,25) {}
         public override void Attack(Player player)
         {
-            Graphics.Type(player.fastMode, $"{Name} leaps through {player.Name} soul!", "red");
+            Graphics.Type(player.fastMode, $"{Name} leaps through {player.gameData.PlayerName} soul!", "red");
             player.TakeDamage(15); // Example spirit damage
         }
     }
