@@ -101,7 +101,7 @@ class Program
                         }
                         else // bad ending
                         {
-                            Graphics.Type(player.fastMode, "You have nothing else to offer to Lich Kitty");
+                            Graphics.Type(player.fastMode, "You have nothing to offer to Lich Kitty");
                             Graphics.Type(player.fastMode, "It seems disappointed and ushers you to the door.");
                             Graphics.Type(player.fastMode, "You watch as Lich Kitty puts out the fires you started, and you decide that you've disappointed it.");
                             Graphics.Type(player.fastMode, "You leave the house.");
@@ -115,9 +115,9 @@ class Program
                     else // worst ending
                     {
                     Graphics.Type(player.fastMode, "It thinks of you as a sneaky scoundrel and startles you with a sassy, squinty, slightly suspicious stare.");
-                    Graphics.Type(player.fastMode, "All of a sudden, it barrels towards you."); 
-                    Enemy LichKitty = new LichKitty(default, default); // create Lich Kitty 
-                    Enemy.Battle(LichKitty, player); 
+                    Graphics.Type(player.fastMode, "All of a sudden, it barrels towards you."); //this is a temporary example of the battle function
+                    /*Enemy LichKitty = new LichKitty(default, default)*/; // create Lich Kitty //CURRENTLY DISABLED
+                    /*Enemy.Battle(LichKitty, player)*/;  //method to initiate battle //CURRENTLY DISABLED
                     //if player wins the battle, this happens v
                     Graphics.Type(player.fastMode, "You peer down the lifeless soul of Lich Kitty.", "red", 200, 50);
                     Graphics.Type(player.fastMode, "GAME OVER.", "red", 200, 50);      
@@ -160,30 +160,19 @@ class Program
             
             else if (fightCommand.Contains(command[0])) // fight method
             {
-                if (player.CurrentRoom.Name == "Kitchen")
+                if (player.CurrentRoom.Name == "Foyer")
                 {
-                Graphics.Type(player.fastMode, "The apple contains a terrible curse. From its core springs an Acid Worm."); //this is a temporary example of the battle function
+                Graphics.Type(player.fastMode, "This is a test battle."); //this is a temporary example of the battle function
                 Enemy AcidWorm = new AcidWorm(default, default); // create acid worm
                 Enemy.Battle(AcidWorm, player);  //method to initiate battle
                 }
             }
 
-             else if (fightCommand.Contains(command[0])) // fight method
-            {
-                if (player.CurrentRoom.Name == "Bedroom")
-                {
-                Graphics.Type(player.fastMode, "The master of this household rises in an etheral form"); //battle function
-                Graphics.Type(player.fastMode, "and begins to attack you with a barrage of pillows."); //
-                Enemy Spirit = new Spirit(default, default); // create spirit
-                Enemy.Battle(Spirit, player);  //method to initiate battle
-                }
-            }
-
             else if (talkCommand.Contains(command[0])) // talk method
             {
-                if (player.CurrentRoom.Name == "Kitchen")
+                if (player.CurrentRoom.Name == "Foyer")
                 {
-                    Console.WriteLine("You see a wrinkly lych sitting by the stove. He seems to be petting one of those white rat dogs.\nHe smiles at you as his dog gives you THAT stare and asks:");
+                    Console.WriteLine("You see a wrinkly lych sitting by the fire. He seems to be petting one of those white rat dogs.\nHe smiles at you as his dog gives you THAT stare and asks:");
                     Console.WriteLine("'Welcome, adventurer. Would you like to pet my sickly pup? His name is Coconut.\nOh! Also, why are you here?'");
                     Console.WriteLine("'Take this key, I believe it's supposed to help you.'");
                     if (!player.Inventory.Contains("key")) //if the player doesn't have the item, they are able to grab the item
