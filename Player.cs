@@ -258,7 +258,7 @@ public class Player
 
     static void DeathScene()
     {
-        Console.WriteLine("You have perished. Game over.");
+        Console.WriteLine("You died. Frankly, I could have done better. Game over.");
         // Add any additional logic for handling player death, such as restarting or exiting the game.
     }
 
