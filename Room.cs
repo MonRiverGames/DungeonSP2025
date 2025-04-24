@@ -137,7 +137,7 @@ namespace DungeonGame
             }
         }
 
-        public static Room InitializeRooms()
+        public static List<Room> InitializeRooms()
         {
             // Initialize Rooms
             Room startRoom = new Room("Foyer", "A kinda spooky black and red hall with barely any lighting. These torches seem on their last legs.. or wick I suppose.");
@@ -145,6 +145,7 @@ namespace DungeonGame
             Room libraryRoom = new Room("Library", "A library filled with books of all kind, not that you would know how to read.\nIn your peripheral vision you can see an alchemy station.");
             Room bedRoom = new Room("Master bedroom", "A huge room fit for a king.\nYou notice all the stuffed animals on the pink frilly bed, seemingly reminicent of something you would have.");
             Room kitchenRoom = new Room("Kitchen", "A black and white tiled kitchen.\nYou see a singular apple on the marble island. Not that you've ever eaten something healthy.");
+            List<Room> rooms = [startRoom, livingRoom, libraryRoom, bedRoom, kitchenRoom];
 
             // Connect Rooms
             startRoom.Exits["north"] = livingRoom;
@@ -155,20 +156,6 @@ namespace DungeonGame
             libraryRoom.Exits["west"] = livingRoom;
             kitchenRoom.Exits["south"] = livingRoom;
             bedRoom.Exits["east"] = livingRoom;
-
-            // Add Items to Rooms
-            startRoom.Items.Add("torch");
-            startRoom.Items.Add("collar");
-            startRoom.Items.Add("end");
-            livingRoom.Items.Add("key");
-            libraryRoom.Items.Add("potion");
-            bedRoom.Items.Add("note");
-            kitchenRoom.Items.Add("apple");
-            kitchenRoom.Items.Add("milk");
-            libraryRoom.Items.Add("gold");
-            startRoom.Items.Add("rubies");
-            livingRoom.Items.Add("emeralds");
-            kitchenRoom.Items.Add("diamonds");
 
             // Add map arrays to rooms
             startRoom.RoomMap = new int[,]{
@@ -219,11 +206,30 @@ namespace DungeonGame
 
             // Adds Enemies to the rooms
             livingRoom.Enemies.Add("Spirit");
-            kitchenRoom.Enemies.Add("Acid Worm");
             libraryRoom.Enemies.Add("Lich");
             bedRoom.Enemies.Add("Spirit");
+            kitchenRoom.Enemies.Add("Acid Worm");
 
-            return startRoom; // Return the starting room
+            return rooms; // Return the starting room
+        }
+
+        // Initialize Items
+        public static void InitializeItems(List<Room> rooms, GameData gameData)
+        {
+            // Add Items to Rooms
+
+            if (!gameData.PlayerInventory.Contains("torch")) rooms[0].Items.Add("torch");
+            if (!gameData.PlayerInventory.Contains("collar")) rooms[0].Items.Add("collar");
+            if (!gameData.PlayerInventory.Contains("end")) rooms[0].Items.Add("end");
+            if (!gameData.PlayerInventory.Contains("rubies")) rooms[0].Items.Add("rubies");
+            if (!gameData.PlayerInventory.Contains("key")) rooms[1].Items.Add("key");
+            if (!gameData.PlayerInventory.Contains("emeralds")) rooms[1].Items.Add("emeralds");
+            if (!gameData.PlayerInventory.Contains("potion")) rooms[2].Items.Add("potion");
+            if (!gameData.PlayerInventory.Contains("gold")) rooms[2].Items.Add("gold");
+            if (!gameData.PlayerInventory.Contains("note")) rooms[3].Items.Add("note");
+            if (!gameData.PlayerInventory.Contains("apple")) rooms[4].Items.Add("apple");
+            if (!gameData.PlayerInventory.Contains("milk")) rooms[4].Items.Add("milk");
+            if (!gameData.PlayerInventory.Contains("diamonds")) rooms[4].Items.Add("diamonds");
         }
 
         // Method to get the room description based on the visit state

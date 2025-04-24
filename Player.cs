@@ -22,10 +22,10 @@ public class Player
     private (int duration, float percentage) Vulnerability { get; set; } // Reduces current armor
 
     // Player constructor
-    public Player(Room Room, GameData Data)
+    public Player(GameData Data)
     {
         gameData = Data;
-        gameData.CurrentRoom = Room;
+        
     }
 
     // Move method

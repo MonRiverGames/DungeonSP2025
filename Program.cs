@@ -27,12 +27,13 @@ class Program
     static void Main()
     {
         // Initialize Rooms
-        Room startRoom = Room.InitializeRooms(); // Use the static method to set up rooms
+        List<Room> rooms = Room.InitializeRooms(); // Use the static method to set up rooms
         Tileset tileset = new Tileset(); // Create an instance of Tileset
 
         Console.Clear();
-        GameData gameData = GameData.LoadGame(startRoom.Exits["North"]);
-        Player player;
+        GameData gameData = GameData.LoadGame(rooms);
+        Player player = new Player(gameData);
+        Room.InitializeItems(rooms, gameData);
         
         // Name prompt only runs if gameData is not resuming a save file
         if (!gameData.IsResuming)
@@ -54,12 +55,7 @@ class Program
                 }
                 Console.WriteLine("Name cannot be empty. Please enter your name:");
             }
-            player = new Player(startRoom, gameData); // Pass both playerName and startRoom
             player.ClassChoice();
-        }
-        else
-        {
-            player = new Player(gameData.CurrentRoom, gameData); // Pass both playerName and CurrentRoom
         } 
         
         System.Console.WriteLine();

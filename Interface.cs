@@ -324,7 +324,7 @@ namespace DungeonGame
         Type(player.fastMode, $"{player.gameData.PlayerName} tugs on the front door, and it creaks open.");
         Type(player.fastMode, "The door is cracked, and on it, there's a sign.");
         Type(player.fastMode, "As you step in, the door creaks shut behind you -- and latches. It's locked.");
-        Type(player.fastMode, "You have no other choice but to look around, but as you do, you realize just how big this dungeon is.\n");
+        Type(player.fastMode, "You have no other choice but to look around, but as you do, you realize just how big this mansion is.\n");
         }
 
         public static void Help(Player player)

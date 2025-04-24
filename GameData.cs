@@ -30,7 +30,7 @@ namespace DungeonGame
         }
 
         // Main Load method, takes the 'startRoom.Exits[North]' parameter which equals livingRoom
-        public static GameData LoadGame(Room livingRoom)
+        public static GameData LoadGame(List<Room> rooms)
         {
             GameData gameData = File.Exists(FilePath) ? JsonConvert.DeserializeObject<GameData>(File.ReadAllText(FilePath)) : new GameData();
             if (File.Exists(FilePath))
@@ -43,7 +43,6 @@ namespace DungeonGame
                     string response = Console.ReadLine().ToLower();
                     if (response.Contains("y"))
                     {
-                        List<Room> rooms = new List<Room> { livingRoom, livingRoom.Exits["North"], livingRoom.Exits["East"], livingRoom.Exits["South"], livingRoom.Exits["West"] };
                         gameData.CurrentRoom = rooms.Find(room => room.Name == gameData.CurrentRoom.Name);
                         gameData.IsResuming = true;
                         break;
@@ -52,13 +51,18 @@ namespace DungeonGame
                     {
                         gameData.IsResuming = false;
                         ResetGame();
+                        gameData.CurrentRoom = rooms.Find(room => room.Name == "Foyer");
                         break;
                     }
                     Graphics.Type(false, "It's a simple question...\nWould you like to resume your game? (Y/N)");
                 }
             }
+            else
+            {
+                gameData.CurrentRoom = rooms.Find(room => room.Name == "Foyer");
+            }
 
-            return gameData;
+                return gameData;
         }
 
         // Save method, pass in current gameData reference
