@@ -240,14 +240,16 @@ namespace DungeonGame
                 switch (visitState)
                 {
                     case 1:
-                        return "You come back into the kitchen to find some cat-nip...\nYou're not sure what it's for but you just decide to pick it up.";
+                        return "A black and white tiled kitchen.\nYou see a smart-fridge with those big freezer drawers and everything. What time period is this?";
                     case 2:
-                        return "When entering the room again you find an open can of Feline Feast on the marble counter.\nYou wonder if there's someone else in the dungeon with you.";
+                        return "You come back into the kitchen to find some cat-nip...\nYou're not sure what it's for but you just decide to pick it up.";
                     case 3:
-                        return "After going back into the kitchen for more clues you find a piece of paper that says a few words on it.\nUpon further inspection you see it has the Hello Cat showtimes for today...\nIt makes you want to sit down and watch the show.";
+                        return "When entering the room again you find an open can of Feline Feast on the marble counter.\nYou wonder if there's someone else in the dungeon with you.";
                     case 4:
-                        return "Upon your scramble for hints in the kitchen you see a cat collar that says 'Kitty' on it...\nYou decide to pick it up.";
+                        return "After going back into the kitchen for more clues you find a piece of paper that says a few words on it.\nUpon further inspection you see it has the Hello Cat showtimes for today...\nIt makes you want to sit down and watch the show.";
                     case 5:
+                        return "Upon your scramble for hints in the kitchen you see a cat collar that says 'Kitty' on it...\nYou decide to pick it up.";
+                    case 6:
                         return "You hope to find another clue in the kitchen, one that would help more this time.\nWhen going in for the last time you decide to feel around to see if you can find ANYTHING that would help.\nYou feel a square dip on the oak China cabinet, it seems to resemble a button.\nYou decide to push it.\nIt opens up a dark room and you decide to go in.\nIn the room you see a picture of a mysterious and fuzzy stranger, it seems to be holding a... freshly hatched human.\nThe small being appears to have a set of pointy feline ears.\nWhile you were inspecting the dark room, you smell smoke.\nYou go to see what it is, and see a blaze of orange and yellow in front of you.\nIt seems to be coming from the stove...\nYou decide it's best to get out of there because the fire is destroying the room.";
                     default:
                         return "The kitchen seems unfamiliar. Are you lost?";
@@ -258,7 +260,7 @@ namespace DungeonGame
                 switch (visitState)
                 {
                     case 1:
-                        return "You enter a bedroom. Virtually everything including the ornate bed is colored pink, and Hello Kitty memorabilia can be seen everywhere you look.";
+                        return "You enter a bedroom. Virtually everything including the ornate bed is colored pink, and Lich Kitty memorabilia can be seen everywhere you look.";
                     case 2:
                         return "You return to the gaudy pink bedroom. You forgot how offensive the decor is.";
                     case 3:
@@ -280,11 +282,29 @@ namespace DungeonGame
                     case 2:
                         return "You return to the place where one must read. READ.";
                     case 3:
-                        return "You return to the place of books. Maybe you missed something Chiken Jockey.";
+                        return "You return to the place of books. Maybe you missed something Chicken Jockey.";
                     case 4:
                         return "You're back in the stacks. You could get lost here.";
                     case 5:
                         return "There is nothing left for you here. Try something else.";
+                    default:
+                        return "The library room seems unfamiliar. Are you lost?";
+                }
+            }
+            else if (Name == "Living Room")
+            {
+                switch (visitState)
+                {
+                    case 1:
+                        return "A room fully lit by table lamps. Seems kind of impractical.\nThe first thing you see upon entrance is a Victorian table painted darker than the inside of your head.";
+                    case 2:
+                        return "You head back into the living room. Could be a safe place to hide from any ghosts.";
+                    case 3:
+                        return "You go back to the living room. Not even a TV in here...";
+                    case 4:
+                        return "As you walk back into the living room you resist the urge to rub your feet on the shag carpeting";
+                    case 5:
+                        return "Nope, no ghosts in here... Why are you here again?";
                     default:
                         return "The library room seems unfamiliar. Are you lost?";
                 }
