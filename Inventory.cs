@@ -55,5 +55,11 @@ namespace DungeonGame
                 }
             }
         }
+
+        public void ClearInventory()
+        {
+            Items.Clear();
+            Console.WriteLine("Your inventory has been cleared.");
+        }
     }
 }

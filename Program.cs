@@ -56,7 +56,16 @@ class Program
                 Console.WriteLine("Name cannot be empty. Please enter your name:");
             }
             player.ClassChoice();
-        } 
+        }
+        else
+        {
+            // Reset the game if the player chooses not to resume
+            GameData.ResetGame();
+            gameData = new GameData();
+            gameData.CurrentRoom = rooms.Find(room => room.Name == "Foyer");
+            gameData.PlayerInventory = new Inventory(); // Ensure a new inventory is created
+            player = new Player(gameData);
+        }
         
         System.Console.WriteLine();
 
@@ -102,7 +111,7 @@ class Program
                         {
                             Graphics.Type(player.fastMode, "You offer it the milk you found in the kitchen");
                             Graphics.Type(player.fastMode, "It bows down and accepts you as a apprentice.");
-                            Graphics.Type(player.fastMode, "Congratulations! You got the good ending!", "green");
+                            Graphics.Type(player.fastMode, "Congratulations! You got the good ending!How boring...", "green");
                             Graphics.Type(player.fastMode, "Press any key to quit.", "green");
                             Console.ReadKey();
                             Environment.Exit(0);                                                  
@@ -113,7 +122,7 @@ class Program
                             Graphics.Type(player.fastMode, "It seems disappointed and ushers you to the door.");
                             Graphics.Type(player.fastMode, "You watch as Lich Kitty puts out the fires you started, and you decide that you've disappointed it.");
                             Graphics.Type(player.fastMode, "You leave the house.");
-                            Graphics.Type(player.fastMode, "You got the ok ending!", "green");
+                            Graphics.Type(player.fastMode, "You got the ok ending. Do better...", "green");
                             Graphics.Type(player.fastMode, "Press any key to quit.", "green");
                             Console.ReadKey();
                             Environment.Exit(0);                                                  
@@ -128,7 +137,7 @@ class Program
                     Enemy.Battle(LichKitty, player); 
                     //if player wins the battle, this happens v
                     Graphics.Type(player.fastMode, "You peer down the lifeless soul of Lich Kitty.", "red", 200, 50);
-                    Graphics.Type(player.fastMode, "GAME OVER.", "red", 200, 50);      
+                    Graphics.Type(player.fastMode, "GAME OVER. AHAHAHA", "red", 200, 50);      
                     Graphics.Type(player.fastMode, "Press any key to quit.", "green");
                     Console.ReadKey();             
                     Environment.Exit(0);                                                  
@@ -275,7 +284,7 @@ class Program
             else
             {
                 Graphics.Type(player.fastMode, "Invalid command.\n", "green");
-                Graphics.Type(player.fastMode, "If you need help, try typing in 'help!'\n", "green");
+                Graphics.Type(player.fastMode, "that's too bad! It's not like there's some convenient 'help' command or anything.'\n", "green");
             }
         }
     }

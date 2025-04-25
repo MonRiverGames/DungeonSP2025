@@ -75,6 +75,23 @@ namespace DungeonGame
         public static void ResetGame()
         {
             if (File.Exists(FilePath)) File.Delete(FilePath);
+
+            // Reset in-memory GameData fields
+            GameData gameData = new GameData
+            {
+                PlayerName = string.Empty,
+                CurrentRoom = null,
+                PlayerInventory = new Inventory(), // Create a new inventory object
+                EndingUnlocked = false,
+                PlayerClass = "Unset",
+                Health = (100, 100),
+                Strength = (10, 10),
+                Defense = (10, 10),
+                Agility = (10, 10)
+            };
+
+            // Explicitly clear the inventory
+            gameData.PlayerInventory.Items.Clear();
         }
     }
 }
