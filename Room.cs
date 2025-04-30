@@ -240,7 +240,7 @@ namespace DungeonGame
                 switch (visitState)
                 {
                     case 1:
-                        return "A black and white tiled kitchen.\nYou see a smart-fridge with those big freezer drawers and everything. What time period is this?";
+                        return "A black and white tiled kitchen.\nYou see an apple on the counter as well as a smart-fridge with those big freezer drawers and everything. What time period is this?";
                     case 2:
                         return "You come back into the kitchen to find some cat-nip...\nYou're not sure what it's for but you just decide to pick it up.";
                     case 3:
