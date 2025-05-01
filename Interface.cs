@@ -41,13 +41,13 @@ namespace DungeonGame
                 {
                     if (input.Contains("1") || input.Contains("continue")) //exits menu
                     {
-                        Type(player.fastMode, "You chose to continue.\n");
+                        Type(player.fastMode, "Let's get started.\n");
                         return;
                     }
                     else if (input.Contains("2") || input.Contains("fast")) //toggles fast mode
                     {
                         player.fastMode = !player.fastMode;
-                        Type(player.fastMode, player.fastMode ? "You're now in fast mode." : "You've turned off fast mode.");
+                        Type(player.fastMode, player.fastMode ? "You're now in fast mode. NYOOOOM" : "You've turned off fast mode.");
                     }
                     else if (input.Contains("3") || input.Contains("story")) // reads out the story so far , should only be major story points
                     {
@@ -61,7 +61,7 @@ namespace DungeonGame
                     }
                     else if (input.Contains("5") || input.Contains("quit"))
                     {
-                        Type(player.fastMode, "You have chose to quit the game. Press any key to exit."); // saves the game and then quits the program
+                        Type(player.fastMode, "Maybe next time. Press any key to exit."); // saves the game and then quits the program
                         //method for save
                         Console.ReadKey();
                         Environment.Exit(0);
@@ -77,17 +77,17 @@ namespace DungeonGame
                 {
                     if (input.Contains("1") || input.Contains("continue")) //exits menu
                     {
-                        Type(player.fastMode, "You chose to start your adventure.\n");
+                        Type(player.fastMode, "Moving on.\n");
                         return;
                     }
                     else if (input.Contains("2") || input.Contains("fast")) //toggles fast mode
                     {
                         player.fastMode = !player.fastMode;
-                        Type(player.fastMode, player.fastMode ? "You're now in fast mode." : "You've turned off fast mode.");
+                        Type(player.fastMode, player.fastMode ? "You're now in fast mode. NYOOOOOOM" : "You've turned off fast mode.");
                     }
                     else if (input.Contains("3") || input.Contains("quit"))
                     {
-                        Type(player.fastMode, "You have chose to quit the game. Press any key to exit."); // saves the game and then quits the program
+                        Type(player.fastMode, "Guess that's it. Press any key to exit."); // saves the game and then quits the program
                         //method for save
                         Console.ReadKey();
                         Environment.Exit(0);
@@ -329,7 +329,7 @@ namespace DungeonGame
 
         public static void Help(Player player)
         {
-            Type(player.fastMode, "Certain phrases allow you to interact with the world. When in doubt, try looking around! You can also type in 'menu' to adjust settings.");
+            Type(player.fastMode, "Since you asked, there are certain phrases you can use to interact such as 'look', 'grab', or any other synonym, etc. Just try something and see what happens! You can also type in 'menu' to adjust settings.");
         }
 
     }
