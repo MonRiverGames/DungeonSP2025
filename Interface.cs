@@ -57,13 +57,12 @@ namespace DungeonGame
                     else if (input.Contains("4") || input.Contains("save")) // saves the game
                     {
                         Type(player.fastMode, "You saved your game.", "green");
-                        //method for saving the game
+                        GameData.SaveGame(player.gameData); // saves the game
                     }
                     else if (input.Contains("5") || input.Contains("quit"))
                     {
-                        Type(player.fastMode, "Maybe next time. Press any key to exit."); // saves the game and then quits the program
-                        //method for save
-                        Console.ReadKey();
+                        Type(player.fastMode, "You have chose to quit the game. Press any key to exit."); // saves the game and then quits the program
+                        GameData.SaveGame(player.gameData); // saves the game
                         Environment.Exit(0);
                         break;
                     }

@@ -49,9 +49,7 @@ namespace DungeonGame
                     }
                     else if (response.Contains("n"))
                     {
-                        gameData.IsResuming = false;
-                        ResetGame();
-                        gameData.CurrentRoom = rooms.Find(room => room.Name == "Foyer");
+                        ResetGame(rooms);
                         break;
                     }
                     Graphics.Type(false, "It's a simple question...\nWould you like to resume your game? (Y/N)");
@@ -72,15 +70,16 @@ namespace DungeonGame
         }
 
         // Reset Save file
-        public static void ResetGame()
+        public static void ResetGame(List<Room> rooms)
         {
             if (File.Exists(FilePath)) File.Delete(FilePath);
 
             // Reset in-memory GameData fields
             GameData gameData = new GameData
             {
+                IsResuming = false,
                 PlayerName = string.Empty,
-                CurrentRoom = null,
+                CurrentRoom = rooms.Find(room => room.Name == "Foyer"), // Set the starting room
                 PlayerInventory = new Inventory(), // Create a new inventory object
                 EndingUnlocked = false,
                 PlayerClass = "Unset",
