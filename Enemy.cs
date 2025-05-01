@@ -64,14 +64,10 @@ namespace DungeonGame
 
             while (true)
             {
+                // Check for Death
                 if (player.gameData.Health.current <= 0)
                 {
-                    Graphics.Type(player.fastMode, "You start to feel woozy. Your breaths become shallower, and your vision begins to darken. Eventually, you can't see anything. You can't feel anything.", "green", 200, 50);
-                    Graphics.Type(player.fastMode, "YOU DIED.", "green", 200, 50);
-                    Graphics.Type(player.fastMode, "Press any key to exit.", "green", 200, 50);
-                    Console.ReadKey();
-                    Environment.Exit(0);
-                    break;
+                    player.DeathScene();
                 }
                 else if (enemy.Health.current <= 0)
                 {
@@ -83,11 +79,11 @@ namespace DungeonGame
                 Graphics.Type(player.fastMode, $"\nWhat do you do?", "green");
                 Graphics.Type(player.fastMode, $"1. Attack", "green");
                 Graphics.Type(player.fastMode, $"2. Defend", "green");
-                Graphics.Type(player.fastMode, $"3. Grab\n", "green");
+                Graphics.Type(player.fastMode, $"3. Grab", "green");
 
                 while (true) // Determine what the player does
                 {
-                    Console.Write("> ");
+                    Console.Write("\n> ");
                     string input = Console.ReadLine() ?? string.Empty;
                     input = input.ToLower(); // Detects player input
 

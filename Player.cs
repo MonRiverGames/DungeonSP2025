@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32.SafeHandles;
+using System.Numerics;
 
 namespace DungeonGame;
 
@@ -231,12 +232,6 @@ public class Player
         // Apply Damage
         gameData.Health = (gameData.Health.original, gameData.Health.current - damage);
         Graphics.Type(fastMode, $"You took {damage} points of damage! Your Health is now {gameData.Health.current}/{gameData.Health.original}.");
-
-        // Check for Death
-        if (gameData.Health.current <= 0)
-        {
-            DeathScene();
-        }
     }
 
     public void PlayerHealthCheck()
@@ -244,15 +239,19 @@ public class Player
         Console.WriteLine($"Your health is: {gameData.Health.current}");
     }
 
-    static void DeathScene()
+    public void DeathScene()
     {
-        Console.WriteLine("You died. Frankly, I could have done better. Game over.");
+        Graphics.Type(fastMode, "You start to feel woozy. Your breaths become shallower, and your vision begins to darken. Eventually, you can't see anything. You can't feel anything.", "green", 200, 50);
+        Graphics.Type(fastMode, "YOU DIED.\nFrankly, I could have done better. Game over.", "green", 200, 50);
         // Add any additional logic for handling player death, such as restarting or exiting the game.
+        GameData.ResetGame();
+        Graphics.Type(fastMode, "Press any key to exit.", "green", 200, 50);
+        Environment.Exit(0);
     }
 
     public virtual void Attack(Enemy enemy)
     {
        Console.WriteLine($"{gameData.PlayerName} attacks {enemy.Name}!");
-        enemy.TakeDamage(10, this.fastMode); // Example damage value
+        enemy.TakeDamage(10, fastMode); // Example damage value
     }
 }

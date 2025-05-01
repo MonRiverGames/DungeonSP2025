@@ -17,8 +17,7 @@ class Program
     static string[] useCommand = { "use", "utilize", "operate" }; //array of use commands
     static string[] inventoryCommand = { "bag", "inventory", "backpack", "pockets", "items" }; // array of inventory commands
 
-    static string[] fightCommand = { "fight", "punch", "probe", "kick", "annoy", "stab", "flick", "kill", "touch", "slap", "hurt", "yell", "splash", "poke", "shoot" }; //array of fight commands
-
+   
     static string[] talkCommand = { "talk", "speak", "greet", "address", "say", "hi", "hello", "hey" }; //array of talk commands
 
     static string[] examineCommand = { "look", "check", "examine", "inspect", "view", "find", "investigate", "scan", "survey" }; //array of examine commands
@@ -26,6 +25,8 @@ class Program
     // To make change to cloud branch, work locally and save. Then, commit to branch --> push to branch (don't push at the same time!) Then, other person pulls to stay up to date.
     static void Main()
     {
+        Random random = new Random();
+
         // Initialize Rooms
         List<Room> rooms = Room.InitializeRooms(); // Use the static method to set up rooms
         Tileset tileset = new Tileset(); // Create an instance of Tileset
@@ -56,15 +57,6 @@ class Program
                 Console.WriteLine("Name cannot be empty. Please enter your name:");
             }
             player.ClassChoice();
-        }
-        else
-        {
-            // Reset the game if the player chooses not to resume
-            GameData.ResetGame();
-            gameData = new GameData();
-            gameData.CurrentRoom = rooms.Find(room => room.Name == "Foyer");
-            gameData.PlayerInventory = new Inventory(); // Ensure a new inventory is created
-            player = new Player(gameData);
         }
         
         System.Console.WriteLine();
@@ -111,10 +103,8 @@ class Program
                         {
                             Graphics.Type(player.fastMode, "You offer it the milk you found in the kitchen");
                             Graphics.Type(player.fastMode, "It bows down and accepts you as a apprentice.");
-                            Graphics.Type(player.fastMode, "Congratulations! You got the good ending!How boring...", "green");
-                            Graphics.Type(player.fastMode, "Press any key to quit.", "green");
-                            Console.ReadKey();
-                            Environment.Exit(0);                                                  
+                            Graphics.Type(player.fastMode, "Congratulations! You got the good ending! How boring...", "green");
+                            Graphics.Type(player.fastMode, "Press any key to quit.", "green");                                                 
                         }
                         else // bad ending
                         {
@@ -123,9 +113,7 @@ class Program
                             Graphics.Type(player.fastMode, "You watch as Lich Kitty puts out the fires you started, and you decide that you've disappointed it.");
                             Graphics.Type(player.fastMode, "You leave the house.");
                             Graphics.Type(player.fastMode, "You got the ok ending. Do better...", "green");
-                            Graphics.Type(player.fastMode, "Press any key to quit.", "green");
-                            Console.ReadKey();
-                            Environment.Exit(0);                                                  
+                            Graphics.Type(player.fastMode, "Press any key to quit.", "green");                                            
                         }
                     }
 
@@ -138,21 +126,36 @@ class Program
                     //if player wins the battle, this happens v
                     Graphics.Type(player.fastMode, "You peer down the lifeless soul of Lich Kitty.", "red", 200, 50);
                     Graphics.Type(player.fastMode, "GAME OVER. AHAHAHA", "red", 200, 50);      
-                    Graphics.Type(player.fastMode, "Press any key to quit.", "green");
-                    Console.ReadKey();             
-                    Environment.Exit(0);                                                  
+                    Graphics.Type(player.fastMode, "Press any key to quit.", "green");                                              
                     }
-                } 
+
+                    GameData.ResetGame(rooms); // Reset the game after the ending
+                    Environment.Exit(0);
+                }
+                
+                if (gameData.CurrentRoom.Name == "Kitchen" && random.Next(2) == 0) // Chance to encounter an enemy
+                {
+                    Graphics.Type(player.fastMode, "The apple contains a terrible curse. From its core springs an Acid Worm."); //this is a temporary example of the battle function
+                    Enemy AcidWorm = new AcidWorm(default, default); // Create acid worm
+                    Enemy.Battle(AcidWorm, player);  // Method to initiate battle
+                }
+                else if (gameData.CurrentRoom.Name == "Master Bedroom" && random.Next(2) == 0) // Chance to encounter an enemy
+                {
+                    Graphics.Type(player.fastMode, "The master of this household rises in an etheral form");
+                    Graphics.Type(player.fastMode, "and begins to attack you with a barrage of pillows.");
+                    Enemy Spirit = new Spirit(default, default); // Create spirit
+                    Enemy.Battle(Spirit, player); // Method to initiate battle
+                }
             }
 
             else if (input == "menu") // if the first word (command[0]) is any of the movement words, then the following body of code will excute
             {
-                Graphics.Menu(player); //method that accepts the inputted value and then excutes for whatever happens
+                Graphics.Menu(player); // method that accepts the inputted value and then excutes for whatever happens
             }
             
             else if (input == "help") // if the first word (command[0]) is any of the movement words, then the following body of code will excute
             {
-                Graphics.Help(player); //method that accepts the inputted value and then excutes for whatever happens
+                Graphics.Help(player); // method that accepts the inputted value and then excutes for whatever happens
             }
 
             else if (grabCommand.Contains(command[0])) // grab method
@@ -172,27 +175,6 @@ class Program
                 else
                 {
                     Graphics.Type(player.fastMode, $"There is no {command[1]} here to grab.");
-                }
-            }
-            
-            else if (fightCommand.Contains(command[0])) // fight method
-            {
-                if (gameData.CurrentRoom.Name == "Kitchen")
-                {
-                Graphics.Type(player.fastMode, "The apple contains a terrible curse. From its core springs an Acid Worm."); //this is a temporary example of the battle function
-                Enemy AcidWorm = new AcidWorm(default, default); // create acid worm
-                Enemy.Battle(AcidWorm, player);  //method to initiate battle
-                }
-            }
-
-             else if (fightCommand.Contains(command[0])) // fight method
-            {
-                if (gameData.CurrentRoom.Name == "Bedroom")
-                {
-                Graphics.Type(player.fastMode, "The master of this household rises in an etheral form"); //battle function
-                Graphics.Type(player.fastMode, "and begins to attack you with a barrage of pillows."); //
-                Enemy Spirit = new Spirit(default, default); // create spirit
-                Enemy.Battle(Spirit, player);  //method to initiate battle
                 }
             }
 
@@ -270,7 +252,7 @@ class Program
                 }
             }
 
-            else if (command.Length > 1 && inventoryCommand.Contains(command[0])) // check inventory
+            else if (inventoryCommand.Contains(command[0])) // check inventory
             {
                 gameData.PlayerInventory.ShowInventory();
             }
@@ -285,6 +267,12 @@ class Program
             {
                 Graphics.Type(player.fastMode, "Invalid command.\n", "green");
                 Graphics.Type(player.fastMode, "that's too bad! It's not like there's some convenient 'help' command or anything.'\n", "green");
+            }
+
+            // Check for Death
+            if (gameData.Health.current <= 0)
+            {
+                player.DeathScene();
             }
         }
     }
