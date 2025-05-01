@@ -182,7 +182,7 @@ class Program
             {
                 if (gameData.CurrentRoom.Name == "Kitchen")
                 {
-                    Console.WriteLine("You see a wrinkly lych sitting by the stove. He seems to be petting one of those white rat dogs.\nHe smiles at you as his dog gives you THAT stare and asks:");
+                    Console.WriteLine("You see a wrinkly lich sitting by the fire. He seems to be petting one of those white rat dogs.\nHe smiles at you as his dog gives you THAT stare and asks:");
                     Console.WriteLine("'Welcome, adventurer. Would you like to pet my sickly pup? His name is Coconut.\nOh! Also, why are you here?'");
                     Console.WriteLine("'Take this key, I believe it's supposed to help you.'");
                     if (!gameData.PlayerInventory.Contains("key")) //if the player doesn't have the item, they are able to grab the item
@@ -266,7 +266,7 @@ class Program
             else
             {
                 Graphics.Type(player.fastMode, "Invalid command.\n", "green");
-                Graphics.Type(player.fastMode, "that's too bad! It's not like there's some convenient 'help' command or anything.'\n", "green");
+                Graphics.Type(player.fastMode, "If you need help, that's too bad! Not like there is some convenient 'help' command or anything!\n", "green");
             }
 
             // Check for Death

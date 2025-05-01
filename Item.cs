@@ -24,28 +24,28 @@ public class Item
         }
         
         else if (name=="gold"){
-            Description=" heavy bar weighing almost as much as a child";
+            Description=" Solid bar weighing almost as much as your ego.";
             IsConsumable=false;
-            Console.WriteLine("\nAs you struggle to lift the chunk of gold, you wonder how it could be of any use.");
-            Console.WriteLine("\nAll of a sudden, the horse of greed and self-indulgence comes crashing into the room.");
-            Console.WriteLine("\n'That looks really good,' says the horse.");
-            Console.WriteLine("\n'Um... do you want it?' you ask.");
-            Console.WriteLine("\nHe nods his head violently.");
-            Console.WriteLine("\nDo you give it to him (TYPE '1') or do you refuse? (TYPE '2')");
+            Console.WriteLine("\nAs you struggle to lift the chunk of gold, you wonder how you will take it home with you.");
+            Console.WriteLine("\nYou manage to finally get it into your convenient bag of holding.");
+            Console.WriteLine("\nYou feel richer already. Also very hurt as you feel the weight of the bag press on your shoulder.");
+            Console.WriteLine("\n'Maybe I can use this as a weapon?' You say.");
+            Console.WriteLine("\nYou think about whether to give it a test swing.");
+            Console.WriteLine("\nDo you try to swing the bag? (TYPE '1') or do you put it back? (TYPE '2')");
             Console.Write("\n> ");
                 string input = Console.ReadLine() ?? string.Empty;
 
                 if (input.Contains("1"))
                 {
-                    Console.WriteLine("\nYou give the block of gold to the horse of greed and self-indulgence.");
-                    Console.WriteLine("\nUnexpectedly, he eats it.");
-                    Console.WriteLine("\nBefore leaving the room, he approaches you and lovingly chomps off your ear.");
+                    Console.WriteLine("\nYou swing the heavy bag, and as it gains velocity, you hear a loud RIP followed by a thunderous crash.");
+                    Console.WriteLine("\nIt appears the gold was so heavy, it ripped through a seam in the bag, knocked over a lamp, and smashed a sizable hole in the wall.");
+                    Console.WriteLine("\nPerhaps it might be best to leave the scene quickly.");
                 }
                 else if (input.Contains("2"))
                 {
-                    Console.WriteLine("\nThe horse of greed and self-indulgence doesn't appreciate your lack of cooperation.");
-                    Console.WriteLine("\nIn retaliation, he approaches you and not only bites the gold out of your hand, but he takes one of your fingers with it.");
-                    Console.WriteLine("\nHe then vanishes into thin air.");
+                    Console.WriteLine("\nDespite the greed in your mind telling you to take the gold, your better judgement decides to leave it where it was.");
+                    Console.WriteLine("\nSuch a shame considering how much it is probably worth.");
+                    Console.WriteLine("\nTruely a shame...");
                 }
                 else
                 {
