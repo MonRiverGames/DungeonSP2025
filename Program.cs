@@ -39,14 +39,13 @@ class Program
         // Name prompt only runs if gameData is not resuming a save file
         if (!gameData.IsResuming)
         {
-            Console.WriteLine("What is your name?");
-            string Name;
+            Graphics.Type(player.fastMode, "What is your name?\n> ");
             while (true)
             {
-                Name = Console.ReadLine() ?? string.Empty;
+                string Name = Console.ReadLine() ?? string.Empty;
                 if (Name == null)
                 {
-                    Console.WriteLine("Input stream closed. Exiting...");
+                    Graphics.Type(player.fastMode, "Input stream closed. Exiting...");
                     return;
                 }
                 if (!string.IsNullOrEmpty(Name))
@@ -54,14 +53,12 @@ class Program
                     gameData.PlayerName = Name;
                     break;
                 }
-                Console.WriteLine("Name cannot be empty. Please enter your name:");
+                Graphics.Type(player.fastMode, "Name cannot be empty. Please enter your name:");
             }
             player.ClassChoice();
         }
-        
-        System.Console.WriteLine();
 
-        Graphics.Type(player.fastMode, "Welcome to..."); //temporary name
+        Graphics.Type(player.fastMode, "\nWelcome to..."); //temporary name
         Graphics.Title();
         Graphics.Menu(player, "start");
         if (!gameData.IsResuming) Graphics.Prolouge(player); // Prolouge only plays if gameData is not resuming a save file
@@ -69,10 +66,7 @@ class Program
 
         while (true)
         {
-            if (gameData.PlayerInventory.Contains("end"))
-            {
-                gameData.EndingUnlocked = true;
-            }
+            if (gameData.PlayerInventory.Contains("end")) gameData.EndingUnlocked = true;
             GameData.SaveGame(gameData); // Saves the game at the the start of command loop
             Console.Write("\n> ");
             string input = Console.ReadLine() ?? string.Empty;
@@ -129,7 +123,7 @@ class Program
                     Graphics.Type(player.fastMode, "Press any key to quit.", "green");                                              
                     }
 
-                    GameData.ResetGame(rooms); // Reset the game after the ending
+                    GameData.ResetGame(rooms, gameData); // Reset the game after the ending
                     Environment.Exit(0);
                 }
                 
@@ -164,7 +158,7 @@ class Program
                 {
                     if (!gameData.PlayerInventory.Contains(command[1])) // if the player doesn't have the item, they are able to grab the item
                     {
-                        gameData.PlayerInventory.AddItem(command[1]);
+                        gameData.PlayerInventory.AddItem(command[1], player);
                         gameData.CurrentRoom.Items.Remove(command[1]);
                     }
                     else
@@ -182,12 +176,12 @@ class Program
             {
                 if (gameData.CurrentRoom.Name == "Kitchen")
                 {
-                    Console.WriteLine("You see a wrinkly lich sitting by the fire. He seems to be petting one of those white rat dogs.\nHe smiles at you as his dog gives you THAT stare and asks:");
-                    Console.WriteLine("'Welcome, adventurer. Would you like to pet my sickly pup? His name is Coconut.\nOh! Also, why are you here?'");
-                    Console.WriteLine("'Take this key, I believe it's supposed to help you.'");
+                    Graphics.Type(player.fastMode, "You see a wrinkly lich sitting by the fire. He seems to be petting one of those white rat dogs.\nHe smiles at you as his dog gives you THAT stare and asks:");
+                    Graphics.Type(player.fastMode, "'Welcome, adventurer. Would you like to pet my sickly pup? His name is Coconut.\nOh! Also, why are you here?'");
+                    Graphics.Type(player.fastMode, "'Take this key, I believe it's supposed to help you.'");
                     if (!gameData.PlayerInventory.Contains("key")) //if the player doesn't have the item, they are able to grab the item
                     {
-                        gameData.PlayerInventory.AddItem("key");
+                        gameData.PlayerInventory.AddItem("key", player);
                         Graphics.Type(player.fastMode, "You received a key!");
                     }
                     else
@@ -203,29 +197,29 @@ class Program
 
             else if (examineCommand.Contains(command[0])) // look method
             {
-                Console.WriteLine($"Room: {gameData.CurrentRoom.Name}"); // Display the room name
-                Console.WriteLine(gameData.CurrentRoom.GetStateBasedDescription()); // Display state-based description
+                Graphics.Type(player.fastMode, $"Room: {gameData.CurrentRoom.Name}"); // Display the room name
+                Graphics.Type(player.fastMode, gameData.CurrentRoom.GetStateBasedDescription()); // Display state-based description
 
-                Console.WriteLine("\nItems in this room:");
+                Graphics.Type(player.fastMode, "\nItems in this room:");
                 if (gameData.CurrentRoom.Items.Count > 0)
                 {
                     foreach (var item in gameData.CurrentRoom.Items)
                     {
-                        Console.WriteLine($"- {item}");
+                        Graphics.Type(player.fastMode, $"- {item}");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("None.");
+                    Graphics.Type(player.fastMode, "None.");
                 }
 
-                Console.WriteLine("\nExits:");
+                Graphics.Type(player.fastMode, "\nExits:");
                 foreach (var exit in gameData.CurrentRoom.Exits.Keys)
                 {
-                    Console.WriteLine($"- {exit}");
+                    Graphics.Type(player.fastMode, $"- {exit}");
                 }
 
-                Console.WriteLine("\nRoom Map:");
+                Graphics.Type(player.fastMode, "\nRoom Map:");
                 tileset.RenderDungeon(gameData.CurrentRoom.RoomMap); // Render the relevant tile map for the current room
 
                 gameData.CurrentRoom.IncrementVisitState(); // Increment the visit state for the room
@@ -254,7 +248,7 @@ class Program
 
             else if (inventoryCommand.Contains(command[0])) // check inventory
             {
-                gameData.PlayerInventory.ShowInventory();
+                gameData.PlayerInventory.ShowInventory(player);
             }
 
             else if (input == "quit") //if the input is 'quit', then the game will break the continuous loop
