@@ -45,7 +45,7 @@ public class Item
                 {
                     Console.WriteLine("\nDespite the greed in your mind telling you to take the gold, your better judgement decides to leave it where it was.");
                     Console.WriteLine("\nSuch a shame considering how much it is probably worth.");
-                    Console.WriteLine("\nTruely a shame...");
+                    Console.WriteLine("\nYour shoulder however, is much happier.");
                 }
                 else
                 {
@@ -66,11 +66,11 @@ public class Item
         }
 
         else if (name=="emeralds"){
-            Description=" 8x8 png picture of a minecraft emerald and as you pick you hear a distant 'hrrrrr' ";
+            Description=" You see several shiney, crisp looking green gems resting on a desk. ";
             IsConsumable=false;
-            Console.WriteLine("\nTo your utter surprise, one of the emeralds grows a face and begins speaking to you.");
-            Console.WriteLine("\n'Get your grubby paws off me, buster!' says the emerald.");
-            Console.WriteLine("\n'And what if I don't want to?' you say.");
+            Console.WriteLine("\nThey look rather almost juicy...");
+            Console.WriteLine("\n'You are incredibly tempted to take a bit out of one.");
+            Console.WriteLine("\n'Against your better judgement, you attempt to take a bite out of the crispiest looking one.");
             Random rng = new Random();
             int index = rng.Next(2);
 
@@ -80,7 +80,7 @@ public class Item
                 Emeralds2();
         }
         else if (name=="diamonds"){
-            Description=" 32k diamond with no imperfections";
+            Description=" 32k diamond with no imperfections, an almost perfect contrast to your soul.";
             IsConsumable=false;
             Random rng = new Random();
             int index = rng.Next(2);
@@ -128,7 +128,7 @@ public class Item
                 Apple2();
         }
         else if (name=="potion"){
-            Description="a bubbling liquid";
+            Description="a bubbling red liquid in a round bottom flask";
             IsConsumable=true;
             Potion1();
         }
@@ -203,30 +203,30 @@ public class Item
     // EMERALDS
     static void Emeralds1()
     {
-        Console.WriteLine("\n'You're about to find out.'");
-        Console.WriteLine("\nThe emerald shoots up at your face, latching onto your nose.");
-        Console.WriteLine("\nAs it jumps back down to the table, it takes your nose with it.");
-        Console.WriteLine("\n'HAHA! Got your nose!' It scurries out of sight.");
+        Console.WriteLine("\nYou take a large bite into this emerald, only to hear a loud 'CRUNCH'.");
+        Console.WriteLine("\nYou look down at the intact emerald, before realization sets in.");
+        Console.WriteLine("\nThat crunch was your teeth cracking against the hard mineral surface.");
+        Console.WriteLine("\nNow sufficiently regretting your actions, you steal a pair of false teeth from a nearby desk.");
     }
 
     static void Emeralds2()
     {
-        Console.WriteLine("\n'You do NOT want to see my bad side,' says the emerald.");
-        Console.WriteLine("\n'You're right! I don't. That's why you're going in my pocket, so I don't have to see you at all.'");
-        Console.WriteLine("\nThe emerald attempts to protest, but as it reaches your bag, it is silenced.");
+        Console.WriteLine("\nYou bite down onto the emerald and feel your teeth sink into its chewy surface.");
+        Console.WriteLine("\nYour curiosity is rewarded with a chewy texture and the flavor of green apple.");
+        Console.WriteLine("\nYou propmtly grab the rest and shove them into your bag for later.");
     }
 
     // DIAMONDS
     static void Diamonds1()
     {
         Console.WriteLine("\nYou kneel down and pick up a diamond.");
-        Console.WriteLine("\n'Yes! 100 percent yes!' you hear as you look up, noticing the horse of love and affection looking down at you.");
-        Console.WriteLine("\n'Huh?' you say.");
-        Console.WriteLine("\n'Are you not proposing to me?' asks the horse.");
-        Console.WriteLine("\n'NO! Absolutely not!'");
-        Console.WriteLine("\n'How rude! Why would you tease me like that?'");
-        Console.WriteLine("\nThe horse of love and affection becomes the horse of hatred and annoyance, then eats the diamonds.");
-        Console.WriteLine("\nThankfully, there's a few diamonds left.");
+        Console.WriteLine("\nAs you pick it up and hold it to the light, you feel almost... mezmerized.");
+        Console.WriteLine("\nYou begin to notice small details, like the angles of the facets, the frosted edges leading to the tip.");
+        Console.WriteLine("\nThe pattern that dances in the light as you look down through the head of the diamond.");
+        Console.WriteLine("\nThe passage of time seems to slow as you admire all the little details.");
+        Console.WriteLine("\nHow long has it been? A few minutes? A day? A week? The answer eludes you as you stare endlessly at perfection.");
+        Console.WriteLine("\nIt is only after you feel a nudge on your shoulder that you break free from this trance. You look up to see a horse gazing into your eyes.");
+        Console.WriteLine("\nStupified, you put the diamonds back, and wait just long enough to realize there is no one here but you.");
     }
 
     static void Diamonds2()
@@ -251,26 +251,28 @@ public class Item
 
     static void Key2()
     {
-        Console.WriteLine("\nAs soon as you pick up the key, a chicken falls from nowhere and immediately begins running around frantically.");
-        Console.WriteLine("\nIt runs in circles, repeatedly pecking at your toes and screeching 'KEY! KEY!'");
-        Console.WriteLine("\nYou have no desire to give up this key.");
-        Console.WriteLine("\n'Why did the chicken cross the road?' you ask.");
-        Console.WriteLine("\nThe chicken stops dead in its tracks and stares at you. All of a sudden, it screeches 'CHICKEN JOCKEY!' and explodes in a cloud of feathers.");
+        Console.WriteLine("\nAs you go to grab the key, you feel your body halt as you are overcome with this feeling of intense dread.");
+        Console.WriteLine("\nThe feeling dissapates as you retract your hand.");
+        Console.WriteLine("\nSomething isn't right. It takes you a moment to realize that there is no curse, this is your body's base instincts to keep you alive.");
+        Console.WriteLine("\nReaching for it a second time, the feeling washes over you, more intense than the last.");
+        Console.WriteLine("\nWhatever this key is, or whatever it unlocks, is clearly not to be messed with. Better to just leave it be.");
     }
 
     static void Fire1()
     {
-        Console.WriteLine("\nA fire-breathing dragon comes out of nowhere lunges at you.");
-        Console.WriteLine("\nAfraid of being scorched, you dodge its advance.");
-        Console.WriteLine("\nThe dragon stares at you for a moment, then murmurs something about Shrek and vanishes into nothingness.");
+        Console.WriteLine("\nThe fire begins to dance atop the lit torch. It's... beautiful.");
+        Console.WriteLine("\nYou draw the torch closer to yourself, bathing in the warmth and soft glow.");
+        Console.WriteLine("\nYou then begin to feel a stinging pain and the smell of burnt hair as you have brought it a little too close.");
+        Console.WriteLine("\nYou quickly splash some water on yourself and leave the torch alone.");
     }
 
     static void Fire2()
     {
         Console.WriteLine("\nYou pick up the torch, but it slips out of your hands.");
-        Console.WriteLine("\nA scrap of parchment lying on the ground erupts into flames, then turns into a squirrel.");
-        Console.WriteLine("\nThe squirrel looks at you in confusion for a moment, before preceding to chuck acorns at you.");
-        Console.WriteLine("\nYou try and grab it, but it snickers as it throws one last acorn at you and disappears in a plume of smoke.");
+        Console.WriteLine("\nIt manages to land in a crate labeled 'Inconvinently Placed Explosives'.");
+        Console.WriteLine("\nYou hear a faint sizzle, and after a few moments, nothing happens.");
+        Console.WriteLine("\n'These must be expired' you say to yourself. 'Thank goo-' A thunderous *BOOM* echoes throughout the house.");
+        Console.WriteLine("\nThe room manages to stay completely intact and you find yourself mostly unharmed. The only evidence of an explosion is the thick layer of soot covering the floor and yourself.");
     }
 
     static void Ice1()
@@ -323,8 +325,9 @@ public class Item
     
     static void Potion1()
     {
-        Console.WriteLine("\nAs you go to pick up the potion, it explodes in your face.");
-        Console.WriteLine("\nThe horse of judgement and self-satisfaction walks by and cackles at your stupidity.");
+        Console.WriteLine("\n'Everyone know this is a healing potion.' You think to yourself.");
+        Console.WriteLine("\nA quick sip however, reveals it was, in fact, NOT a healing potion.");
+        Console.WriteLine("\nThis is a flask of boiling hot cranberry juice kept hot by magic.");
     }
 
 }
