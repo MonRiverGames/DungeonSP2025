@@ -12,18 +12,18 @@ namespace DungeonGame
             Items = new List<string>();
         }
 
-        public void AddItem(string name)
+        public void AddItem(string name, Player player)
         {
-            Item item = new Item(name);
+            Item item = new Item(name, player);
             if (!Items.Contains(item.Name))
             {
                 // Treasure room items
                 Items.Add(item.Name);
-                Console.WriteLine($"You aggressively shove the {item.Name} into your bag.");
+                Graphics.Type(player.fastMode, $"You aggressively shove the {item.Name} into your bag.");
             }
             else
             {
-                Console.WriteLine("Check your inventory lately? You already have that item!");
+                Graphics.Type(player.fastMode, "Check your inventory lately? You already have that item!");
             }
         }
 
@@ -40,26 +40,26 @@ namespace DungeonGame
             return Items.Contains(item);
         }
 
-        public void ShowInventory()
+        public void ShowInventory(Player player)
         {
             if (Items.Count == 0)
             {
-                Console.WriteLine("It's as empty in here as your wallet.");
+                Graphics.Type(player.fastMode, "It's as empty in here as your wallet.");
             }
             else
             {
-                Console.WriteLine("Is that a...? The items in your... Lich Kitty merchandise bag are as follows:");
+                Graphics.Type(player.fastMode, "Is that a...? The items in your... Lich Kitty merchandise bag are as follows:");
                 foreach (var item in Items)
                 {
-                    Console.WriteLine($"- {item}");
+                    Graphics.Type(player.fastMode, $"- {item}");
                 }
             }
         }
 
-        public void ClearInventory()
+        public void ClearInventory(Player player)
         {
             Items.Clear();
-            Console.WriteLine("Your inventory has been cleared.");
+            Graphics.Type(player.fastMode, "Your inventory has been cleared.");
         }
     }
 }

@@ -35,22 +35,22 @@ public class Player
         if (gameData.CurrentRoom.Exits.ContainsKey(direction))
         {
             gameData.CurrentRoom = gameData.CurrentRoom.Exits[direction];
-            Console.WriteLine($"You moved to: {gameData.CurrentRoom.Name}");
+            Graphics.Type(fastMode, $"You moved to: {gameData.CurrentRoom.Name}");
         }
         else
         {
-            Console.WriteLine("You can't go that way!");
+            Graphics.Type(fastMode, "You can't go that way!");
         }
     }
 
     // Character class selection method
     public void ClassChoice()
     {
-        Console.WriteLine("\nChoose a Class! This determines your stats and abilities. Choose wisely.");
-        Console.WriteLine("1: Knight: Heavy Armor & Heavy Weapons.");
-        Console.WriteLine("2: Rogue: Light Armor & Small Weapons.");
-        Console.WriteLine("3: Wizard: Staffs & Damaging Magic/Spells.");
-        Console.WriteLine("4: Cleric: Healing Spells & Blunt Weapons.");
+        Graphics.Type(fastMode, "\nChoose a Class! This determines your stats and abilities. Choose wisely.");
+        Graphics.Type(fastMode, "1: Knight: Heavy Armor & Heavy Weapons.");
+        Graphics.Type(fastMode, "2: Rogue: Light Armor & Small Weapons.");
+        Graphics.Type(fastMode, "3: Wizard: Staffs & Damaging Magic/Spells.");
+        Graphics.Type(fastMode, "4: Cleric: Healing Spells & Blunt Weapons.");
 
         int classChoice;
         while (true)
@@ -62,7 +62,7 @@ public class Player
                 {
                     case 1:
                         gameData.PlayerClass = "Knight";
-                        Console.WriteLine("Knight");
+                        Graphics.Type(fastMode, "Knight");
                         gameData.Health = (100, 100f);
                         gameData.Strength = (10, 10f);
                         gameData.Defense = (20, 20f);
@@ -70,7 +70,7 @@ public class Player
                         break;
                     case 2:
                         gameData.PlayerClass = "Rogue";
-                        Console.WriteLine("Rogue");
+                        Graphics.Type(fastMode, "Rogue");
                         gameData.Health = (100, 100f);
                         gameData.Strength = (8, 8f);
                         gameData.Defense = (10, 10f);
@@ -78,7 +78,7 @@ public class Player
                         break;
                     case 3:
                         gameData.PlayerClass = "Wizard";
-                        Console.WriteLine("Wizard");
+                        Graphics.Type(fastMode, "Wizard");
                         gameData.Health = (100, 100f);
                         gameData.Strength = (2, 2f);
                         gameData.Defense = (5, 5f);
@@ -86,7 +86,7 @@ public class Player
                         break;
                     case 4:
                         gameData.PlayerClass = "Cleric";
-                        Console.WriteLine("Cleric");
+                        Graphics.Type(fastMode, "Cleric");
                         gameData.Health = (100, 100f);
                         gameData.Strength = (5, 5);
                         gameData.Defense = (10, 10f);
@@ -94,13 +94,13 @@ public class Player
                         break;
                 }
                 Graphics.Type(fastMode, $"\nYou chose {gameData.PlayerClass}! \n{gameData.Health.original} Health\n{gameData.Strength.original} Strength\n{gameData.Defense.original} Defense\n{gameData.Agility.original} Agility");
-                System.Console.WriteLine("\nPress any key to continue.");
+                Graphics.Type(fastMode, "\nPress any key to continue.\n> ");
                 Console.ReadKey();
                 break;
             }
             else
             {
-                Console.WriteLine("*Incorrect Buzzer Sound* Try again. This time enter a number between 1 and 4.");
+                Graphics.Type(fastMode, "*Incorrect Buzzer Sound* Try again. This time enter a number between 1 and 4.");
             }
         }
     }
@@ -112,33 +112,33 @@ public class Player
         {
             case "heal": // Adds health, use null or 0 for duration
                 gameData.Health = (gameData.Health.original, gameData.Health.current + effect);
-                Console.WriteLine($"You heal for {effect} health!");
+                Graphics.Type(fastMode, $"You heal for {effect} health!");
                 break;
 
             case "regeneration":
                 Regeneration = (duration, effect);
-                Console.WriteLine($"You regenerate for {effect} health for {duration} round(s)!");
+                Graphics.Type(fastMode, $"You regenerate for {effect} health for {duration} round(s)!");
                 break;
 
             case "rage":
                 gameData.Strength = (gameData.Strength.original, gameData.Strength.current - gameData.Strength.original * Rage.percentage);
                 Rage = (duration, effect);
                 gameData.Strength = (gameData.Strength.original, gameData.Strength.current + gameData.Strength.original * effect);
-                Console.WriteLine($"You rage for +{effect * 100}% strength for {duration} round(s)!");
+                Graphics.Type(fastMode, $"You rage for +{effect * 100}% strength for {duration} round(s)!");
                 break;
 
             case "focus":
                 gameData.Agility = (gameData.Agility.original, gameData.Agility.current - gameData.Agility.original * Focus.percentage);
                 Focus = (duration, effect);
                 gameData.Agility = (gameData.Agility.original, gameData.Agility.current + gameData.Agility.original * effect);
-                Console.WriteLine($"You focus for +{effect * 100}% agility for {duration} round(s)!");
+                Graphics.Type(fastMode, $"You focus for +{effect * 100}% agility for {duration} round(s)!");
                 break;
 
             case "fortify":
                 gameData.Defense = (gameData.Defense.original, gameData.Defense.current - gameData.Defense.original * Focus.percentage);
                 Fortify = (duration, effect);
                 gameData.Defense = (gameData.Defense.original, gameData.Defense.current + gameData.Defense.original * effect);
-                Console.WriteLine($"You fortify for +{effect * 100}% defense for {duration} round(s)!");
+                Graphics.Type(fastMode, $"You fortify for +{effect * 100}% defense for {duration} round(s)!");
                 break;
         }
     }
@@ -150,33 +150,33 @@ public class Player
         {
             case "stun":
                 Stun = duration;
-                Console.WriteLine($"You are stunned for {duration} round(s)!");
+                Graphics.Type(fastMode, $"You are stunned for {duration} round(s)!");
                 break;
 
             case "poison":
                 Poison = (duration, effect);
-                Console.WriteLine($"You are poisoned by {effect} damage for {duration} round(s)!");
+                Graphics.Type(fastMode, $"You are poisoned by {effect} damage for {duration} round(s)!");
                 break;
 
             case "weaken":
                 gameData.Strength = (gameData.Strength.original, gameData.Strength.current + gameData.Strength.original * Weaken.percentage);
                 Weaken = (duration, effect);
                 gameData.Strength = (gameData.Strength.original, gameData.Strength.current - gameData.Strength.original * effect);
-                Console.WriteLine($"You are weakened by {(effect) * 100}% for {duration} round(s)!");
+                Graphics.Type(fastMode, $"You are weakened by {(effect) * 100}% for {duration} round(s)!");
                 break;
 
             case "confusion":
                 gameData.Agility = (gameData.Agility.original, gameData.Agility.current + gameData.Agility.original * Confusion.percentage);
                 Confusion = (duration, effect);
                 gameData.Agility = (gameData.Agility.original, gameData.Agility.current - gameData.Agility.original * effect);
-                Console.WriteLine($"You are confused by {(effect) * 100}% for {duration} round(s)!");
+                Graphics.Type(fastMode, $"You are confused by {(effect) * 100}% for {duration} round(s)!");
                 break;
 
             case "vulnerability":
                 gameData.Defense = (gameData.Defense.original, gameData.Defense.current + gameData.Defense.original * Vulnerability.percentage);
                 Vulnerability = (duration, effect);
                 gameData.Defense = (gameData.Defense.original, gameData.Defense.current - gameData.Defense.original * effect);
-                Console.WriteLine($"You are weakened by {(effect) * 100}% for {duration} round(s)!");
+                Graphics.Type(fastMode, $"You are weakened by {(effect) * 100}% for {duration} round(s)!");
                 break;
         }
     }
@@ -236,7 +236,7 @@ public class Player
 
     public void PlayerHealthCheck()
     {
-        Console.WriteLine($"Your health is: {gameData.Health.current}");
+        Graphics.Type(fastMode, $"Your health is: {gameData.Health.current}");
     }
 
     public void DeathScene()
@@ -244,14 +244,14 @@ public class Player
         Graphics.Type(fastMode, "You start to feel woozy. Your breaths become shallower, and your vision begins to darken. Eventually, you can't see anything. You can't feel anything.", "green", 200, 50);
         Graphics.Type(fastMode, "YOU DIED.\nFrankly, I could have done better. Game over.", "green", 200, 50);
         // Add any additional logic for handling player death, such as restarting or exiting the game.
-        GameData.ResetGame();
+        GameData.ResetGame(gameData.Rooms, gameData);
         Graphics.Type(fastMode, "Press any key to exit.", "green", 200, 50);
         Environment.Exit(0);
     }
 
     public virtual void Attack(Enemy enemy)
     {
-       Console.WriteLine($"{gameData.PlayerName} attacks {enemy.Name}!");
+        Graphics.Type(fastMode, $"{gameData.PlayerName} attacks {enemy.Name}!");
         enemy.TakeDamage(10, fastMode); // Example damage value
     }
 }

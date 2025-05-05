@@ -80,60 +80,60 @@ namespace DungeonGame
         }
 
         // Display room information
-        public void DisplayRoomInfo()
+        public void DisplayRoomInfo(Player player)
         {
-            Console.WriteLine($"Room: {Name}");
-            Console.WriteLine($"Description: {Description}");
+            Graphics.Type(player.fastMode, $"Room: {Name}");
+            Graphics.Type(player.fastMode, $"Description: {Description}");
 
             tileset.RenderDungeon(RoomMap);
 
-            Console.WriteLine("Exits:");
+            Graphics.Type(player.fastMode, "Exits:");
             foreach (var exit in Exits.Keys)
             {
-                Console.WriteLine($"- {exit}");
+                Graphics.Type(player.fastMode, $"- {exit}");
             }
 
-            Console.WriteLine("Items:");
+            Graphics.Type(player.fastMode, "Items:");
             if (Items.Count > 0)
             {
                 foreach (var item in Items)
                 {
-                    Console.WriteLine($"- {item}");
+                    Graphics.Type(player.fastMode, $"- {item}");
                 }
             }
             else
             {
-                Console.WriteLine("None.");
+                Graphics.Type(player.fastMode, "None.");
             }
 
-            Console.WriteLine("Actions:");
+            Graphics.Type(player.fastMode, "Actions:");
             if (Actions.Count > 0)
             {
                 foreach (var action in Actions)
                 {
-                    Console.WriteLine($"- {action.Key}: {action.Value}");
+                    Graphics.Type(player.fastMode, $"- {action.Key}: {action.Value}");
                 }
             }
             else
             {
-                Console.WriteLine("None.");
+                Graphics.Type(player.fastMode, "None.");
             }
         }
-        public void PrintRoomDetails()
+        public void PrintRoomDetails(Player player)
         {
-            Console.WriteLine($"Room: {Name}");
-            Console.WriteLine($"Description: {Description}");
-            Console.WriteLine("Exits:");
+            Graphics.Type(player.fastMode, $"Room: {Name}");
+            Graphics.Type(player.fastMode, $"Description: {Description}");
+            Graphics.Type(player.fastMode, "Exits:");
             foreach (var exit in Exits)
             {
                 // Check if exit.Value is null before accessing its Name property
                 string exitRoomName = exit.Value != null ? exit.Value.Name : "Unknown";
-                Console.WriteLine($"- {exit.Key}: {exitRoomName}");
+                Graphics.Type(player.fastMode, $"- {exit.Key}: {exitRoomName}");
             }
-            Console.WriteLine("Items:");
+            Graphics.Type(player.fastMode, "Items:");
             foreach (var item in Items)
             {
-                Console.WriteLine($"- {item}");
+                Graphics.Type(player.fastMode, $"- {item}");
             }
         }
 
