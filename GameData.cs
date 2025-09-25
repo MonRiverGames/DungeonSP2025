@@ -14,6 +14,7 @@ namespace DungeonGame
 
         public string PlayerName { get; set; }
         public Room CurrentRoom { get; set; }
+        public List<Room> Rooms { get; set; }
         public Inventory PlayerInventory { get; set; }
         public bool EndingUnlocked = false;
 
@@ -49,7 +50,7 @@ namespace DungeonGame
                     }
                     else if (response.Contains("n"))
                     {
-                        ResetGame(rooms);
+                        ResetGame(rooms, gameData);
                         break;
                     }
                     Graphics.Type(false, "It's a simple question...\nWould you like to resume your game? (Y/N)");
@@ -59,8 +60,8 @@ namespace DungeonGame
             {
                 gameData.CurrentRoom = rooms.Find(room => room.Name == "Foyer");
             }
-
-                return gameData;
+            gameData.Rooms = rooms;
+            return gameData;
         }
 
         // Save method, pass in current gameData reference
@@ -70,27 +71,23 @@ namespace DungeonGame
         }
 
         // Reset Save file
-        public static void ResetGame(List<Room> rooms)
+        public static GameData ResetGame(List<Room> rooms, GameData gameData)
         {
             if (File.Exists(FilePath)) File.Delete(FilePath);
 
             // Reset in-memory GameData fields
-            GameData gameData = new GameData
-            {
-                IsResuming = false,
-                PlayerName = string.Empty,
-                CurrentRoom = rooms.Find(room => room.Name == "Foyer"), // Set the starting room
-                PlayerInventory = new Inventory(), // Create a new inventory object
-                EndingUnlocked = false,
-                PlayerClass = "Unset",
-                Health = (100, 100),
-                Strength = (10, 10),
-                Defense = (10, 10),
-                Agility = (10, 10)
-            };
+            gameData.IsResuming = false;
+            gameData.PlayerName = string.Empty;
+            gameData.CurrentRoom = rooms.Find(room => room.Name == "Foyer"); // Set the starting room
+            gameData.PlayerInventory.Items.Clear(); // Explicitly clear the inventory
+            gameData.EndingUnlocked = false;
+            gameData.PlayerClass = "Unset";
+            gameData.Health = (100, 100);
+            gameData.Strength = (10, 10);
+            gameData.Defense = (10, 10);
+            gameData.Agility = (10, 10);
 
-            // Explicitly clear the inventory
-            gameData.PlayerInventory.Items.Clear();
+            return gameData;
         }
     }
 }

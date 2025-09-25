@@ -61,19 +61,15 @@ Thank you for contributing to the Dungeon Crawler project! To maintain a clean a
 ✅ Be **respectful and supportive** in discussions.  
 
 ### **Contribution List**
-- Write a summary of your contributions to this project when the project is due. 
-- Arnett
-- Bratton
-- Broadwater
-- Byerley
-- Chen
-- Clover
-- Hemmings
-- Martin
-- Nuzum
-- Osborne
-- Roberts
-- Scher
-- Scott
-- Stewart
-- Withers
+- Spring 2025 Classroom Dungeon Project
+- Arnett: Participated as part of Unit 3; wrote many initial story elements and descriptions. Assisted with UI.
+- Bratton: Used as part of final project. Polished mechanics and added new features.
+- Byerley: Participated as part of Unit 3; worked on enemy systems but did not integrate into main program
+- Chen: Participated as part of Unit 3; established game loop/movement through rooms/usage of combat to end game. Significant improvement of UI. 
+- Clover: Participated as part of Unit 3; Attempted save system, but didn't work out
+- Martin: Used as part of final project. Wrote new descriptions and story elements. 
+- Nuzum: Participated as part of Unit 3; wrote initial bedroom switch statement
+- Roberts: Participated as part of Unit 3, attempted inventory system, kitchen descriptions, treasures/spells
+- Scher: Participated as part of Unit 3, attempted rooms and inventory, but didn't work out
+- Scott: Participated as part of Unit 3, Created class system, attempted player customization
+- Withers: Participated as part of Unit 3, no noticeable contributions through github but worked with Cy on team contribution
